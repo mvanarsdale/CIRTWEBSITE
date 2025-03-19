@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CIRT Publication</title>
+
+    {% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Poster Gallery</title>
+    <link rel="stylesheet" href="{% static 'core/css/posterstyle.css' %}"> 
+</head>
+<body>
+
+    <!-- Header -->
+    <header>
+        <div class="logo">Journals</div>
+        <div class="header-right">
+            <input type="text" id="searchInput" placeholder="Search this site...">
+            <button id="loginBtn" class="login-button">Login</button>
+        </div>
+    </header>
+
+    <!-- Navigation -->
+    <nav class="secondary_header">
+        <div class="button-container">
+            <!-- Link to the 'About' (index) page -->
+            <a href="{% url 'index' %}">
+                <button class="button">About</button>
+            </a>
+            <!-- Link to the Journals (index) page -->
+            <a href="{% url 'journals' %}">
+                <button class="button">Journals</button>
+            </a>
+            <!-- Link to the 'Posters' page (current page, so no change needed) -->
+            <button class="button">Posters</button>
+            </a>
+            <!-- Link to the 'FAQ' page (define 'faq' view and URL if needed) -->
+            <a href="{% url 'FAQ' %}">
+                <button class="button">FAQ</button>
+            </a>
+        </div>
+    </nav>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+
+        /* HEADER STYLING */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #333;
+            color: white;
+            padding: 15px 20px;
+        }
+        .logo img {
+            height: 50px;
+        }
+        .title {
+            font-size: 24px;
+            font-weight: bold;
+        }
+        .search-box {
+            display: flex;
+            align-items: center;
+        }
+        .search-box input {
+            padding: 8px;
+            border: none;
+            border-radius: 4px;
+        }
+        .search-box button {
+            padding: 8px 12px;
+            background-color: #555;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .search-box button:hover {
+            background-color: #777;
+        }
+        
+        /* IMAGE SECTION STYLING */
+        .image-container {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            padding: 20px;
+            flex-wrap: wrap;
+        }
+        .image-container img {
+            width: 30%; /* Adjust size as needed */
+            height: auto;
+            border-radius: 8px;
+            box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        /* RECENT PUBLICATIONS SECTION */
+        .publications {
+            margin: 50px 0;
+            padding: 20px;
+            background-color: white;
+            box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            width: 80%;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* ALL JOURNALS SECTION */
+        .all-journals {
+            width: 80%;
+            margin: 50px auto;
+            background-color: white;
+            padding: 20px;
+            box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+
+        .all-journals-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .search-box {
+            display: flex;
+            align-items: center;
+        }
+
+        .search-box input {
+            padding: 8px;
+            margin-right: 10px;
+        }
+
+        .button-container {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .filter-container {
+            display: inline-block;
+            position: relative;
+        }
+
+        .filter-button {
+            padding: 8px 12px;
+            background-color: #555;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        /* Adjusting dropdown to stay within the screen */
+        .filter-dropdown {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background-color: white;
+            max-width: 250px; /* Set a max width */
+            width: auto; /* Auto width based on content */
+            box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);
+            padding: 10px;
+            z-index: 1;
+            border-radius: 8px;
+            overflow: auto; /* Make dropdown scrollable if content is too long */
+        }
+
+        .filter-container:hover .filter-dropdown {
+            display: block;
+        }
+
+        .filter-section {
+            margin-bottom: 15px;
+        }
+
+        .filter-section label {
+            font-weight: bold;
+            display: block;
+            margin-bottom: 5px; /* Add margin below label */
+        }
+
+        .filter-section input,
+        .filter-section select {
+            width: 100%;
+            padding: 6px;
+            margin-top: 5px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+        /* Ensure checkboxes are aligned */
+        .filter-section input[type="checkbox"] {
+            width: auto;
+            display: inline-block;
+            margin-right: 5px; /* Add some space between checkbox and text */
+            vertical-align: middle;
+        }
+
+        .filter-button:hover {
+            background-color: #777;
+        }
+        
+        /* JOURNAL LISTING STYLES */
+        .journal-listing {
+            margin-top: 50px;
+        }
+
+        .journal-item {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            margin-bottom: 30px;
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .journal-item .journal-image {
+            flex: 1;
+            margin-right: 20px;
+        }
+
+        .journal-item .journal-image img {
+            width: 100%;
+            height: auto;
+            border-radius: 8px;
+            box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .journal-item .journal-description {
+            flex: 2;
+        }
+
+        .journal-item .journal-description h3 {
+            font-size: 22px;
+            font-weight: bold;
+        }
+
+        .journal-item .journal-description .journal-summary {
+            font-size: 16px;
+            margin-bottom: 15px;
+        }
+
+        .journal-item .journal-description .journal-details p {
+            margin: 5px 0;
+        }
+
+        .journal-item .journal-description .journal-details strong {
+            font-weight: bold;
+        }
+
+        /* RESPONSIVE STYLING */
+        @media (max-width: 768px) {
+            .journal-item {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .journal-item .journal-image {
+                margin-right: 0;
+                margin-bottom: 20px;
+            }
+
+            .journal-item .journal-description {
+                width: 100%;
+            }
+        }
+
+    </style>
+</head>
+<body>
+
+    <!-- RECENT PUBLICATIONS SECTION -->
+    <div class="publications">
+        <h2>Recent Publications</h2>
+        <div class="journal-gallery">
+            <img src="journal1.jpg" alt="Journal Page 1">
+            <img src="journal2.jpg" alt="Journal Page 2">
+            <img src="journal3.jpg" alt="Journal Page 3">
+        </div>
+    </div>
+
+    <!-- ALL JOURNALS SECTION -->
+    <div class="all-journals">
+        <div class="all-journals-header">
+            <h2>All Journals</h2>
+            <div class="button-container">
+                <div class="search-box">
+                    <input type="text" placeholder="Search Journals...">
+                    <button type="submit">Search</button>
+                </div>
+                <div class="filter-container">
+                    <button class="filter-button">Filter ▼</button>
+                    <div class="filter-dropdown">
+                        <!-- AUTHOR FILTER -->
+                        <div class="filter-section">
+                            <label>Author</label>
+                            <input type="checkbox"> A-Z Order <br>
+                            <input type="text" placeholder="Enter Author Name">
+                        </div>
+
+                        <!-- DATE FILTER -->
+                        <div class="filter-section">
+                            <label>Date</label>
+                            <input type="checkbox"> Oldest <br>
+                            <input type="checkbox"> Most Recent <br>
+                            <input type="date">
+                        </div>
+
+                        <!-- CATEGORY FILTER -->
+                        <div class="filter-section">
+                            <label>Category</label>
+                            <input type="text" placeholder="Enter Category">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- PLACEHOLDER FOR JOURNAL LISTING -->
+        <div class="journal-listing">
+            <div class="journal-item">
+                <div class="journal-image">
+                    <img src="journal1.jpg" alt="Journal 1">
+                </div>
+                <div class="journal-description">
+                    <h3>Title of Journal 1</h3>
+                    <p class="journal-summary">
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. In tincidunt sollicitudin augue, at fermentum odio vehicula a. 
+                        Curabitur pharetra sit amet felis et tincidunt.
+                    </p>
+                    <div class="journal-details">
+                        <p><strong>Author:</strong> John Doe</p>
+                        <p><strong>Contact:</strong> johndoe@example.com</p>
+                        <p><strong>Published:</strong> March 2025</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="journal-item">
+                <div class="journal-image">
+                    <img src="journal2.jpg" alt="Journal 2">
+                </div>
+                <div class="journal-description">
+                    <h3>Title of Journal 2</h3>
+                    <p class="journal-summary">
+                        Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam.
+                    </p>
+                    <div class="journal-details">
+                        <p><strong>Author:</strong> Jane Smith</p>
+                        <p><strong>Contact:</strong> janesmith@example.com</p>
+                        <p><strong>Published:</strong> February 2025</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Add more journal items here -->
+        </div>
+    </div>
+    
+</body>
+</html>
