@@ -1,0 +1,240 @@
+@charset "UTF-8";
+/* CSS Document */
+
+/* General Body Styling */
+body {
+    background-color: #FFFFFF;
+    margin: 0;
+    font-family: Arial, sans-serif;
+}
+
+/* Container */
+.container {
+    width: 90%;
+    margin: auto;
+    background-color: #FFFFFF;
+}
+
+/* Header */
+header {
+    width: 100%;
+    height: 60px;
+    background-color: #692022;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 20px;
+}
+
+.logo {
+    color: #fff;
+    font-weight: bold;
+    letter-spacing: 4px;
+    font-size: 22px;
+}
+
+.header-right {
+    display: flex;
+    align-items: center;
+}
+
+#searchInput {
+    padding: 8px;
+    font-size: 16px;
+}
+
+.login-button {
+    background-color: #4B0909;
+    color: white;
+    padding: 8px 16px;
+    cursor: pointer;
+    border: none;
+    margin-left: 20px;
+}
+
+.login-button:hover {
+    background-color: #B7A28E;
+}
+
+/* Navigation Bar */
+.secondary_header {
+    background-color: #B7A28E;
+    padding: 15px;
+    display: flex;
+    justify-content: center;
+}
+
+.button-container {
+    display: flex;
+    justify-content: space-evenly;
+    width: 100%;
+}
+
+.button-container .button {
+    background-color: #B7A28E;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.button-container .button:hover {
+    background-color: #4B0909;
+}
+/* Filter Section Styling */
+.filter-section {
+    margin: 20px 0;
+    padding: 10px;
+    background-color: #f4f4f4;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 10px;
+}
+
+#filterSelect {
+    padding: 8px;
+    font-size: 16px;
+}
+
+#filterInput {
+    padding: 8px;
+    font-size: 16px;
+    width: 200px;
+}
+
+
+/* Gallery Styling */
+.gallery {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    background-color: #FFFFFF;
+    padding: 20px;
+}
+
+.thumbnail {
+    width: 30%;
+    text-align: center;
+    margin: 15px;
+    background-color: #F8F8F8;
+    padding-bottom: 20px;
+    border-radius: 5px;
+    padding-top: 20px;
+    border-bottom: 4px solid #6DC7D0;
+}
+
+.gallery .thumbnail h4 {
+    margin-top: 10px;
+    color: #52BAD5;
+    text-align: center;
+}
+
+/* Poster Thumbnails */
+.cards {
+    width: 100%;
+    height: auto;
+    max-width: 300px;
+    opacity: 0.9;
+    cursor: pointer;
+    transition: transform 0.2s ease-in-out;
+}
+
+.cards:hover {
+    transform: scale(1.05);
+}
+
+/* Modal Styling */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.8);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.close-modal {
+    position: absolute;
+    top: 15px;
+    right: 30px;
+    color: white;
+    font-size: 30px;
+    cursor: pointer;
+}
+
+/* Footer */
+footer {
+    background-color: #B3B3B3;
+    padding: 20px;
+    text-align: center;
+}
+
+.copyright {
+    color: #FFFFFF;
+    text-transform: uppercase;
+    font-weight: lighter;
+    letter-spacing: 2px;
+}
+#popupOverlay, #loginPopup, #posterModal {
+    display: none;
+}
+/* Popup Styling */
+.popup-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    z-index: 999;
+}
+
+.popup {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    z-index: 1000;
+    width: 300px;
+    text-align: center;
+}
+
+.popup-content input {
+    width: 100%;
+    padding: 8px;
+    margin: 5px 5;
+}
+
+.popup-content button {
+    background: #4B0909;
+    color: white;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+}
+
+.popup-content button:hover {
+    background: #B7A28E;
+}
+
+.close-btn {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    font-size: 20px;
+    cursor: pointer;
+}
+
