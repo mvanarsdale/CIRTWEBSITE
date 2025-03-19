@@ -1,0 +1,197 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Poster Gallery</title>
+    <link rel="stylesheet" href="{% static 'core/css/posterstyle.css' %}"> 
+</head>
+<body>
+
+    <!-- Header -->
+    <header>
+        <div class="logo">Poster Gallery</div>
+        <div class="header-right">
+            <input type="text" id="searchInput" placeholder="Search this site...">
+            <button id="loginBtn" class="login-button">Login</button>
+        </div>
+    </header>
+
+    <!-- Navigation -->
+    <nav class="secondary_header">
+        <div class="button-container">
+            <!-- Link to the 'About' (index) page -->
+            <a href="{% url 'index' %}">
+                <button class="button">About</button>
+            </a>
+
+            <!-- Link to the 'Posters' page (current page, so no change needed) -->
+            <button class="button">Posters</button>
+            </a>
+        </div>
+    </nav>
+
+    <!-- Filter Section -->
+    <div class="filter-section">
+        <label for="filterSelect">Filter by:</label>
+        <select id="filterSelect">
+            <option value="student">Student Name</option>
+            <option value="poster">Poster Title</option>
+            <option value="date">Date Created</option>
+        </select>
+        <input type="text" id="filterInput" placeholder="Enter filter term">
+    </div>
+
+    <!-- Poster Gallery -->
+    <div class="gallery">
+        <div class="thumbnail" data-student="John Doe" data-poster="Poster Title 1" data-date="2024">
+            <a href="#" class="poster-link" data-src="poster1.pdf">
+                <img src="{% static 'core/images/pexels-cottonbro-4547587.jpg' %}" alt="Poster 1" class="cards">
+            </a>
+            <h4>Poster Title 1</h4>
+            <p class="caption">Student: John Doe | Major: Criminology | Created: 2024</p>
+        </div>
+        <div class="thumbnail" data-student="Jane Smith" data-poster="Poster Title 2" data-date="2023">
+            <a href="#" class="poster-link" data-src="poster2.pdf">
+                <img src="{% static 'core/images/pexels-fotios-photos-5653734.jpg' %}" alt="Poster 2" class="cards">
+            </a>
+            <h4>Poster Title 2</h4>
+            <p class="caption">Student: Jane Smith | Major: Criminology | Created: 2023</p>
+        </div>
+        <div class="thumbnail" data-student="Sarah Lee" data-poster="Poster Title 3" data-date="2022">
+            <a href="#" class="poster-link" data-src="poster3.pdf">
+                <img src="{% static 'core/images/pexels-inga-sv-4066761.jpg' %}" alt="Poster 3" class="cards">
+            </a>
+            <h4>Poster Title 3</h4>
+            <p class="caption">Student: Sarah Lee | Major: Psychology | Created: 2022</p>
+        </div>
+        <div class="thumbnail" data-student="Mark Johnson" data-poster="Poster Title 4" data-date="2021">
+            <a href="#" class="poster-link" data-src="poster4.pdf">
+                <img src="{% static 'core/images/pexels-tiana-18128-3312231.jpg' %}" alt="Poster 4" class="cards">
+            </a>
+            <h4>Poster Title 4</h4>
+            <p class="caption">Student: Mark Johnson | Major: Law | Created: 2021</p>
+        </div>
+    </div>
+
+    <!-- Modal for displaying posters -->
+    <div id="posterModal" class="modal">
+        <span class="close-modal">&times;</span>
+        <iframe id="posterFrame" src=""></iframe>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="copyright">© 2025 Poster Gallery. All Rights Reserved.</div>
+    </footer>
+
+    <!-- Login Popup -->
+    <div id="popupOverlay" class="popup-overlay"></div>
+    <div id="loginPopup" class="popup">
+        <div class="popup-content">
+            <span class="close-btn">&times;</span>
+            <h2>Login</h2>
+            <form>
+                <label for="username">Username:</label>
+                <input type="text" id="username" required>
+                
+                <label for="password">Password:</label>
+                <input type="password" id="password" required>
+
+                <button type="submit">Log In</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- JavaScript -->
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            // Handle the login popup
+            const loginBtn = document.getElementById('loginBtn');
+            const loginPopup = document.getElementById('loginPopup');
+            const popupOverlay = document.getElementById('popupOverlay');
+            const closeBtn = document.querySelector('.close-btn');
+
+            // Show pop-up when login button is clicked
+            loginBtn.addEventListener('click', () => {
+                loginPopup.style.display = 'block';
+                popupOverlay.style.display = 'block';
+            });
+
+            // Hide pop-up when close button or overlay is clicked
+            closeBtn.addEventListener('click', () => {
+                loginPopup.style.display = 'none';
+                popupOverlay.style.display = 'none';
+            });
+
+            popupOverlay.addEventListener('click', () => {
+                loginPopup.style.display = 'none';
+                popupOverlay.style.display = 'none';
+            });
+
+            // Filter Functionality
+            document.getElementById("filterInput").addEventListener("input", function () {
+                let filterValue = this.value.toLowerCase();
+                let filterType = document.getElementById("filterSelect").value;
+                let thumbnails = document.querySelectorAll(".thumbnail");
+
+                thumbnails.forEach(thumbnail => {
+                    let filterData = thumbnail.getAttribute(`data-${filterType}`).toLowerCase();
+                    if (filterData.includes(filterValue)) {
+                        thumbnail.style.display = "block";
+                    } else {
+                        thumbnail.style.display = "none";
+                    }
+                });
+            });
+
+            // Search Functionality (same as before)
+            document.getElementById("searchInput").addEventListener("input", function () {
+                let filter = this.value.toLowerCase();
+                let thumbnails = document.querySelectorAll(".thumbnail");
+
+                thumbnails.forEach(thumbnail => {
+                    let title = thumbnail.querySelector("h4").textContent.toLowerCase();
+                    let caption = thumbnail.querySelector(".caption").textContent.toLowerCase();
+                    if (title.includes(filter) || caption.includes(filter)) {
+                        thumbnail.style.display = "block";
+                    } else {
+                        thumbnail.style.display = "none";
+                    }
+                });
+            });
+
+            // Poster Modal Functionality
+            document.querySelectorAll(".poster-link").forEach(link => {
+                link.addEventListener("click", function (event) {
+                    event.preventDefault();
+                    let pdfSrc = this.getAttribute("data-src");
+                    let modal = document.getElementById("posterModal");
+                    let iframe = document.getElementById("posterFrame");
+
+                    iframe.src = pdfSrc;
+                    modal.style.display = "flex";
+                });
+            });
+
+            // Close Modal
+            document.querySelector(".close-modal").addEventListener("click", function () {
+                document.getElementById("posterModal").style.display = "none";
+                document.getElementById("posterFrame").src = ""; // Reset iframe
+            });
+
+            // Close modal when clicking outside the iframe
+            window.addEventListener("click", function (event) {
+                let modal = document.getElementById("posterModal");
+                if (event.target === modal) {
+                    modal.style.display = "none";
+                    document.getElementById("posterFrame").src = "";
+                }
+            });
+        });
+    </script>
+
+</body>
+</html>

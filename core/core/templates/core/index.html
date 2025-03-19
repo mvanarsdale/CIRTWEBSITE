@@ -1,0 +1,204 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Simple Theme</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'core/css/style.css' %}">
+</head>
+<body>
+<div class="container">
+    <header>
+        <div class="primary_header">
+            <p class="thumbnail_align">&nbsp; </p>
+            <h1 class="title">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;CRIMINOLOGY INSTITUTE FOR RESEARCH/TRAINING (CIRT)</h1>
+            <div class="search-container">
+                <input type="text" id="searchInput" placeholder="Search this site...">
+                <button id="loginBtn" class="login-button">Login</button>
+                <ul id="searchResults"></ul>
+            </div>
+        </div>
+
+        <nav class="secondary_header">
+            <div class="button-container">
+                <!-- Link to the About (index) page -->
+                <a href="{% url 'index' %}">
+                    <button class="button">About</button>
+                </a>
+                <!-- Link to the Posters page -->
+                <a href="{% url 'posters' %}">
+                    <button class="button">Posters</button>
+                </a>
+            </div>
+        </nav>
+    </header>
+
+    <section>
+        <article class="left_article">
+            <h3>What is CIRT?</h3>
+            <p>The Criminal Justice Innovation & Research Team (CIRT) was established in 2023 to serve as a hub for collaboration, education, and career preparation within the Criminal Justice field. It fosters networking between UT scholars, criminal justice agencies, and businesses, provides learning resources and training for students and professionals, and equips students for future careers in the evolving industry. Additionally, CIRT acts as a central space for research, training, and student engagement, strengthening the connection between academia and real-world criminal justice practices.</p>
+        </article>
+        <aside class="right_article">
+            <img src="{% static 'core/images/pexels-expressivestanley-1454360.jpg' %}" alt="Research Image" width="600" height="400" class="placeholder"/>
+        </aside>
+    </section>
+
+    <!-- News Section -->
+<section class="news-section">
+    <h4>NEWS</h4>
+    <div class="news-container">
+        <div class="news-item">
+            <img src="{% static 'core/images/pexels-cottonbro-4547587.jpg' %}" alt="Article Image" class="news-image"/>
+            <h5>Article Title 1</h5>
+            <p class="news-description">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ut enim ad minim veniam, quis nostrud.</p>
+            <a href="#" class="news-link">Read More</a>
+        </div>
+        <div class="news-item">
+            <img src="{% static 'core/images/pexels-fotios-photos-5653734.jpg' %}" alt="Article Image" class="news-image"/>
+            <h5>Article Title 2</h5>
+            <p class="news-description">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ut enim ad minim veniam, quis nostrud.</p>
+            <a href="#" class="news-link">Read More</a>
+        </div>
+        <div class="news-item">
+            <img src="{% static 'core/images/pexels-tiana-18128-3312231.jpg' %}" alt="Article Image" class="news-image"/>
+            <h5>Article Title 3</h5>
+            <p class="news-description">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ut enim ad minim veniam, quis nostrud.</p>
+            <a href="#" class="news-link">Read More</a>
+        </div>
+        <div class="news-item">
+            <img src="{% static 'core/images/pexels-inga-sv-4066761.jpg' %}" alt="Article Image" class="news-image"/>
+            <h5>Article Title 3</h5>
+            <p class="news-description">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ut enim ad minim veniam, quis nostrud.</p>
+            <a href="#" class="news-link">Read More</a>
+        </div>
+        <div class="news-item">
+            <img src="{% static 'core/images/pexels-cottonbro-4547587.jpg' %}" alt="Article Image" class="news-image"/>
+            <h5>Article Title 3</h5>
+            <p class="news-description">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ut enim ad minim veniam, quis nostrud.</p>
+            <a href="#" class="news-link">Read More</a>
+        </div>
+        <div class="news-item">
+            <img src="{% static 'core/images/pexels-fotios-photos-5653734.jpg' %}" alt="Article Image" class="news-image"/>
+            <h5>Article Title 3</h5>
+            <p class="news-description">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ut enim ad minim veniam, quis nostrud.</p>
+            <a href="#" class="news-link">Read More</a>
+        </div>
+    </div>
+</section>
+
+    <footer class="secondary_header footer">
+        <div class="copyright"><strong>&nbsp;</strong></div>
+    </footer>
+</div>
+
+<!-- Login Popup -->
+<div id="popupOverlay" class="popup-overlay"></div>
+<div id="loginPopup" class="popup">
+    <div class="popup-content">
+        <span class="close-btn">&times;</span>
+        <h2>Login</h2>
+        <form>
+            <label for="username">Username:</label>
+            <input type="text" id="username" required>
+            
+            <label for="password">Password:</label>
+            <input type="password" id="password" required>
+
+            <button type="submit">Log In</button>
+        </form>
+    </div>
+</div>
+
+<!-- JavaScript -->
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        // Handle the login popup
+        const loginBtn = document.getElementById('loginBtn');
+        const loginPopup = document.getElementById('loginPopup');
+        const popupOverlay = document.getElementById('popupOverlay');
+        const closeBtn = document.querySelector('.close-btn');
+    
+        // Show pop-up when login button is clicked
+        if (loginBtn) {
+            loginBtn.addEventListener('click', () => {
+                loginPopup.style.display = 'block';
+                popupOverlay.style.display = 'block';
+            });
+        }
+    
+        // Hide pop-up when close button or overlay is clicked
+        if (closeBtn && popupOverlay) {
+            closeBtn.addEventListener('click', () => {
+                loginPopup.style.display = 'none';
+                popupOverlay.style.display = 'none';
+            });
+    
+            popupOverlay.addEventListener('click', () => {
+                loginPopup.style.display = 'none';
+                popupOverlay.style.display = 'none';
+            });
+        }
+    
+        // --------------------------
+        // FIXING THE SEARCH FUNCTION
+        // --------------------------
+        let searchData = [];
+    
+        // Fetch search-data.json
+        fetch("search-data.json")
+            .then(response => response.json())
+            .then(data => {
+                searchData = data;
+                console.log("Search data loaded:", searchData); // Debugging
+            })
+            .catch(error => console.error("Error loading search data:", error));
+    
+        function searchFunction() {
+            const input = document.getElementById("searchInput").value.toLowerCase();
+            const resultsContainer = document.getElementById("searchResults");
+            resultsContainer.innerHTML = ""; // Clear previous results
+    
+            if (input.length === 0) {
+                resultsContainer.style.display = "none"; // Hide if input is empty
+                return;
+            }
+    
+            // Filter search results
+            const results = searchData.filter(item =>
+                item.title.toLowerCase().includes(input) || item.content.toLowerCase().includes(input)
+            );
+    
+            if (results.length > 0) {
+                resultsContainer.style.display = "block"; // Show results
+                results.forEach(result => {
+                    const li = document.createElement("li");
+                    const link = document.createElement("a");
+                    link.href = result.url;
+                    link.textContent = result.title;
+                    li.appendChild(link);
+                    resultsContainer.appendChild(li);
+                });
+            } else {
+                resultsContainer.style.display = "block"; // Show "No results found"
+                resultsContainer.innerHTML = "<li>No results found</li>";
+            }
+        }
+    
+        // Attach search function to keyup event (typing)
+        document.getElementById("searchInput").addEventListener("keyup", searchFunction);
+    
+        // Ensure search works when pressing Enter
+        document.getElementById("searchInput").addEventListener("keypress", function (event) {
+            if (event.key === "Enter") {
+                event.preventDefault(); // Prevent page reload
+                searchFunction(); // Execute search
+            }
+        });
+    
+    }); // <-- Make sure this is here to close the event listener
+</script>    
+</body>
+</html>
