@@ -1,7 +1,7 @@
 # CIRTWEBSITE
 CSC 230 Project Website
 
-To run this, first, activiate a virtual enviroment 
+Activiate a virtual enviroment in terminal before testing
 
 
 Team Documents
