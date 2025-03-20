@@ -12,10 +12,16 @@
 
     <!-- Header -->
     <header>
-        <div class="logo">Poster Gallery</div>
-        <div class="header-right">
-            <input type="text" id="searchInput" placeholder="Search this site...">
-            <button id="loginBtn" class="login-button">Login</button>
+        <div class="primary_header">
+            <p class="thumbnail_align">&nbsp; </p>
+            <!-- Header with logo on the top-left Code from ChatGPT -->
+        <img src="{% static 'core/images/CIRT_LOGO.png' %}" alt="Logo" class="logo">
+            <h1 class="title">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;CRIMINOLOGY INSTITUTE FOR RESEARCH/TRAINING (CIRT)</h1>
+            <div class="search-container">
+                <input type="text" id="searchInput" placeholder="Search this site..." onkeyup="searchFunction()">
+                <button id="loginBtn" class="login-button">Login</button>
+                <ul id="searchResults"></ul>
+            </div>
         </div>
     </header>
 
@@ -26,11 +32,12 @@
             <a href="{% url 'index' %}">
                 <button class="button">About</button>
             </a>
-            <!-- Link to the Journals (index) page -->
+            <!-- Link to the Journals page -->
             <a href="{% url 'journals' %}">
-                <button class="button">Journals</button>
+                <button class="button">Publications</button>
             </a>
             <!-- Link to the 'Posters' page (current page, so no change needed) -->
+            <a href="{% url 'posters' %}">
             <button class="button">Posters</button>
             </a>
             <!-- Link to the 'FAQ' page (define 'faq' view and URL if needed) -->

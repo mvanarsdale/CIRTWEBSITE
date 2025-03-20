@@ -3,14 +3,12 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Home Page</title>
     <link rel="stylesheet" type="text/css" href="{% static 'core/css/style.css' %}">
 </head>
 <body>
-<div class="container">
     <header>
         <div class="primary_header">
             <p class="thumbnail_align">&nbsp; </p>
@@ -23,6 +21,7 @@
                 <ul id="searchResults"></ul>
             </div>
         </div>
+    </header>
 
         <nav class="secondary_header">
             <div class="button-container">
@@ -32,7 +31,7 @@
                 </a>
                 <!-- Link to the Journals (index) page -->
                 <a href="{% url 'journals' %}">
-                    <button class="button">Journals</button>
+                    <button class="button">Publications</button>
                 </a>
                 <!-- Link to the Posters page -->
                 <a href="{% url 'posters' %}">
@@ -44,7 +43,6 @@
                 </a>
             </div>
         </nav>
-    </header>
 
     <section>
         <article class="left_article">
@@ -123,7 +121,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const loginForm = document.getElementById("loginForm");
     loginForm.addEventListener("submit", function (e) {
         e.preventDefault();
-        window.location.href = "EditorPortal_Author.html";
+        window.location.href = "{% url 'Dashboard' %}";
     });
     
     const loginBtn = document.getElementById('loginBtn');

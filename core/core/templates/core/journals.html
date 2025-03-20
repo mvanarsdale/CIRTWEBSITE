@@ -1,28 +1,27 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CIRT Publication</title>
-
-    {% load static %}
+{% load static %}
 
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Poster Gallery</title>
-    <link rel="stylesheet" href="{% static 'core/css/posterstyle.css' %}"> 
+    <title>Publications</title>
+    <link rel="stylesheet" href="{% static 'core/css/style.css' %}"> 
 </head>
 <body>
 
     <!-- Header -->
     <header>
-        <div class="logo">Journals</div>
-        <div class="header-right">
-            <input type="text" id="searchInput" placeholder="Search this site...">
-            <button id="loginBtn" class="login-button">Login</button>
+        <div class="primary_header">
+            <p class="thumbnail_align">&nbsp; </p>
+            <!-- Header with logo on the top-left Code from ChatGPT -->
+        <img src="{% static 'core/images/CIRT_LOGO.png' %}" alt="Logo" class="logo">
+            <h1 class="title">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;CRIMINOLOGY INSTITUTE FOR RESEARCH/TRAINING (CIRT)</h1>
+            <div class="search-container">
+                <input type="text" id="searchInput" placeholder="Search this site..." onkeyup="searchFunction()">
+                <button id="loginBtn" class="login-button">Login</button>
+                <ul id="searchResults"></ul>
+            </div>
         </div>
     </header>
 
@@ -35,9 +34,10 @@
             </a>
             <!-- Link to the Journals (index) page -->
             <a href="{% url 'journals' %}">
-                <button class="button">Journals</button>
+                <button class="button">Publications</button>
             </a>
             <!-- Link to the 'Posters' page (current page, so no change needed) -->
+            <a href="{% url 'posters' %}">
             <button class="button">Posters</button>
             </a>
             <!-- Link to the 'FAQ' page (define 'faq' view and URL if needed) -->
@@ -49,49 +49,11 @@
 
     <style>
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Lora', 'Times New Roman', serif;
             margin: 0;
             padding: 0;
             background-color: #f4f4f4;
         }
-
-        /* HEADER STYLING */
-        .header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background-color: #333;
-            color: white;
-            padding: 15px 20px;
-        }
-        .logo img {
-            height: 50px;
-        }
-        .title {
-            font-size: 24px;
-            font-weight: bold;
-        }
-        .search-box {
-            display: flex;
-            align-items: center;
-        }
-        .search-box input {
-            padding: 8px;
-            border: none;
-            border-radius: 4px;
-        }
-        .search-box button {
-            padding: 8px 12px;
-            background-color: #555;
-            color: white;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-        }
-        .search-box button:hover {
-            background-color: #777;
-        }
-        
         /* IMAGE SECTION STYLING */
         .image-container {
             display: flex;
@@ -118,7 +80,6 @@
             margin-left: auto;
             margin-right: auto;
         }
-
         /* ALL JOURNALS SECTION */
         .all-journals {
             width: 80%;
@@ -293,9 +254,9 @@
     <div class="publications">
         <h2>Recent Publications</h2>
         <div class="journal-gallery">
-            <img src="journal1.jpg" alt="Journal Page 1">
-            <img src="journal2.jpg" alt="Journal Page 2">
-            <img src="journal3.jpg" alt="Journal Page 3">
+            <img src="{% static 'core/images/criminoloy2.jpeg' %}" alt="Journal Page 1"
+            <img src="{% static 'core/images/criminoloy-program-hero.jpeg' %}" alt="Journal Page 2"
+            <img src="{% static 'core/images/criminoloy3.jpeg' %}" alt="Journal Page 3"
         </div>
     </div>
 
