@@ -1,0 +1,111 @@
+{% load static %}
+
+<!DOCTYPE html>
+
+<html lang="en">
+    <html lang="en">
+        <head>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <title>Frequently Asked Questions</title>
+            <link rel="stylesheet" href="{% static 'core/css/posterstyle.css' %}"> 
+        </head>
+        <body>
+        
+            <!-- Header -->
+            <header>
+                <div class="logo">Frequently Asked Questions</div>
+                <div class="header-right">
+                    <input type="text" id="searchInput" placeholder="Search this site...">
+                    <button id="loginBtn" class="login-button">Login</button>
+                </div>
+            </header>
+            <!-- Navigation -->
+            <nav class="secondary_header">
+                <div class="button-container">
+                    <!-- Link to the 'About' (index) page -->
+                    <a href="{% url 'index' %}">
+                        <button class="button">About</button>
+                    </a>
+                    <!-- Link to the Posters page -->
+                    <a href="{% url 'journals' %}">
+                        <button class="button">Publications</button>
+                    </a>
+                    <!-- Link to the Posters page -->
+                    <a href="{% url 'posters' %}">
+                        <button class="button">Posters</button>
+                    </a>
+                    <!-- Link to the 'FAQ' page (define 'faq' view and URL if needed) -->
+                    <a href="{% url 'FAQ' %}">
+                        <button class="button">FAQ</button>
+                    </a>
+                </div>
+            </nav>
+            </header>
+<body>
+    <div class="container">
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <a class="navbar-brand" href="home.html"><img src="CIRT FAQ/CIRTpfpFAQ.png" alt="" width="50" height="50" class="img-fluid rounded-circle"/></a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent1" aria-controls="navbarSupportedContent1" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent1">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item active">
+                        <a class="nav-title">CRIMINOLOGY INSTITUTE FOR RESEARCH/TRAINING (CIRT)</a>
+                    </li>
+                </ul>
+                <form class="form-inline my-2 my-lg-0">
+                    <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+                    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+                </form>
+            </div>
+        </nav>
+        <h1 class="faq-title">Frequently Asked Questions</h1>
+        <p class="description">
+            If you can't find what you are looking for here, you can check out our 
+            <a href="contact.html" class="contact-link">contact</a> page for more information.
+        </p>
+        <div class="faq-section">
+            <div class="sidebox">
+                <h2 class="aboutus">About us</h2>
+                <button onclick="location.href='about.html'">123456</button>
+                <button onclick="location.href='about.html'">123456</button>
+                <button onclick="location.href='about.html'">123456</button>
+                <button onclick="location.href='about.html'">123456</button>
+            </div>
+            <div class="faq-content">
+                <button class="dropdown-btn">Drop down.</button>
+                <div class="dropdown-content">
+                    <p>Sample FAQ content.</p>
+                </div>
+                <button class="dropdown-btn">Drop down.</button>
+                <div class="dropdown-content">
+                    <p>Sample FAQ content.</p>
+                </div>
+                <button class="dropdown-btn">Drop down.</button>
+                <div class="dropdown-content">
+                    <p>Sample FAQ content.</p>
+                </div>
+                <button class="dropdown-btn">Drop down.</button>
+                <div class="dropdown-content">
+                    <p>Sample FAQ content.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="js/jquery-3.4.1.min.js"></script>
+    <script src="js/popper.min.js"></script>
+    <script src="js/bootstrap-4.4.1.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            let dropdownButtons = document.querySelectorAll(".dropdown-btn");
+            dropdownButtons.forEach(button => {
+                button.addEventListener("click", function() {
+                    this.nextElementSibling.classList.toggle("show");
+                });
+            });
+        });
+    </script>
+</body>
+</html>
