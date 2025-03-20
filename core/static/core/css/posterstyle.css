@@ -5,7 +5,7 @@
 body {
     background-color: #FFFFFF;
     margin: 0;
-    font-family: Arial, sans-serif;
+    font-family: 'Lora', 'Times New Roman', serif;
 }
 
 /* Container */
@@ -16,49 +16,124 @@ body {
 }
 
 /* Header */
-header {
-    width: 100%;
-    height: 60px;
+.primary_header {
+    display: flex;
     background-color: #692022;
-    display: flex;
     align-items: center;
-    justify-content: space-between;
-    padding: 0 20px;
+    padding: 15px;
+    flex-wrap: wrap; /* Allows elements to move to the next line if needed */
 }
 
+.primary_header .title {
+    font-size: 2vw; /* Makes the title responsive */
+    min-width: 250px; /* Ensures the title doesn’t shrink too much */
+    flex-grow: 1; /* Pushes the title to fill available space */
+    text-align: left; /* Centers the title */
+    color: rgba(255,255,255,1);
+}
+
+/* code from ChatGPT */
+/* Style for the logo */
 .logo {
-    color: #fff;
-    font-weight: bold;
-    letter-spacing: 4px;
-    font-size: 22px;
+    width: 115px;  /* Adjust logo size */
+    height: auto;
 }
 
-.header-right {
+.thumbnail_align {
     display: flex;
     align-items: center;
+    flex-shrink: 0; /* Prevents the logo from shrinking */
+}
+
+.search-container {
+    flex-shrink: 0; /* Ensures the search bar doesn’t collapse */
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    margin-left: auto; /* Pushes search to the right */
+    gap: 10px;
+}
+
+/* Ensures title wraps properly on smaller screens */
+@media screen and (max-width: 768px) {
+    .primary_header {
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    .primary_header .title {
+        font-size: 24px; /* Reduce font size on smaller screens */
+        margin: 10px 0;
+        text-align: center;
+    }
+    
+    .search-container {
+        width: 100%;
+        justify-content: center; /* Centers search input on smaller screens */
+    }
 }
 
 #searchInput {
     padding: 8px;
     font-size: 16px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+    width: 100%; /* Let it fill the container */
+}
+
+#searchResults {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+#searchResults li {
+    padding: 5px;
+    border-bottom: 1px solid #ccc;
+}
+
+#searchResults li a {
+    color: #333;
+    text-decoration: none;
+}
+
+/* Button Styles */
+button {
+    background-color: #490404;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 5px;
+    margin: 5px;
+    transition: background-color 0.3s ease;
+    width: auto;
+    min-width: 100px;
+}
+
+button:hover {
+    background-color: #0056b3;
 }
 
 .login-button {
-    background-color: #4B0909;
-    color: white;
-    padding: 8px 16px;
-    cursor: pointer;
-    border: none;
-    margin-left: 20px;
+    background-color: #800000;
+    padding: 10px 15px; /* Match padding of other buttons */
+    font-size: 16px;
+    border-radius: 5px;
 }
 
 .login-button:hover {
-    background-color: #B7A28E;
+    background-color: #AB0000;
+}
+
+button:focus {
+    outline: none;
 }
 
 /* Navigation Bar */
 .secondary_header {
-    background-color: #B7A28E;
+    background-color: #000000;
     padding: 15px;
     display: flex;
     justify-content: center;
@@ -66,12 +141,12 @@ header {
 
 .button-container {
     display: flex;
-    justify-content: space-evenly;
-    width: 100%;
+    justify-content: space-evenly; /* Evenly space the buttons across the container */
+    width: 100%; /* Stretch the container to full width */
 }
 
 .button-container .button {
-    background-color: #B7A28E;
+    background-color: #5e0c0c;
     color: white;
     border: none;
     padding: 10px 20px;

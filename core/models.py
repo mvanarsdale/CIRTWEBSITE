@@ -9,7 +9,7 @@ from django.db.models.functions import Lower # Returns lower cased value of fiel
 # django import that generates an ID number for each paper
 import uuid
 
-# code from: https://developer.mozilla.org/en-US/docs/Learn_web_development/Extensions/Server-side/Django
+# code refrenced from: https://developer.mozilla.org/en-US/docs/Learn_web_development/Extensions/Server-side/Django
 class KeyWord(models.Model):
     """Model that represents the keywords class"""
     # using the char field 
@@ -39,7 +39,7 @@ class KeyWord(models.Model):
         ]
 
     
-# code from: https://developer.mozilla.org/en-US/docs/Learn_web_development/Extensions/Server-side/Django
+# code refrenced from: https://developer.mozilla.org/en-US/docs/Learn_web_development/Extensions/Server-side/Django
 class Paper(models.Model):
     """Model representing a paper"""
     title = models.CharField(max_length=200)
@@ -65,7 +65,6 @@ class Paper(models.Model):
     key_word = models.ManyToManyField(
         KeyWord, help_text="Select a key word for this paper"
     )
-    
     def __str__(self):
         """represents model object"""
         return self.title
@@ -105,5 +104,3 @@ class PaperProgress(models.Model):
         return f"{self.paper.title} - {self.get_status_display()}"
     
          
-
-
