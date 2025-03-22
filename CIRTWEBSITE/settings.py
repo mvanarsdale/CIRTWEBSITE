@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'core',
+    'users',
 ]
 
 MIDDLEWARE = [
@@ -56,7 +57,7 @@ ROOT_URLCONF = 'CIRTWEBSITE.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR / 'core/templates'], # added from CHATGPT
+        'DIRS': [os.path.join(BASE_DIR, 'templates')], # added from CHATGPT
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
