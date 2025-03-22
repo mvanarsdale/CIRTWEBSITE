@@ -1,0 +1,63 @@
+<!-- templates/about.html -->
+{% extends 'core/base.html' %}
+
+{% load static %} 
+
+{% block title %}FAQ{% endblock %}
+
+{% block page_css %}
+    <link rel="stylesheet" href="{% static 'core/css/faqstyle.css' %}">
+{% endblock %}
+
+{% block content %}
+              
+    <div class="container">
+        <h1 class="faq-title">Frequently Asked Questions</h1>
+        <p class="description">
+            If you can't find what you are looking for here, you can check out our 
+            <a href="contact.html" class="contact-link">contact</a> page for more information.
+        </p>
+        <div class="faq-section">
+            <div class="sidebox">
+                <h2 class="aboutus">About us</h2>
+                <button onclick="location.href='about.html'">123456</button>
+                <button onclick="location.href='about.html'">123456</button>
+                <button onclick="location.href='about.html'">123456</button>
+                <button onclick="location.href='about.html'">123456</button>
+            </div>
+            <div class="faq-content">
+                <button class="dropdown-btn">Drop down.</button>
+                <div class="dropdown-content">
+                    <p>Sample FAQ content.</p>
+                </div>
+                <button class="dropdown-btn">Drop down.</button>
+                <div class="dropdown-content">
+                    <p>Sample FAQ content.</p>
+                </div>
+                <button class="dropdown-btn">Drop down.</button>
+                <div class="dropdown-content">
+                    <p>Sample FAQ content.</p>
+                </div>
+                <button class="dropdown-btn">Drop down.</button>
+                <div class="dropdown-content">
+                    <p>Sample FAQ content.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endblock %}
+    <script src="js/jquery-3.4.1.min.js"></script>
+    <script src="js/popper.min.js"></script>
+    <script src="js/bootstrap-4.4.1.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            let dropdownButtons = document.querySelectorAll(".dropdown-btn");
+            dropdownButtons.forEach(button => {
+                button.addEventListener("click", function() {
+                    this.nextElementSibling.classList.toggle("show");
+                });
+            });
+        });
+    </script>
+</body>
+</html>
