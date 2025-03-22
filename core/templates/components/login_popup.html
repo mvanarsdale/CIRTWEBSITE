@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Popup</title>
+    <link rel="stylesheet" href="login_popup.css"> <!-- Link to your CSS file -->
+</head>
+<body>
+    <!-- Login Popup -->
+    <div id="popupOverlay" class="popup-overlay"></div>
+    <div id="loginPopup" class="popup">
+        <div class="popup-content">
+            <span class="close-btn">&times;</span>
+            <h2>Login</h2>
+            <form id="loginForm">
+                <label for="username">Username:</label>
+                <input type="text" id="username" required>
+                
+                <label for="password">Password:</label>
+                <input type="password" id="password" required>
+
+                <button type="submit">Log In</button>
+            </form>
+        </div>
+    </div>
+    
+    <!-- JavaScript -->
+    <script>
+        // Get the modal and overlay
+        const popupOverlay = document.getElementById("popupOverlay");
+        const loginPopup = document.getElementById("loginPopup");
+        const closeBtn = document.querySelector(".close-btn");
+
+        // Open the modal when the login button is clicked
+        function openPopup() {
+            popupOverlay.style.display = "block";
+            loginPopup.style.display = "block";
+        }
+
+        // Close the modal when the close button is clicked
+        closeBtn.addEventListener("click", function() {
+            popupOverlay.style.display = "none";
+            loginPopup.style.display = "none";
+        });
+
+        // Close the modal if the overlay is clicked
+        popupOverlay.addEventListener("click", function() {
+            popupOverlay.style.display = "none";
+            loginPopup.style.display = "none";
+        });
+    </script>
+</body>
+</html>

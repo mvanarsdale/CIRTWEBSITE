@@ -1,50 +1,15 @@
-{% load static %}
+<!-- templates/about.html -->
+{% extends 'core/base.html' %}
 
-<!DOCTYPE html>
-<html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Frequently Asked Questions</title>
-        <link rel="stylesheet" href="{% static 'core/css/posterstyle.css' %}"> 
-</head>
-<body>
-    <!-- Header -->
-    <header>
-        <div class="primary_header">
-            <p class="thumbnail_align">&nbsp; </p>
-            <!-- Header with logo on the top-left Code from ChatGPT -->
-        <img src="{% static 'core/images/CIRT_LOGO.png' %}" alt="Logo" class="logo">
-            <h1 class="title">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;CRIMINOLOGY INSTITUTE FOR RESEARCH/TRAINING (CIRT)</h1>
-            <div class="search-container">
-                <input type="text" id="searchInput" placeholder="Search this site..." onkeyup="searchFunction()">
-                <button id="loginBtn" class="login-button">Login</button>
-                <ul id="searchResults"></ul>
-            </div>
-        </div>
-    </header>
+{% load static %} 
 
-    <!-- Navigation -->
-    <nav class="secondary_header">
-        <div class="button-container">
-            <!-- Link to the 'About' (index) page -->
-            <a href="{% url 'index' %}">
-                <button class="button">About</button>
-            </a>
-            <!-- Link to the Journals (index) page -->
-            <a href="{% url 'journals' %}">
-                <button class="button">Publications</button>
-            </a>
-            <!-- Link to the 'Posters' page (current page, so no change needed) -->
-            <a href="{% url 'posters' %}">
-            <button class="button">Posters</button>
-            </a>
-            <!-- Link to the 'FAQ' page (define 'faq' view and URL if needed) -->
-            <a href="{% url 'FAQ' %}">
-                <button class="button">FAQ</button>
-            </a>
-        </div>
-    </nav>
+{% block title %}FAQ{% endblock %}
+
+{% block page_css %}
+    <link rel="stylesheet" href="{% static 'core/css/faqstyle.css' %}">
+{% endblock %}
+
+{% block content %}
               
     <div class="container">
         <h1 class="faq-title">Frequently Asked Questions</h1>
@@ -80,6 +45,7 @@
             </div>
         </div>
     </div>
+    {% endblock %}
     <script src="js/jquery-3.4.1.min.js"></script>
     <script src="js/popper.min.js"></script>
     <script src="js/bootstrap-4.4.1.js"></script>

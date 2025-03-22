@@ -1,49 +1,15 @@
-{% load static %}
+<!-- templates/about.html -->
+{% extends 'core/base.html' %}
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home Page</title>
-    <link rel="stylesheet" href="{% static 'core/css/style.css' %}">
-</head>
-<body>
-    <header>
-        <div class="primary_header">
-            <p class="thumbnail_align">&nbsp; </p>
-            <!-- Header with logo on the top-left Code from ChatGPT -->
-        <img src="{% static 'core/images/CIRT_LOGO.png' %}" alt="Logo" class="logo">
-            <h1 class="title">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;CRIMINOLOGY INSTITUTE FOR RESEARCH/TRAINING (CIRT)</h1>
-            <div class="search-container">
-                <input type="text" id="searchInput" placeholder="Search this site..." onkeyup="searchFunction()">
-                <button id="loginBtn" class="login-button">Login</button>
-                <ul id="searchResults"></ul>
-            </div>
-        </div>
-    </header>
+{% load static %} 
 
-        <nav class="secondary_header">
-            <div class="button-container">
-                <!-- Link to the About (index) page -->
-                <a href="{% url 'index' %}">
-                    <button class="button">About</button>
-                </a>
-                <!-- Link to the Journals (index) page -->
-                <a href="{% url 'journals' %}">
-                    <button class="button">Publications</button>
-                </a>
-                <!-- Link to the Posters page -->
-                <a href="{% url 'posters' %}">
-                    <button class="button">Posters</button>
-                </a>
-                <!-- Link to the 'FAQ' page (define 'faq' view and URL if needed) -->
-                <a href="{% url 'FAQ' %}">
-                    <button class="button">FAQ</button>
-                </a>
-            </div>
-        </nav>
+{% block title %}Home{% endblock %}
 
+{% block page_css %}
+    <link rel="stylesheet" href="{% static 'core/css/index.css' %}">
+{% endblock %}
+
+{% block content %}
     <section>
         <article class="left_article">
             <h3>What is CIRT?</h3>
@@ -90,29 +56,7 @@
             </div>
         </div>
     </section>
-
-    <footer class="secondary_header footer">
-        <div class="copyright"><strong>&nbsp;</strong></div>
-    </footer>
-</div>
-
-<!-- Login Popup -->
-<div id="popupOverlay" class="popup-overlay"></div>
-<div id="loginPopup" class="popup">
-    <div class="popup-content">
-        <span class="close-btn">&times;</span>
-        <h2>Login</h2>
-        <form id= "loginForm">
-            <label for="username">Username:</label>
-            <input type="text" id="username" required>
-            
-            <label for="password">Password:</label>
-            <input type="password" id="password" required>
-
-            <button type="submit">Log In</button>
-        </form>
-    </div>
-</div>
+{% endblock %}
 
 <!-- JavaScript -->
 <script>
@@ -121,7 +65,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const loginForm = document.getElementById("loginForm");
     loginForm.addEventListener("submit", function (e) {
         e.preventDefault();
-        window.location.href = "EditorPortal_Author.html";
+        window.location.href = "{% url 'Dashboard' %}";
     });
     
     const loginBtn = document.getElementById('loginBtn');
@@ -188,5 +132,4 @@ document.addEventListener("DOMContentLoaded", function () {
     document.getElementById("searchInput").addEventListener("keyup", searchFunction);
 });
 </script>
-</body>
-</html>
+
