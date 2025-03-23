@@ -1,0 +1,342 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Poster Submit</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'core/css/style.css' %}">
+</head>
+<body>
+    <header>
+        <div class="primary_header">
+            <p class="thumbnail_align">&nbsp; </p>
+            <!-- Header with logo on the top-left Code from ChatGPT -->
+        <img src="{% static 'core/images/CIRT_LOGO.png' %}" alt="Logo" class="logo">
+            <h1 class="title">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;CRIMINOLOGY INSTITUTE FOR RESEARCH/TRAINING (CIRT)</h1>
+            <div class="search-container">
+                <input type="text" id="searchInput" placeholder="Search this site..." onkeyup="searchFunction()">
+                <button id="loginBtn" class="login-button">Login</button>
+                <ul id="searchResults"></ul>
+            </div>
+        </div>
+    </header>
+
+        <nav class="secondary_header">
+            <div class="button-container">
+                <!-- Link to the About (index) page -->
+                <a href="{% url 'index' %}">
+                    <button class="button">About</button>
+                </a>
+                <!-- Link to the Journals (index) page -->
+                <a href="{% url 'journals' %}">
+                    <button class="button">Publications</button>
+                </a>
+                <!-- Link to the Posters page -->
+                <a href="{% url 'posters' %}">
+                    <button class="button">Posters</button>
+                </a>
+                <!-- Link to the 'FAQ' page (define 'faq' view and URL if needed) -->
+                <a href="{% url 'FAQ' %}">
+                    <button class="button">FAQ</button>
+                </a>
+            </div>
+        </nav>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Lora', 'Times New Roman', serif;
+            background: #f4f4f4;
+        }
+
+        /* Header Styles */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #000;
+            padding: 15px 30px;
+            color: white;
+            position: relative;
+        }
+        .logo img {
+            height: 50px;
+        }
+        .center-link {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        .center-link a {
+            text-decoration: none;
+            color: white;
+            font-size: 18px;
+            font-weight: bold;
+        }
+        .portal-button {
+            padding: 8px 15px;
+            background:rgb(188, 148, 56);
+            color: white;
+            border-radius: 5px;
+            text-decoration: none;
+        }
+
+        /* Main Content */
+        .container {
+            max-width: 1000px;
+            margin: 20px auto;
+        }
+        .author-info {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .sections {
+            display: flex;
+            gap: 20px;
+        }
+        .left-section, .right-section {
+            flex: 1;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            height: 500px;
+        }
+        .file-preview {
+            border: 2px dashed #ccc;
+            height: 350px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            margin-bottom: 10px;
+            background: #fafafa;
+        }
+        .file-preview iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+        .choose-btn, .fullscreen-btn {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            background: rgb(188, 148, 56);
+            color: white;
+            text-align: center;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+        .fullscreen-btn {
+            background: rgb(189, 181, 162);
+        }
+
+        /* Fullscreen Modal */
+        .fullscreen-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            justify-content: center;
+            align-items: center;
+        }
+        .fullscreen-content {
+            width: 90%;
+            height: 90%;
+            background: white;
+            position: relative;
+        }
+        .fullscreen-content iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+        .close-fullscreen {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: #dc3545;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        /* File Upload Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+            width: 300px;
+            text-align: center;
+        }
+        .modal-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 15px;
+        }
+        .modal-buttons button {
+            flex: 1;
+            margin: 0 5px;
+            padding: 10px;
+            border: none;
+            cursor: pointer;
+        }
+        .submit-btn {
+            background: rgb(188, 148, 56);
+            color: white;
+            border-radius: 5px;
+        }
+        .close-btn {
+            background: #dc3545;
+            color: white;
+            border-radius: 5px;
+        }
+        
+        .submit-section button {
+            width: 100%;
+            padding: 10px;
+            background: #0073e6; /* Matching the portal button */
+            color: white;
+            font-size: 16px;
+            font-weight: bold;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        .submit-section button:hover {
+            background: #005bb5; /* Darker shade on hover */
+        }
+
+    
+        /* Description and Comments Box */
+        .text-area {
+            width: 100%;
+            height: 150px; /* Fixed height */
+            resize: none; /* Prevent resizing */
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 14px;
+            margin-bottom: 20px; /* Add space below the description box */
+        }
+
+    </style>
+</head>
+<body>
+
+<!-- Header -->
+<header class="header">
+    <div class="logo">
+        
+    </div>
+    <div class="center-link">
+        <a href="#">Poster Submission</a>
+    </div>
+    <div>
+        <a href="{% url 'Portal' %}" class="portal-button">Portal</a>
+    </div>
+</header>
+
+<!-- Main Content -->
+<div class="container">
+    <div class="author-info">
+        <h2>Author's Name: <span id="authorName">John Doe</span></h2>
+        <p>Date: <span id="currentDate"></span></p>
+    </div>
+
+    <div class="sections">
+        <div class="left-section">
+            <h3>File Preview</h3>
+            <div class="file-preview" id="filePreview">No file selected</div>
+            <div class="choose-btn" onclick="openModal()">Choose File</div>
+            <div class="fullscreen-btn" onclick="openFullScreen()">Full Screen</div>
+        </div>
+
+        <div class="right-section">
+            <h3>Description Box</h3>
+            <textarea class="text-area" placeholder="Enter description here..."></textarea>
+            <div class="submit-section">
+            <a href="{% url 'Portal' %}" class="portal-button">Submit</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- File Upload Modal -->
+<div class="modal" id="fileModal">
+    <h3>Submit the poster in PDF format</h3>
+    <input type="file" id="fileInput" accept="application/pdf">
+    <div class="modal-buttons">
+        <button class="submit-btn" onclick="submitFile()">Submit</button>
+        <button class="close-btn" onclick="closeModal()">Close</button>
+    </div>
+</div>
+
+<!-- Fullscreen Modal -->
+<div class="fullscreen-modal" id="fullscreenModal">
+    <div class="fullscreen-content">
+        <button class="close-fullscreen" onclick="closeFullScreen()">Close</button>
+        <iframe id="fullscreenIframe"></iframe>
+    </div>
+</div>
+
+<script>
+    document.getElementById('currentDate').innerText = new Date().toLocaleDateString();
+
+    function openModal() {
+        document.getElementById('fileModal').style.display = 'block';
+    }
+
+    function closeModal() {
+        document.getElementById('fileModal').style.display = 'none';
+    }
+
+    function submitFile() {
+        const fileInput = document.getElementById('fileInput');
+        const file = fileInput.files[0];
+
+        if (file && file.type === "application/pdf") {
+            const fileURL = URL.createObjectURL(file);
+            document.getElementById('filePreview').innerHTML = `<iframe src="${fileURL}"></iframe>`;
+            document.getElementById('fullscreenIframe').src = fileURL;
+            closeModal();
+        } else {
+            alert("Please select a valid PDF file.");
+        }
+    }
+
+    function openFullScreen() {
+        const fileIframe = document.getElementById('fullscreenIframe').src;
+        if (fileIframe) {
+            document.getElementById('fullscreenModal').style.display = 'flex';
+        } else {
+            alert("No file selected.");
+        }
+    }
+
+    function closeFullScreen() {
+        document.getElementById('fullscreenModal').style.display = 'none';
+    }
+</script>
+
+</body>
+</html>
