@@ -1,5 +1,10 @@
 from django.shortcuts import render
+from django.shortcuts import redirect
 
+
+
+def old_to_new_redirect(request):
+    return render(request, 'core/index.html')
 
 def index(request):
     return render(request, 'core/index.html')
