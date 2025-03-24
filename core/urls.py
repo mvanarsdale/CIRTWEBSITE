@@ -10,6 +10,8 @@ urlpatterns = [
     path('Dashboard/', views.Dashboard, name='Dashboard'),
     path('Portal/', views.Portal, name='Portal'),
     path('PosterSubmit/', views.PosterSubmit, name='PosterSubmit'),
+    
+    path('ajax-login/', views.ajax_login, name='ajax_login'),
 ]
 
 
