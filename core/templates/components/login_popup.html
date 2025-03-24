@@ -10,21 +10,24 @@
     <link rel="stylesheet" href="{% static 'core/css/login_popup.css' %}"> <!-- Link to your CSS file -->
 </head>
 <body>
-    <!-- Login Popup -->
+    <!-- Login Popup (Code from ChatGPT: Updated to connect with backend)-->
     <div id="popupOverlay" class="popup-overlay"></div>
     <div id="loginPopup" class="popup">
         <div class="popup-content">
             <span class="close-btn">&times;</span>
             <h2>Login</h2>
-            <form id="loginForm">
+            <form id="loginForm" method="POST" action="{% url 'login' %}">
+                {% csrf_token %}
                 <label for="username">Username:</label>
-                <input type="text" id="username" required>
-                
+                <input type="text" id="username" name="username" required>
+
                 <label for="password">Password:</label>
-                <input type="password" id="password" required>
+                <input type="password" id="password" name="password" required>
 
                 <button type="submit">Log In</button>
             </form>
+            <!--added by chatGPT--> 
+            <div id="errorMessages"></div> <!-- To display error messages -->
         </div>
     </div>
     
@@ -34,6 +37,9 @@
         const popupOverlay = document.getElementById("popupOverlay");
         const loginPopup = document.getElementById("loginPopup");
         const closeBtn = document.querySelector(".close-btn");
+        const form = document.getElementById('loginForm');
+        // added by chatGPT
+        const errorMessagesDiv = document.getElementById('errorMessages');
 
         // Open the modal when the login button is clicked
         function openPopup() {
@@ -51,6 +57,47 @@
         popupOverlay.addEventListener("click", function() {
             popupOverlay.style.display = "none";
             loginPopup.style.display = "none";
+        });
+
+        // Handle form submission with AJAX
+        form.addEventListener('submit', function(event) {
+            event.preventDefault(); // Prevent the default form submission
+
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+
+            // Clear previous error messages
+            errorMessagesDiv.innerHTML = '';
+
+            // Code from ChatGPT Send an AJAX request to log the user in
+            fetch('{% url "ajax_login" %}', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                    'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value,
+                },
+                body: new URLSearchParams({
+                    'username': username,
+                    'password': password
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    
+                    // add logic to change login to say "Hello User" here
+
+                    // redirect to the dashboard
+                    window.location.href = data.redirect_url;  // Redirect on success
+                
+                } else {
+                    errorMessagesDiv.innerHTML = `<p style="color: red;">${data.error_message}</p>`;
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                errorMessagesDiv.innerHTML = '<p style="color: red;">Something went wrong. Please try again later.</p>';
+            });
         });
     </script>
 </body>
