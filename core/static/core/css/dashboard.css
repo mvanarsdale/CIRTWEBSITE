@@ -1,0 +1,105 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Lora', 'Times New Roman', serif;
+}
+
+.container {
+    display: flex;
+    height: 100vh;
+}
+
+/* Sidebar */
+.sidebar {
+    width: 125px;
+    height: 135vh;
+    background: #a0a0a0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 100px; /* Adjusted for top bar overlap */
+}
+
+.sidebar a {
+    width: 85%;
+    padding: 10px;
+    margin: 5px;
+    margin-top: 10px;
+    background: #888;
+    color: white;
+    border: none;
+    cursor: pointer;
+    text-align: left;
+    text-decoration: none;
+    display: block;
+}
+
+.sidebar a:hover {
+    background: #777;
+}
+
+/* Main Content */
+.main-content {
+    flex: 1;
+    background: #ffffff;
+    display: flex;
+    flex-direction: column;
+    margin-left: 125px; /* Ensures content starts after sidebar */
+}
+/* Apps Section */
+.apps-section {
+    padding: 100px 20px 20px; /* Adjusted padding to avoid top bar overlap */
+}
+
+h2 {
+    margin-bottom: 10px;
+    margin-left: -120px;
+}
+
+.apps-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+    max-width: 800px;
+    margin-left: -50px;
+    margin-top: 20px;
+}
+
+/* Each app with description */
+.app-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.app-box {
+    width: 200px;
+    height: 225px;
+    background: #8b5d5d;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-decoration: none;
+    color: black;
+    font-size: 14px;
+    margin: 40px;
+}
+
+.app-box:hover {
+    background: #7a4a4a;
+}
+
+/* Description below app box */
+.descript {
+    text-align: center;
+    margin-top: 5px;
+    font-weight: bold;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .apps-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
