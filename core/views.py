@@ -1,6 +1,9 @@
 from django.shortcuts import render
-from django.shortcuts import redirect
 from django.urls import reverse
+
+
+from django.contrib.auth import authenticate, login
+from django.http import JsonResponse
 
 
 
@@ -29,11 +32,9 @@ def Portal(request):
 def PosterSubmit(request):
     return render(request, 'core/PosterSubmit.html')
 
-from django.contrib.auth import authenticate, login
-from django.http import JsonResponse
-from django.shortcuts import redirect
 
-# move to users later
+# move to users later 
+# Code from ChatGPT
 def ajax_login(request):
     if request.method == 'POST':
         username = request.POST.get('username')
@@ -41,15 +42,18 @@ def ajax_login(request):
 
         user = authenticate(request, username=username, password=password)
         
+        # check for user in database
         if user is not None:
             login(request, user)
             return JsonResponse({
                 'success': True,
                 # to change the login button when signed in
                 'username': user.username,
-                'redirect_url': reverse('Dashboard')  # Redirect to the Dashboard URL
+                # Redirect to the Dashboard URL
+                'redirect_url': reverse('Dashboard')  
             })
         else:
+            # user doesn't exist or a typo happened 
             return JsonResponse({
                 'success': False,
                 'error_message': 'Invalid credentials'

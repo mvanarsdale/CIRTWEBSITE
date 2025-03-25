@@ -132,4 +132,4 @@ STATICFILES_DIRS = [
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # instead of the default update to use custom
-#AUTH_USER_MODEL = 'users.User'
+#AUTH_USER_MODEL = 'core.User'
