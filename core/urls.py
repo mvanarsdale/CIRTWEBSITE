@@ -12,6 +12,8 @@ urlpatterns = [
     path('PosterSubmit/', views.PosterSubmit, name='PosterSubmit'),
     
     path('ajax-login/', views.ajax_login, name='ajax_login'),
+    
+    path('signup/', views.signup, name='signup'),
 ]
 
 

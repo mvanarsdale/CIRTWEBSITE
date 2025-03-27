@@ -21,6 +21,8 @@
                 <input type="text" id="searchInput" placeholder="Search this site..." onkeyup="searchFunction()">
                  <!-- Login Popup Trigger -->
                 <button id="loginBtn" class="login-button" onclick="openPopup()">Login</button>
+                <!-- Sign up Popup Trigger -->
+                <button id="signUpBtn" class="popup-content" onclick="openSignUpPopup()">Register</button>
                 <ul id="searchResults"></ul>
             </div>
         </div>
@@ -69,6 +71,7 @@
 
 <!-- Include Login Popup -->
 {% include 'components/login_popup.html' %}
+{% include 'components/signup_popup.html' %}
 
 </body>
 </html>

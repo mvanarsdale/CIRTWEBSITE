@@ -32,7 +32,13 @@ def Portal(request):
 def PosterSubmit(request):
     return render(request, 'core/PosterSubmit.html')
 
+def signup(request):
+    if request.method == 'POST':
+        username = request.POST.get('username')
+        password = request.POST.get('password')
 
+        
+    
 # move to users later 
 # Code from ChatGPT
 def ajax_login(request):
