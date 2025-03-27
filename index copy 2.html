@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Simple Theme</title>
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+</head>
+<body>
+<div class="container">
+    <header>
+        <div class="primary_header">
+            <h1 class="title">CRIMINOLOGY INSTITUTE FOR RESEARCH/TRAINING (CIRT)</h1>
+            <div class="search-container">
+                <input type="text" id="searchInput" placeholder="Search this site..." onkeyup="searchFunction()">
+                <button id="loginBtn" class="login-button">Login</button>
+                <button id="signUpBtn" class="signup-button">Sign Up</button>
+                <ul id="searchResults"></ul>
+            </div>
+        </div>
+    </header>
+
+    <!-- Login Popup -->
+    <div id="popupOverlay" class="popup-overlay"></div>
+    <div id="loginPopup" class="popup">
+        <div class="popup-content">
+            <span class="close-btn">&times;</span>
+            <h2>Login</h2>
+            <form id="loginForm">
+                <label for="username">Username:</label>
+                <input type="text" id="username" required>
+                
+                <label for="password">Password:</label>
+                <input type="password" id="password" required>
+
+                <button type="submit">Log In</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Sign Up Popup -->
+    <div id="popupOverlaySignup" class="popup-overlay"></div>
+    <div id="signupPopup" class="popup">
+        <div class="popup-content">
+            <span class="close-btn">&times;</span>
+            <h2>Sign Up</h2>
+            <form id="signupForm">
+                <input type="text" placeholder="First and Last Name" required>
+                <input type="text" placeholder="UT Email" required>
+                <input type="text" placeholder="Create Username" required>
+                <input type="password" placeholder="Create Password" required>
+                
+                <select required>
+                    <option value="" disabled selected>Select Account Type</option>
+                    <option value="Author">Author</option>
+                    <option value="Editor">Editor</option>
+                    <option value="Reviewer">Reviewer</option>
+                </select>
+                <button type="submit">Create Account</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- JavaScript -->
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            // Login popup elements
+            const loginBtn = document.getElementById('loginBtn');
+            const loginPopup = document.getElementById('loginPopup');
+            const popupOverlay = document.getElementById('popupOverlay');
+            const loginForm = document.getElementById("loginForm");
+
+            // Sign-up popup elements
+            const signUpBtn = document.getElementById('signUpBtn');
+            const signUpPopup = document.getElementById('signupPopup');
+            const popupOverlaySignup = document.getElementById('popupOverlaySignup');
+
+            const closeBtns = document.querySelectorAll('.close-btn');
+
+            // Show login pop-up
+            loginBtn.addEventListener('click', () => {
+                loginPopup.style.display = 'block';
+                popupOverlay.style.display = 'block';
+            });
+
+            // Show sign-up pop-up
+            signUpBtn.addEventListener('click', () => {
+                signUpPopup.style.display = 'block';
+                popupOverlaySignup.style.display = 'block';
+            });
+
+            // Close pop-ups when clicking the close button or overlay
+            closeBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    loginPopup.style.display = 'none';
+                    popupOverlay.style.display = 'none';
+                    signUpPopup.style.display = 'none';
+                    popupOverlaySignup.style.display = 'none';
+                });
+            });
+
+            popupOverlay.addEventListener('click', () => {
+                loginPopup.style.display = 'none';
+                popupOverlay.style.display = 'none';
+            });
+
+            popupOverlaySignup.addEventListener('click', () => {
+                signUpPopup.style.display = 'none';
+                popupOverlaySignup.style.display = 'none';
+            });
+
+            // Login form submission
+            loginForm.addEventListener("submit", function (e) {
+                e.preventDefault();
+                window.location.href = "EditorPortal_Author.html";
+            });
+        });
+    </script>
+    </div>
+</body>
+</html>
+
