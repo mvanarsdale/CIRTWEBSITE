@@ -20,12 +20,12 @@
             <h2>Sign Up</h2>
             <form id="loginForm" method="POST" action="{% url 'signup' %}">
             {% csrf_token %}
-                <input type="text" placeholder="First and Last Name" required>
-                <input type="text" placeholder="UT Email" required>
-                <input type="text" placeholder="Create Username" required>
-                <input type="password" placeholder="Create Password" required>
+                <input type="text" name="name" placeholder="First and Last Name" required>
+                <input type="text" name="email" placeholder="UT Email" required>
+                <input type="text" name="username" placeholder="Create Username" required>
+                <input type="password" name="password"placeholder="Create Password" required>
                 
-                <select required>
+                <select name="role" required>
                     <option value="" disabled selected>Select Account Type</option>
                     <option value="Author">Author</option>
                     <option value="Editor">Editor</option>

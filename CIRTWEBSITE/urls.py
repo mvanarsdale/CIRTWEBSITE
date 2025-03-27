@@ -20,6 +20,9 @@ from django.views.generic import RedirectView
 # django authentic view
 from django.contrib.auth import views as auth_views
 
+from core import views as user_view
+from django.contrib.auth import views as auth
+
 urlpatterns = [
 
     # Redirect from root to the core app's homepage
@@ -33,5 +36,7 @@ urlpatterns = [
     path('logout/', auth_views.LogoutView.as_view(), name='logout'),
     path('password_change/', auth_views.PasswordChangeView.as_view(), name='password_change'),
     path('password_change/done/', auth_views.PasswordChangeDoneView.as_view(), name='password_change_done'),
+    
+    #path('register/', user_view.signup, name ='register'),
     
 ]

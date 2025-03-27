@@ -14,11 +14,24 @@ from django.db.models.functions import Lower
 #from core import admin
 
 # abstract user automattically includes nessary user fields 
-class User(models.Model):
+class CustomUser(AbstractUser):
     # Your custom user model fields
     username = models.CharField(max_length=150, unique=True)
     name = models.CharField(max_length=150, blank=True)
     email = models.EmailField(blank=True)
+    password = models.CharField(max_length=150, blank=True)
+    
+    
+    # roles
+    ROLE_CHOICES = [
+        ('user', 'User'),
+        ('author', 'Author'),
+        ('viewer', 'Reviewer'),
+        ('editor', 'Editor'),
+    ]
+    # Role field with a dropdown
+    role = models.CharField(max_length=20, choices=ROLE_CHOICES, default='user')
+    
     groups = models.ManyToManyField(
         'auth.Group', 
         blank=True, 
@@ -38,7 +51,7 @@ class Role(models.Model):
  
 
 class Author(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='author_profile', default=1)
+    user = models.OneToOneField(CustomUser, on_delete=models.CASCADE, related_name='author_profile', default=1)
     
 
     class Meta:
@@ -140,6 +153,19 @@ class Poster(models.Model):
     # add image field for the poster PDF
     
     submitted_date = models.DateField(null=True, blank=True)
+    
+# code from ChatGPT
+class Profile(models.Model):
+    ROLE_CHOICES = [
+        ('author', 'Author'),
+        ('viewer', 'Reviewer'),
+        ('editor', 'Editor'),
+    ]
+        
+    user = models.OneToOneField(CustomUser, on_delete=models.CASCADE)
+    role = models.CharField(max_length=20, choices=ROLE_CHOICES)
+   
+    
     
     
 
