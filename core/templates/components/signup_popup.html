@@ -1,0 +1,73 @@
+ <!-- Mariam's Sign Up Popup -->
+
+{% load static %} 
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign up</title>
+    <link rel="stylesheet" href="{% static 'core/css/style.css' %}"> 
+</head>
+<body>
+    <!-- Sign Up Popup -->
+    <div id="popupOverlaySignup" class="popup-overlay"></div>
+    <div id="signupPopup" class="popup">
+        <div class="popup-content">
+            <span class="close-btn">&times;</span>
+            <h2>Sign Up</h2>
+            <form id="loginForm" method="POST" action="{% url 'signup' %}">
+            {% csrf_token %}
+                <input type="text" name="name" placeholder="First and Last Name" required>
+                <input type="text" name="email" placeholder="UT Email" required>
+                <input type="text" name="username" placeholder="Create Username" required>
+                <input type="password" name="password"placeholder="Create Password" required>
+                
+                <select name="role" required>
+                    <option value="" disabled selected>Select Account Type</option>
+                    <option value="Author">Author</option>
+                    <option value="Editor">Editor</option>
+                    <option value="Reviewer">Reviewer</option>
+                </select>
+                <button type="submit">Create Account</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- JavaScript -->
+    <script>
+        // Sign-up popup elements
+        const signUpBtn = document.getElementById('signUpBtn');
+        const signUpPopup = document.getElementById('signupPopup');
+        const popupOverlaySignup = document.getElementById('popupOverlaySignup');
+
+        const closeBtns = document.querySelectorAll('.close-btn');
+
+        function openSignUpPopup() {
+            popupOverlay.style.display = "block";
+            signUpPopup.style.display = "block";
+        }
+
+        // Show sign-up pop-up
+        signUpBtn.addEventListener('click', () => {
+            signUpPopup.style.display = 'block';
+            popupOverlaySignup.style.display = 'block';
+        });
+
+        // Close pop-ups when clicking the close button or overlay
+        closeBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                signUpPopup.style.display = 'none';
+                popupOverlaySignup.style.display = 'none';
+            });
+        });
+
+        popupOverlaySignup.addEventListener('click', () => {
+            signUpPopup.style.display = 'none';
+            popupOverlaySignup.style.display = 'none';
+        });
+    </script>
+</body>
+</html>

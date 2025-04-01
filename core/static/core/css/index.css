@@ -9,23 +9,6 @@ body {
     background-color: #f4f4f4;
 }
 
-/* Header Layout (Primary) */
-.primary_header {
-    display: flex;
-    background-color: #692022;
-    align-items: center;
-    padding: 15px;
-    flex-wrap: wrap;
-}
-
-.primary_header .title {
-    font-size: 2vw;
-    min-width: 250px;
-    flex-grow: 1;
-    text-align: left;
-    color: rgba(255,255,255,1);
-}
-
 /* Logo Styles */
 .logo {
     width: 115px;
@@ -62,7 +45,7 @@ button {
 }
 
 button:hover {
-    background-color: #0056b3;
+    background-color: #440415;
 }
 
 /* News Section Styles */

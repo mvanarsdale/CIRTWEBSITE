@@ -60,39 +60,6 @@
 
 <!-- JavaScript -->
 <script>
-document.addEventListener("DOMContentLoaded", function () {
-    // Handle the login popup
-    const loginForm = document.getElementById("loginForm");
-    loginForm.addEventListener("submit", function (e) {
-        e.preventDefault();
-        window.location.href = "{% url 'Dashboard' %}";
-    });
-    
-    const loginBtn = document.getElementById('loginBtn');
-    const loginPopup = document.getElementById('loginPopup');
-    const popupOverlay = document.getElementById('popupOverlay');
-    const closeBtn = document.querySelector('.close-btn');
-
-    // Show pop-up when login button is clicked
-    loginBtn.addEventListener('click', () => {
-        loginPopup.style.display = 'block';
-        popupOverlay.style.display = 'block';
-    });
-
-    // Hide pop-up when close button or overlay is clicked
-    closeBtn.addEventListener('click', () => {
-        loginPopup.style.display = 'none';
-        popupOverlay.style.display = 'none';
-    });
-
-    popupOverlay.addEventListener('click', () => {
-        loginPopup.style.display = 'none';
-        popupOverlay.style.display = 'none';
-    });
-
-    // Search functionality
-    let searchData = [];
-
     // Load search data from JSON
     fetch("search-data.json")
         .then(response => response.json())

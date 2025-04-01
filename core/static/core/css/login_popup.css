@@ -92,3 +92,9 @@
 .popup-content button:focus {
     outline: none;
 }
+
+/* Style for the logged-in state From ChatGPT */
+.login-button.logged-in {
+    background-color: #4CAF50; /* Green background for logged-in state */
+    cursor: default; /* Make it non-clickable */
+}

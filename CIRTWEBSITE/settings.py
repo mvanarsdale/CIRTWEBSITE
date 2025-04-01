@@ -11,7 +11,6 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
 from pathlib import Path
-import os 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -39,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'core',
+
 ]
 
 MIDDLEWARE = [
@@ -107,7 +107,8 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+# floridas time zone
+TIME_ZONE = 'America/New_York'
 
 USE_I18N = True
 
@@ -121,7 +122,7 @@ STATIC_URL = '/static/'
 
 # code from ChatGPT - djangos pointer to css files and images 
 STATICFILES_DIRS = [
-    BASE_DIR / "static",  # Add this line if it's not already there
+    BASE_DIR / "core"/ "static",  # Add this line if it's not already there
 ]
 
 
@@ -129,3 +130,6 @@ STATICFILES_DIRS = [
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# instead of the default update to use custom
+AUTH_USER_MODEL = 'core.CustomUser'
