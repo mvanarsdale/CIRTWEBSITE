@@ -5,16 +5,15 @@ from django.urls import reverse
 from django.contrib.auth import authenticate, login
 from django.http import JsonResponse
 
-from django.contrib.auth.models import User
+# for messages with log in success / failure
 from django.contrib import messages
 
-from core.models import CustomUser
+from .models import CustomUser
 
+from django.contrib.auth.decorators import login_required, user_passes_test
+from django.shortcuts import render
 
-
-
-
-
+# an attempt to fix my redirect problem 
 def old_to_new_redirect(request):
     return render(request, 'core/index.html')
 
@@ -31,7 +30,7 @@ def journals(request):
     return render(request, 'core/journals.html')
 
 def Dashboard(request):
-    return render(request, 'core/Dashboard.html')
+    return render(request, 'core/dashboard.html')
 
 def Portal(request):
     return render(request, 'core/Portal.html')
@@ -65,7 +64,6 @@ def signup(request):
         return redirect(ajax_login(request))
     
     return render(request, 'components/signup_popup.html')
-        
 
 # move to users later 
 # Code from ChatGPT
@@ -92,3 +90,14 @@ def ajax_login(request):
                 'success': False,
                 'error_message': 'Invalid credentials'
             })
+       
+# check to see if the user is author
+def is_author(user):
+    return user.groups.filter(name="Author").exists()
+  
+# requires user to be logged in and have correct permissions 
+@login_required
+@user_passes_test(is_author)
+# code from chatGPT
+def author_portal(request):
+    return render(request, 'author_portal.html')

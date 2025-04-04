@@ -1,4 +1,231 @@
-<!-- templates/about.html -->
+    <style>
+         * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family:  'Lora', 'Times New Roman', serif;
+        }
+		.primary_header {
+    display: flex;
+    background-color: #692022; /* Dark background for the header */
+    align-items: center;
+    padding: 20px;
+    flex-wrap: wrap; /* Allows wrapping of items if there's not enough space */
+	
+}
+
+.primary_header .title {
+    font-size: 2vw; /* Responsive font size based on viewport width */
+	font-weight: bold;
+    min-width: 250px; /* Prevents shrinking too much */
+    flex-grow: 1; /* Makes the title flexible */
+    text-align: left;
+    color: rgba(255,255,255,1); /* White color for the title */
+}
+
+/* Navigation Bar */
+.secondary_header {
+    background-color: #000000;
+    padding: 15px;
+    display: flex;
+    justify-content: center;
+	
+}
+
+.button-container {
+    display: flex;
+    justify-content: space-evenly; /* Evenly space the buttons across the container */
+    width: 100%; /* Stretch the container to full width */
+}
+
+.button-container .button {
+    background-color: #000000;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-size: 20px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.button-container .button:hover {
+    background-color: #4B0909;
+}
+
+
+/* Logo Styling */
+.logo {
+    width: 80px;  /* Adjust logo size */
+    height: auto;
+}
+
+.thumbnail_align {
+    display: flex;
+    align-items: center;
+    flex-shrink: 0; /* Prevents logo from shrinking */
+}
+
+/* Search Bar Container */
+.search-container {
+    flex-shrink: 0; /* Prevents search bar from collapsing */
+    display: flex;
+    align-items: center;
+    justify-content: flex-end; /* Pushes search bar to the right */
+    margin-left: auto; /* Pushes search container to the right */
+    gap: 10px;
+}
+
+/* Search Bar Input Field */
+#searchInput {
+    padding: 8px;
+    font-size: 16px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+    width: 100%; /* Makes the input field fill available space */
+}
+
+/* Button Styles */
+button {
+    background-color: #490404; /* Button color */
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 5px;
+    margin: 5px;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: #460303; /* Hover effect */
+}
+        .container {
+            width: 100%;
+			height: 100%;
+            max-width: 2000px;
+            margin-left: 0px;
+			position: absolute;
+            padding: 0px;
+        }
+        .faq-title {
+            font-size: 50px;
+            font-weight: bold;
+            text-align: center;
+            margin-top: 20px;
+        }
+        .contact-link {
+            color: black;
+            font-weight: bold;
+            text-decoration: underline;
+        }
+		.contact-link:hover{
+			 color: #692022;
+		}
+        .description {
+            text-align: center;
+            font-size: 18px;
+            margin-bottom: 20px;
+        }
+        .faq-section {
+            display: flex;
+            flex-wrap: wrap;
+            width: 100%;
+        }
+        .sidebox {
+            background: #692022;
+            padding: 20px;
+            width: 30%;
+            min-width: 300px;
+			margin-left: 25px;
+			height: 75vh;
+			margin-top: 45px;
+			border-radius: 5px;
+        }
+        .sidebox button {
+            display: block;
+            width: 100%;
+			height: 70px;
+            margin: 5px 0;
+            padding: 10px;
+			margin-bottom: 45px;
+			margin-top: 40px;
+            background: #ccc;
+            border: 2px solid black;
+            text-align: left;
+            cursor: pointer;
+        }
+        .faq-content {
+            flex-grow: 1;
+            padding-left: 15px;
+            min-width: 300px;
+			padding-right: 15px;
+			padding-top: 25px
+        }
+        .dropdown-btn {
+            width: 100%;
+            background: #692022;
+            padding: 13px;
+            margin-bottom: 60px;
+			margin-top: 20px;
+            cursor: pointer;
+            border: none;
+            text-align: left;
+            position: relative;
+        }
+        .dropdown-btn::after {
+            content: '\25BC'; /* Down arrow */
+            position: absolute;
+            right: 15px;
+        }
+        .dropdown-content {
+            display: none;
+            background: #E2E2E2;
+            padding: 10px;
+            border-left: 5px solid #692022;
+            margin-bottom: 15px;
+			margin-top: -45px;
+        }
+        .show {
+            display: block;
+        }
+        .aboutus {
+            text-align: center;
+            margin-bottom: 10px;
+			margin-top: 15px;
+            font-size: 35px;
+            font-weight: bold;
+			color: white;
+        }
+		.abt_us_btn{
+			color: #000000;
+		}
+		
+		/* Responsive */
+        @media (max-width: 768px) {
+			.primary_header {
+        flex-direction: column; /* Stacks header items vertically on smaller screens */
+        text-align: center; /* Centers the text */
+    }
+
+    .primary_header .title {
+        font-size: 24px; /* Adjusts title size for small screens */
+        margin: 10px 0;
+        text-align: center;
+    }
+
+    .search-container {
+        width: 100%; /* Ensures search bar takes full width */
+        justify-content: center; /* Centers the search bar */
+    }
+
+    #searchInput {
+        width: 80%; /* Makes the search bar smaller on mobile */
+    }
+        }
+  
+    </style>
+    <!-- templates/about.html -->
 {% extends 'core/base.html' %}
 
 {% load static %} 
@@ -6,12 +233,10 @@
 {% block title %}FAQ{% endblock %}
 
 {% block page_css %}
-    <link rel="stylesheet" href="{% static 'core/css/faqstyle.css' %}">
+   
 {% endblock %}
 
-{% block content %}
-              
-    <div class="container">
+{% block content %} 
         <h1 class="faq-title">Frequently Asked Questions</h1>
         <p class="description">
             If you can't find what you are looking for here, you can check out our 
@@ -20,10 +245,10 @@
         <div class="faq-section">
             <div class="sidebox">
                 <h2 class="aboutus">About us</h2>
-                <button onclick="location.href='about.html'">123456</button>
-                <button onclick="location.href='about.html'">123456</button>
-                <button onclick="location.href='about.html'">123456</button>
-                <button onclick="location.href='about.html'">123456</button>
+                <button class="abt_us_btn" onclick="location.href='about.html'">123456</button>
+                <button class="abt_us_btn" onclick="location.href='about.html'">123456</button>
+				<button class="abt_us_btn" onclick="location.href='about.html'">123456</button>
+				<button class="abt_us_btn" onclick="location.href='about.html'">123456</button>
             </div>
             <div class="faq-content">
                 <button class="dropdown-btn">Drop down.</button>
@@ -46,9 +271,8 @@
         </div>
     </div>
     {% endblock %}
-    <script src="js/jquery-3.4.1.min.js"></script>
-    <script src="js/popper.min.js"></script>
-    <script src="js/bootstrap-4.4.1.js"></script>
+	
+    <!-- JavaScript for the Dropdown Buttons// -->
     <script>
         document.addEventListener("DOMContentLoaded", function() {
             let dropdownButtons = document.querySelectorAll(".dropdown-btn");

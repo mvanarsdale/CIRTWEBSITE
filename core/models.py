@@ -5,10 +5,13 @@ from django.db import models
 # Used in get_absolute_url() to get URL for specified ID
 from django.urls import reverse 
 
+# allows the abillity to change django default user
 from django.contrib.auth.models import AbstractUser
 
 from django.db.models import UniqueConstraint
 from django.db.models.functions import Lower
+
+from django.contrib.auth.models import Group, Permission
 
 
 #from core import admin
@@ -16,38 +19,65 @@ from django.db.models.functions import Lower
 # abstract user automattically includes nessary user fields 
 class CustomUser(AbstractUser):
     # Your custom user model fields
-    username = models.CharField(max_length=150, unique=True)
+    #username = models.CharField(max_length=150, unique=True)
     name = models.CharField(max_length=150, blank=True)
-    email = models.EmailField(blank=True)
-    password = models.CharField(max_length=150, blank=True)
-    
+    #email = models.EmailField(blank=True)
+    #password = models.CharField(max_length=150, blank=True)
     
     # roles
     ROLE_CHOICES = [
-        ('user', 'User'),
+        ('admin', 'User'),
         ('author', 'Author'),
-        ('viewer', 'Reviewer'),
+        ('reviewer', 'Reviewer'),
         ('editor', 'Editor'),
+        ('basic', 'Basic'),
     ]
-    # Role field with a dropdown
-    role = models.CharField(max_length=20, choices=ROLE_CHOICES, default='user')
     
+    # Role field with a dropdown
+    role = models.CharField(max_length=20, choices=ROLE_CHOICES, default='basic')
+
     groups = models.ManyToManyField(
-        'auth.Group', 
-        blank=True, 
-        related_name='core_user_set'  # Specify a unique related_name
+        'auth.Group',
+        blank=True,
+        related_name='core_user_set'
     )
     user_permissions = models.ManyToManyField(
-        'auth.Permission', 
-        blank=True, 
-        related_name='core_user_permissions'  # Specify a unique related_name
+        'auth.Permission',
+        blank=True,
+        related_name='core_user_permissions'
     )
+    
+    # code from ChatGPT - assigns user to desired group
+    def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)
 
-class Role(models.Model):
-    name = models.CharField(max_length=20, unique=True)
+        # assign user to corrrect django group based off choosen role 
+        if self.role:
+            group = Group.objects.get_or_create(name=self.role)
+            # clear user of basic group
+            self.groups.clear()
+            self.groups.add(group)
 
-    def __str__(self):
-        return self.name
+            # Assign group permissions
+            if self.role == 'author':
+                perms = ['author_button', 'submit_PDF']
+            elif self.role == 'editor':
+                perms = ['editor_button']
+            elif self.role == 'reviewer':
+                perms = ['reviewer_button']
+            elif self.role == 'admin':
+                perms = ['admin_button']
+            else:
+                perms = []
+
+            # Assign the permissions to the group
+            for perm_codename in perms:
+                try:
+                    permission = Permission.objects.get(codename=perm_codename)
+                    group.permissions.add(permission)
+                except Permission.DoesNotExist:
+                    pass  # Ignore if the permission doesn't exist
+
  
 
 class Author(models.Model):
@@ -65,9 +95,45 @@ class Author(models.Model):
         return reverse('author-detail', args=[str(self.id)])
 
     def __str__(self):
-        return f"Author Profile: {self.user.username}"
+        return f"{self.user.name}"
+    
+# model for reviewers
+class Reviewer(models.Model):
+    user = models.OneToOneField(CustomUser, on_delete=models.CASCADE, related_name='reviewer_profile', default=1)
+    
+    class Meta:
+        permissions = [ 
+                       ("can_reviewF", "Can review"),
+                       ("can_communicate", "Can communicate")
+                       ]
 
+    def get_absolute_url(self):
+        """Returns the URL to access a particular author instance."""
+        return reverse('reviewer-detail', args=[str(self.id)])
 
+    def __str__(self):
+        return f"{self.user.name}"
+
+# model for reviewers
+class Editor(models.Model):
+    user = models.OneToOneField(CustomUser, on_delete=models.CASCADE, related_name='editor_profile', default=1)
+    
+    class Meta:
+        permissions = [ 
+                       ("can_edit", "Can edit"),
+                       ("can_communicate", "Can communicate")
+                       ]
+
+    def get_absolute_url(self):
+        """Returns the URL to access a particular author instance."""
+        return reverse('editor-detail', args=[str(self.id)])
+
+    def __str__(self):
+        return f"{self.user.name}"
+
+# code from ChatGPT
+class Profile(models.Model):    
+    user = models.OneToOneField(CustomUser, on_delete=models.CASCADE)
  
 # https://developer.mozilla.org/en-US/docs/Learn_web_development/Extensions/Server-side/Django
 class KeyWord(models.Model):
@@ -154,16 +220,10 @@ class Poster(models.Model):
     
     submitted_date = models.DateField(null=True, blank=True)
     
-# code from ChatGPT
-class Profile(models.Model):
-    ROLE_CHOICES = [
-        ('author', 'Author'),
-        ('viewer', 'Reviewer'),
-        ('editor', 'Editor'),
-    ]
-        
-    user = models.OneToOneField(CustomUser, on_delete=models.CASCADE)
-    role = models.CharField(max_length=20, choices=ROLE_CHOICES)
+    def __str__(self):
+        """represents model object"""
+        return self.title
+    
    
     
     

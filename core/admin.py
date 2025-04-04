@@ -1,14 +1,14 @@
 from django.contrib import admin
 
-from .models import Role, CustomUser, Paper, Author, Poster
+from .models import CustomUser, Author, Paper, Poster, Editor, Reviewer
 
 
-admin.site.register(Role)
+#admin.site.register(Role)
 admin.site.register(CustomUser)
 
 admin.site.register(Author)
-#admin.site.register(Editor)
-#admin.site.register(Reviewer)
+admin.site.register(Editor)
+admin.site.register(Reviewer)
 admin.site.register(Paper)
 admin.site.register(Poster)
 
