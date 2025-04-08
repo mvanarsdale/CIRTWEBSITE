@@ -1,0 +1,17 @@
+{
+    "sqltools.connections": [
+        {
+            "pgOptions": {
+                "ssl": {
+                    "rejectUnauthorized": true,
+                    "requestCert": true
+                }
+            },
+            "previewLimit": 50,
+            "server": "localhost",
+            "driver": "PostgreSQL",
+            "name": "Project",
+            "connectString": "postgresql://app:ty6NNb39tI642nC79Q1jep3V@recently-welcomed-mongrel.a1.pgedge.io/defaultdb?sslmode=require"
+        }
+    ]
+}
