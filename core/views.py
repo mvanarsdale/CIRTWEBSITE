@@ -35,8 +35,25 @@ def Dashboard(request):
 def Portal(request):
     return render(request, 'core/Portal.html')
 
-def PosterSubmit(request):
-    return render(request, 'core/PosterSubmit.html')
+def editPort(request):
+    return render(request, 'core/editPort.html')
+
+def reviewPort(request):
+    return render(request, 'core/reviewPort.html')
+
+def authPort(request):
+    return render(request, 'core/authPort.html')
+
+def posterSub(request):
+    return render(request, 'core/posterSub.html')
+def journalSub(request):
+    return render(request, 'core/journalSub.html')
+
+
+def subComp(request):
+    return render(request, 'core/subComp.html')
+
+
 
 
 # code from ChatGPT

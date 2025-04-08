@@ -199,15 +199,15 @@ button:hover {
   <section class="apps-section">
 <div class="apps-grid">
           <div class="app-container">
-                    <a href="editor.html" class="app-box"><img src="{% static 'core/images/pencil.png' %}" width="100" height="100" alt=""/></a>
+                    <a href="{% url 'editPort' %}" class="app-box"><img src="{% static 'core/images/pencil.png' %}" width="100" height="100" alt=""/></a>
                     <span class="descript">Editor Portal</span>
    		</div>
 				<div class="app-container">
-                    <a href="editing.html" class="app-box"><img src="{% static 'core/images/eye.png' %}" width="175" height="175" alt=""/></a>
+                    <a href={% url 'reviewPort' %} class="app-box"><img src="{% static 'core/images/eye.png' %}" width="175" height="175" alt=""/></a>
                     <span class="descript">Reviewer Portal</span>
                 </div>
                 <div class="app-container">
-                    <a href="requests.html" class="app-box"><img src="{% static 'core/images/Cube_EPort.png' %}" width="150" height="150" alt=""/></a>
+                    <a href={% url 'authPort' %} class="app-box"><img src="{% static 'core/images/Cube_EPort.png' %}" width="150" height="150" alt=""/></a>
                     <span class="descript">Author Portal</span>
                 </div>
 		<div class="app-container">
