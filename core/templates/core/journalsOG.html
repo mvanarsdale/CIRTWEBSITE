@@ -1,0 +1,118 @@
+<!-- templates/about.html -->
+{% extends 'core/base.html' %}
+
+{% load static %} 
+
+{% block title %}Publications{% endblock %}
+
+{% block page_css %}
+    <link rel="stylesheet" href="{% static 'core/css/journals.css' %}">
+{% endblock %}
+
+{% block content %}
+</head>
+    <!-- RECENT PUBLICATIONS SECTION -->
+    <div class="publications">
+        <h2>Recent Publications</h2>
+        <div class="journal-gallery">
+            <img src="{% static 'core/images/criminoloy2.jpeg' %}" alt="Journal Page 1" />
+            <img src="{% static 'core/images/criminoloy-program-hero.jpeg' %}" alt="Journal Page 2" />
+            <img src="{% static 'core/images/criminoloy3.jpeg' %}" alt="Journal Page 3" />
+
+        </div>
+    </div>
+
+    <!-- ALL JOURNALS SECTION -->
+    <div class="all-journals">
+        <div class="all-journals-header">
+            <h2>All Journals</h2>
+            <div class="button-container">
+                <div class="search-box">
+                    <input type="text" placeholder="Search Journals...">
+                    <button type="submit">Search</button>
+                </div>
+                <div class="filter-container">
+                    <button class="filter-button">Filter ▼</button>
+                    <div class="filter-dropdown">
+                        <!-- AUTHOR FILTER -->
+                        <div class="filter-section">
+                            <label>Author</label>
+                            <input type="checkbox"> A-Z Order <br>
+                            <input type="text" placeholder="Enter Author Name">
+                        </div>
+
+                        <!-- DATE FILTER -->
+                        <div class="filter-section">
+                            <label>Date</label>
+                            <input type="checkbox"> Oldest <br>
+                            <input type="checkbox"> Most Recent <br>
+                            <input type="date">
+                        </div>
+
+                        <!-- CATEGORY FILTER -->
+                        <div class="filter-section">
+                            <label>Category</label>
+                            <input type="text" placeholder="Enter Category">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- PLACEHOLDER FOR JOURNAL LISTING -->
+        <div class="journal-listing">
+            <div class="journal-item">
+                <div class="journal-image">
+                    <img src="{% static 'core/images/journal1.jpg' %}" alt="Journal 1">
+                </div>
+                <div class="journal-description">
+                    <h3>Title of Journal 1</h3>
+                    <p class="journal-summary">
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. In tincidunt sollicitudin augue, at fermentum odio vehicula a. 
+                        Curabitur pharetra sit amet felis et tincidunt.
+                    </p>
+                    <div class="journal-details">
+                        <p><strong>Author:</strong> John Doe</p>
+                        <p><strong>Contact:</strong> johndoe@example.com</p>
+                        <p><strong>Published:</strong> March 2025</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="journal-item">
+                <div class="journal-image">
+                    <img src="{% static 'core/images/journal2.jpg' %}" alt="Journal 2">
+                </div>
+                <div class="journal-description">
+                    <h3>Title of Journal 2</h3>
+                    <p class="journal-summary">
+                        Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam.
+                    </p>
+                    <div class="journal-details">
+                        <p><strong>Author:</strong> Jane Smith</p>
+                        <p><strong>Contact:</strong> janesmith@example.com</p>
+                        <p><strong>Published:</strong> February 2025</p>
+                    </div>
+                </div>
+            </div>
+            <div class="journal-image">
+                <img src="{% static 'core/images/journal2.jpg' %}" alt="Journal 2">
+            </div>
+            <div class="journal-description">
+                <h3>Title of Journal 2</h3>
+                <p class="journal-summary">
+                    Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam.
+                </p>
+                <div class="journal-details">
+                    <p><strong>Author:</strong> Jane Smith</p>
+                    <p><strong>Contact:</strong> janesmith@example.com</p>
+                    <p><strong>Published:</strong> February 2025</p>
+                </div>
+            </div>
+        </div>
+            <!-- Add more journal items here -->
+        </div>
+    </div>
+    {% endblock %}
+    
+
