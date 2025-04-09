@@ -1,5 +1,8 @@
 from django.shortcuts import redirect, render
 from django.urls import reverse
+from django.views.decorators.csrf import csrf_exempt
+from django.contrib.auth import logout
+from django.contrib.auth import get_user_model
 
 
 from django.contrib.auth import authenticate, login
@@ -123,3 +126,43 @@ def is_author(user):
 # code from chatGPT
 def author_portal(request):
     return render(request, 'author_portal.html')
+
+# Jamie's code to keep track of user
+def check_login_status(request):
+    if request.user.is_authenticated:
+        return JsonResponse({
+            'is_logged_in': True,
+            'username': request.user.username
+        })
+    else:
+        return JsonResponse({'is_logged_in': False})
+# Jamie's code to keep track of user
+@csrf_exempt  # Only use this if you aren't passing CSRF token properly
+def logout_view(request):
+    if request.method == 'POST':
+        logout(request)
+        return JsonResponse({'success': True})
+    return JsonResponse({'success': False, 'error': 'Only POST allowed'}, status=405)
+#added from chatgpt
+@csrf_exempt
+def ajax_signup(request):
+    User = get_user_model()
+    if request.method == 'POST':
+        name = request.POST.get('name')
+        email = request.POST.get('email')
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+        #role = request.POST.get('role')
+
+        if User.objects.filter(username=username).exists():
+            return JsonResponse({'success': False, 'error_message': 'Username already taken'})
+
+        user = User.objects.create_user(username=username, password=password, email=email)
+        user.first_name = name
+        user.save()
+
+        login(request, user)
+
+        return JsonResponse({'success': True, 'username': user.username})
+    
+    return JsonResponse({'success': False, 'error_message': 'Invalid request'})

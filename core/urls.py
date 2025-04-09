@@ -37,9 +37,18 @@ urlpatterns = [
 
    
     # for log in view 
-    path('ajax-login/', views.ajax_login, name='ajax_login'),
+    path('ajax_login/', views.ajax_login, name='ajax_login'),
     # url for signup view 
-    path('signup/', views.signup, name='signup'),    
+    path('signup/', views.signup, name='signup'),   
+    
+    # url to check if someone is logged in - Jamie's code
+    path('check_login_status/', views.check_login_status, name='check_login_status'), 
+    path('logout/', views.logout_view, name='logout'), 
+    path('ajax_signup/', views.ajax_signup, name='ajax_signup'), 
+    
+    
+    
+
 ]
 
 
