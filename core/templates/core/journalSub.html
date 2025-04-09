@@ -1,75 +1,5 @@
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family:  'Lora', 'Times New Roman', serif;}.primary_header;
-        }
-        body {
-            background: #f4f4f4;
-        }
-
-        /* Header Styles */
-        .header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background: #692022;
-            padding: 15px 30px;
-            color: white;
-            position: relative;
-        }
-        .logo img {
-            height: 50px;
-        }
-        .center-link {
-            position: absolute;
-            left: 50%;
-            transform: translateX(-50%);
-        }
-        .center-link a {
-            text-decoration: none;
-            color: white;
-            font-size: 18px;
-            font-weight: bold;
-        }
-        .portal-button {
-            padding: 8px 15px;
-            background: #555;
-            color: white;
-            border-radius: 5px;
-            text-decoration: none;
-        }
         
-        /* Navigation Bar */
-        .secondary_header {
-            background-color: #000000;
-            padding: 15px;
-            display: flex;
-            justify-content: center;
-        }
-
-        .button-container {
-            display: flex;
-            justify-content: space-evenly; /* Evenly space the buttons across the container */
-            width: 100%; /* Stretch the container to full width */
-        }
-
-        .button-container .button {
-            background-color: #000000;
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            font-size: 16px;
-            cursor: pointer;
-            border-radius: 5px;
-        }
-
-        .button-container .button:hover {
-            background-color: #4B0909;
-            
-        }
-
         /* Main Content */
         .container {
             max-width: 1000px;
@@ -335,11 +265,11 @@
         sessionStorage.setItem("journalComments", comments);
 
         alert("Journal submitted successfully!");
-        window.location.href = "Journal_Process.html"; // Redirect to the process page
+        window.location.replace("{% url 'JournalProc' %}"); // Redirect to the process page
     }
 </script>
 
-{% endblock content %} 
 
 </body>
 </html>
+{% endblock content %} 

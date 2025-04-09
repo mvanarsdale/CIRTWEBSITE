@@ -49,6 +49,11 @@ def posterSub(request):
 def journalSub(request):
     return render(request, 'core/journalSub.html')
 
+def JournalProc(request):
+    return render(request, 'core/Journal_Process.html')
+
+
+
 
 def subComp(request):
     return render(request, 'core/subComp.html')

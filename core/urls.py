@@ -29,6 +29,11 @@ urlpatterns = [
     
     # for poster submit view 
     path('subComp/', views.subComp, name='subComp'),
+    
+    # for journal process submit view 
+    path('JournalProc/', views.JournalProc, name='JournalProc'),
+    
+    
 
    
     # for log in view 
