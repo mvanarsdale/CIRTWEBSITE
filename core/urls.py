@@ -13,6 +13,8 @@ urlpatterns = [
     # for dashboard view 
     path('Dashboard/', views.Dashboard, name='Dashboard'),
     # for user portal view 
+    path('contact/', views.contact, name='contact'),
+    # for user portal view 
     path('Portal/', views.Portal, name='Portal'),
     # for poster submit view 
     path('PosterSubmit/', views.PosterSubmit, name='PosterSubmit'),

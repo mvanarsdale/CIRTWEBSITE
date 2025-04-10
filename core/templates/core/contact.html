@@ -1,0 +1,248 @@
+<!-- base extension -->
+{% extends 'core/base.html' %}
+
+{% load static %} 
+
+{% block title %}Contact{% endblock %}
+
+{% block page_css %}
+    <link rel="stylesheet" href="{% static 'core/css/index.css' %}">
+{% endblock %}
+
+{% block content %}
+  <style>
+    body {
+      font-family: 'Lora', 'Times New Roman', serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f4f4f4;
+    }
+
+    /* POPUP */
+    .popup-overlay {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.5);
+    }
+
+    .popup {
+      display: none;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: #999;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+      color: black !important;
+      z-index: 1000;
+    }
+
+    .popup-content {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .close-btn {
+      position: absolute;
+      top: 10px;
+      right: 15px;
+      font-size: 24px;
+      cursor: pointer;
+    }
+
+    input[type="text"],
+    input[type="password"] {
+      color: black !important;
+      background-color: white !important;
+      border: 1px solid #ccc;
+      padding: 8px;
+      border-radius: 4px;
+    }
+
+    label,
+    h2 {
+      color: black !important;
+    }
+
+    /* HEADER STYLING */
+    .header {
+      display: flex;
+      align-items: center;
+      background-color: #692022;
+      color: white;
+      padding: 15px 20px;
+      width: 100%;
+      box-sizing: border-box;
+      gap: 20px;
+    }
+
+    .logo {
+      flex-shrink: 0;
+    }
+
+    .logo img {
+      height: 50px;
+    }
+
+    .title {
+      flex-grow: 1;
+      text-align: center;
+      font-size: 24px;
+      font-weight: bold;
+    }
+
+    .search-box {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-shrink: 0;
+    }
+
+    .search-box input {
+      padding: 8px;
+      border: none;
+      border-radius: 4px;
+    }
+
+    .search-box button {
+      padding: 8px 12px;
+      background-color: #555;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    .search-box button:hover {
+      background-color: #777;
+    }
+
+    /* NAVIGATION BAR */
+    .secondary_header {
+      background-color: #000000;
+      padding: 15px;
+      display: flex;
+      justify-content: center;
+    }
+
+    .button-container {
+      display: flex;
+      justify-content: space-evenly;
+      width: 100%;
+    }
+
+    .button-container .button {
+      background-color: #000000;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      font-size: 16px;
+      cursor: pointer;
+      border-radius: 5px;
+    }
+
+    .button-container .button:hover {
+      background-color: #4B0909;
+    }
+
+    /* CONTACTS SECTION */
+    .contacts {
+      padding: 20px;
+    }
+
+    .professor {
+      display: flex;
+      align-items: center;
+      background-color: white;
+      margin-bottom: 20px;
+      padding: 15px;
+      border-radius: 10px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+
+    .professor img {
+      width: 100px;
+      height: 100px;
+      object-fit: cover;
+      border-radius: 50%;
+      margin-right: 20px;
+    }
+
+    .info h2 {
+      margin: 0 0 5px;
+      color: #c62828;
+    }
+
+    .info p {
+      margin: 3px 0;
+    }
+  </style>
+
+  <!-- CONTACT SECTION -->
+  <section class="contacts">
+    <div class="professor">
+      <img src="images/pexels-fotios-photos-5653734.jpg" alt="Professor 1">
+      <div class="info">
+        <h2>Dr. Jane Smith</h2>
+        <p>Subject: Criminology</p>
+        <p>Email: jsmith@ut.edu</p>
+        <p>Office: Room 201, Criminology Building</p>
+      </div>
+    </div>
+
+    <div class="professor">
+      <img src="images/pexels-inga-sv-4066761.jpg" alt="Professor 2">
+      <div class="info">
+        <h2>Prof. David Lee</h2>
+        <p>Subject: Criminology</p>
+        <p>Email: dlee@ut.edu</p>
+        <p>Office: Room 110, Criminology Building</p>
+      </div>
+    </div>
+
+    <div class="professor">
+      <img src="images/pexels-cottonbro-4547587.jpg" alt="Professor 3">
+      <div class="info">
+        <h2>Dr. Maria Gonzalez</h2>
+        <p>Subject: Criminology</p>
+        <p>Email: mgonzalez@ut.edu</p>
+        <p>Office: Room 305, Criminology Building</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- SCRIPT -->
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      const loginBtn = document.getElementById('loginBtn');
+      const loginPopup = document.getElementById('loginPopup');
+      const popupOverlay = document.getElementById('popupOverlay');
+      const closeBtn = document.querySelector('.close-btn');
+
+      loginBtn.addEventListener('click', () => {
+        loginPopup.style.display = 'block';
+        popupOverlay.style.display = 'block';
+      });
+
+      closeBtn.addEventListener('click', () => {
+        loginPopup.style.display = 'none';
+        popupOverlay.style.display = 'none';
+      });
+
+      popupOverlay.addEventListener('click', () => {
+        loginPopup.style.display = 'none';
+        popupOverlay.style.display = 'none';
+      });
+    });
+  </script>
+</body>
+</html>
+
+{% endblock content %}

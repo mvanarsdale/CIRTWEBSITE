@@ -26,6 +26,10 @@ def index(request):
 def posters(request):
     return render(request, 'core/posters.html')
 
+# for the homepage
+def contact(request):
+    return render(request, 'core/contact.html')
+
 # for the FAQ page
 def FAQ(request):
     return render(request, 'core/FAQ.html')
