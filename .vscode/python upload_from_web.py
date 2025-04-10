@@ -1,19 +1,12 @@
-import psycopg
-import csv
-import requests
-from io import StringIO
+import psycopg2 as psycopg
+import os
+from flask import Flask, request
 
-# Step 1: Download file from website
-url = "https://example.com/data.csv"  # Replace with your actual URL
-response = requests.get(url)
-response.raise_for_status()  # Raise error if download failed
+app = Flask(__name__)
+UPLOAD_FOLDER = "uploads"
+os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 
-# Step 2: Read CSV from downloaded content
-csv_file = StringIO(response.text)
-reader = csv.reader(csv_file)
-header = next(reader)  # Skip header row
-
-# Step 3: Connect to the pgEdge database
+# Step 1: Connect to the pgEdge database
 conn = psycopg.connect(
     host="recently-welcomed-mongrel.a1.pgedge.io",
     dbname="defaultdb",
@@ -23,20 +16,36 @@ conn = psycopg.connect(
 )
 cursor = conn.cursor()
 
-# Step 4: Create table (modify as per your data structure)
+# Step 2: Create table for storing PDFs
 cursor.execute("""
-    CREATE TABLE IF NOT EXISTS website_data (
-        name TEXT,
-        age INT
+    CREATE TABLE IF NOT EXISTS pdf_storage (
+        id SERIAL PRIMARY KEY,
+        filename TEXT,
+        file_data BYTEA
     )
 """)
-
-# Step 5: Insert rows
-for row in reader:
-    cursor.execute("INSERT INTO website_data (name, age) VALUES (%s, %s)", row)
-
-# Step 6: Commit and close
 conn.commit()
-cursor.close()
-conn.close()
-print("Upload complete!")
+
+# Step 3: Define upload route
+@app.route("/upload", methods=["POST"])
+def upload_file():
+    if "file" not in request.files:
+        return "No file uploaded!", 400
+    
+    file = request.files["file"]
+
+    if file.filename == "":
+        return "Invalid file name!", 400
+    
+    if file:
+        filename = file.filename
+        file_data = file.read()
+
+        cursor.execute("INSERT INTO pdf_storage (filename, file_data) VALUES (%s, %s)", (filename, file_data))
+        conn.commit()
+        
+        return f"Upload successful for {filename}!", 200
+
+# Step 4: Run the Flask app
+if __name__ == "__main__":
+    app.run(debug=True, port=5000)

@@ -3,8 +3,9 @@
         {
             "pgOptions": {
                 "ssl": {
-                    "rejectUnauthorized": true,
-                    "requestCert": true
+                    "rejectUnauthorized": false,
+                    "requestCert": false,
+                    "ca": ""
                 }
             },
             "previewLimit": 50,
