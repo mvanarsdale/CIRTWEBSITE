@@ -1,0 +1,102 @@
+<!-- base extension -->
+{% extends 'core/base.html' %}
+
+{% load static %} 
+
+{% block title %}Home{% endblock %}
+
+{% block page_css %}
+    <link rel="stylesheet" href="{% static 'core/css/index.css' %}">
+{% endblock %}
+
+{% block content %}
+    <section>
+        <article class="left_article">
+            <h3>What is CIRT?</h3>
+            <p>The Criminal Justice Innovation & Research Team (CIRT) was established in 2023 to serve as a hub for collaboration, education, and career preparation within the Criminal Justice field. It fosters networking between UT scholars, criminal justice agencies, and businesses, provides learning resources and training for students and professionals, and equips students for future careers in the evolving industry. Additionally, CIRT acts as a central space for research, training, and student engagement, strengthening the connection between academia and real-world criminal justice practices.</p>
+        </article>
+        <aside class="right_article">
+            <img src="{% static 'core/images/pexels-expressivestanley-1454360.jpg' %}" alt="Research Image" width="600" height="400" class="placeholder"/>
+        </aside>
+    </section>
+
+    <!-- News Section -->
+    <section class="news-section">
+        <h4>NEWS</h4>
+        <div class="news-container">
+            <div class="news-item">
+                <img src="{% static 'core/images/pexels-cottonbro-4547587.jpg' %}" alt="Article Image" class="news-image"/>
+                <h5>Article Title 1</h5>
+                <p class="news-description">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ut enim ad minim veniam, quis nostrud.</p>
+                <a href="#" class="news-link">Read More</a>
+            </div>
+            <div class="news-item">
+                <img src="{% static 'core/images/pexels-fotios-photos-5653734.jpg' %}" alt="Article Image" class="news-image"/>
+                <h5>Article Title 2</h5>
+                <p class="news-description">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ut enim ad minim veniam, quis nostrud.</p>
+                <a href="#" class="news-link">Read More</a>
+            </div>
+            <div class="news-item">
+                <img src="{% static 'core/images/pexels-tiana-18128-3312231.jpg' %}" alt="Article Image" class="news-image"/>
+                <h5>Article Title 3</h5>
+                <p class="news-description">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ut enim ad minim veniam, quis nostrud.</p>
+                <a href="#" class="news-link">Read More</a>
+            </div>
+            <div class="news-item">
+                <img src="{% static 'core/images/pexels-inga-sv-4066761.jpg' %}" alt="Article Image" class="news-image"/>
+                <h5>Article Title 4</h5>
+                <p class="news-description">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ut enim ad minim veniam, quis nostrud.</p>
+                <a href="#" class="news-link">Read More</a>
+            </div>
+            <div class="news-item">
+                <img src="{% static 'core/images/pexels-cottonbro-4547587.jpg' %}" alt="Article Image" class="news-image"/>
+                <h5>Article Title 5</h5>
+                <p class="news-description">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ut enim ad minim veniam, quis nostrud.</p>
+                <a href="#" class="news-link">Read More</a>
+            </div>
+        </div>
+    </section>
+{% endblock %}
+
+<!-- JavaScript -->
+<script>
+    // Load search data from JSON
+    fetch("search-data.json")
+        .then(response => response.json())
+        .then(data => {
+            searchData = data;
+        })
+        .catch(error => console.error("Error loading search data:", error));
+
+    function searchFunction() {
+        const input = document.getElementById("searchInput").value.toLowerCase();
+        const resultsContainer = document.getElementById("searchResults");
+
+        resultsContainer.innerHTML = ""; // Clear previous results
+
+        if (input.length === 0) {
+            return;
+        }
+
+        // Filter search results
+        const results = searchData.filter(item => 
+            item.title.toLowerCase().includes(input) || 
+            item.content.toLowerCase().includes(input)
+        );
+
+        // Display results
+        results.forEach(result => {
+            const li = document.createElement("li");
+            const link = document.createElement("a");
+            link.href = result.url;
+            link.textContent = result.title;
+            li.appendChild(link);
+            resultsContainer.appendChild(li);
+        });
+    }
+
+    // Attach function to search input
+    document.getElementById("searchInput").addEventListener("keyup", searchFunction);
+});
+</script>
+

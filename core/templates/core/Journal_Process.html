@@ -1,0 +1,354 @@
+    <style>
+       
+        .progress-container {
+            background-color: #f3f3f3;
+            border-radius: 10px;
+            overflow: hidden;
+            height: 30px;
+            margin: 20px 0;
+            border: 1px solid #ccc;
+        }
+
+        .progress-bar {
+            height: 100%;
+            width: 0%;
+            transition: width 0.5s ease;
+            text-align: center;
+            line-height: 30px;
+            color: white;
+        }
+
+        .progress-stages {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 10px;
+        }
+
+        .progress-stages .stage {
+            text-align: center;
+            flex: 1;
+            position: relative;
+        }
+
+        .progress-stages .stage span {
+            display: inline-block;
+            background-color: #ccc;
+            color: white;
+            width: 25px;
+            height: 25px;
+            line-height: 25px;
+            border-radius: 50%;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        .progress-stages .stage.active span {
+            background-color: #0073e6;
+        }
+
+        .progress-stages .stage p {
+            margin: 0;
+            font-size: 12px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .journal-section {
+            width: 100%;
+            margin: 20px auto;
+            background: #999;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+        }
+
+        .journal-header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .journal-actions {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .file-preview iframe {
+            width: 100%;
+            height: 350px;
+            border: 2px solid #ccc;
+            transition: transform 0.3s ease;
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .actions {
+            margin-top: 10px;
+            text-align: center;
+        }
+
+        .actions button {
+            padding: 10px 15px;
+            margin: 5px;
+            background-color: #555;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .actions button:hover {
+            background-color: #333;
+        }
+        
+        .comment-box {
+            margin-top: 10px;
+        }
+
+        .comments {
+            margin-top: 20px;
+        }
+
+        .comment-box textarea {
+            width: 100%;
+            height: 100px;
+            padding: 10px;
+            resize: vertical;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            font-family: inherit;
+            font-size: 14px;
+            box-sizing: border-box;
+        }
+        
+        .submit-comment {
+            margin-top: 10px;
+            text-align: right;
+        }
+
+        .submit-comment button {
+            padding: 10px 20px;
+            background-color: #555;
+            color: white;
+            border-radius: 5px;
+            cursor: pointer;
+            text-decoration: none
+        }
+
+        .submit-comment button:hover {
+            background-color: #333;
+        }
+
+        .spinner {
+            width: 40px;
+            height: 40px;
+            border: 5px solid #ccc;
+            border-top-color: #0073e6;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 20px auto;
+            display: none;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+    </style>
+<!-- templates/about.html -->
+{% extends 'core/base.html' %}
+
+{% load static %} 
+
+{% block title %}Poster Submission{% endblock %}
+
+{% block content %}
+
+    <div class="container">
+        <!-- Progress Bar -->
+        <div class="progress-container" aria-label="Submission Progress">
+            <div class="progress-bar" id="progressBar"></div>
+        </div>
+
+        <!-- Step Indicator -->
+        <div class="progress-stages" id="progressStages">
+            <div class="stage"><span>1</span><p>Submit</p></div>
+            <div class="stage"><span>2</span><p>Reached Editor</p></div>
+            <div class="stage"><span>3</span><p>Edits Made</p></div>
+            <div class="stage"><span>4</span><p>Approved</p></div>
+        </div>
+
+        <!-- Loading Spinner -->
+        <div id="loadingSpinner" class="spinner" role="status" aria-label="Loading progress..."></div>
+        
+        <div class="journal-section">
+        <div class="journal-header">
+            <h2 id="article-title">Journal Article Title</h2>
+            <p><strong>Author:</strong> <span id="article-author">Author Name</span></p>
+            <p><strong>Published:</strong> <span id="article-date">Date</span></p>
+        </div>
+
+        <!-- File Preview -->
+<div style="display: flex; gap: 30px;">
+            <div style="flex: 1; background: #777; padding: 20px; border-radius: 10px; box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);">
+            <h3 class="section-title">File Preview</h3>
+            <div class="file-preview" id="filePreview">
+            <iframe id="fileIframe" title="Journal File Preview"></iframe>
+        </div>
+
+        <!-- Controls -->
+        <div class="actions">
+            <button onclick="downloadPDF()" aria-label="Download PDF">Download</button>
+            <button onclick="printPDF()" aria-label="Print PDF">Print</button>
+            <button onclick="editPDF()" aria-label="Edit PDF">Edit</button>
+        </div>
+            </div>
+
+        <!-- Journal Info -->
+           <div style="flex: 1; background: #777; padding: 20px; border-radius: 10px; box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);">
+                <h3 class="section-title">Editor Comments</h3>
+                <div class="comment-box">
+                    <textarea readonly id="editorComments">The editor has not made any comments yet.</textarea>
+                </div>
+
+                <h3 class="section-title">Comments</h3>
+                <div class="comment-box">
+                    <textarea id="userComment" placeholder="Enter your comment..."></textarea>
+                </div>
+
+                <div class="submit-comment">
+                    <button onclick="submitComment()" aria-label="Submit your comment">Submit Comment</button>
+                </div>
+            </div>
+
+        </div>
+
+    <script>
+        let scale = 1;
+
+        function zoomIn() {
+            scale += 0.1;
+            const iframe = document.querySelector('.file-preview iframe');
+            iframe.style.transform = `scale(${scale})`;
+            iframe.style.transformOrigin = 'top left';
+        }
+
+        function zoomOut() {
+            scale = Math.max(0.5, scale - 0.1);
+            const iframe = document.querySelector('.file-preview iframe');
+            iframe.style.transform = `scale(${scale})`;
+            iframe.style.transformOrigin = 'top left';
+        }
+
+        function downloadPDF() {
+            alert("Download PDF functionality not implemented yet.");
+        }
+
+        function printPDF() {
+            alert("Print PDF functionality not implemented yet.");
+        }
+
+        function editPDF() {
+            alert("Edit PDF functionality not implemented yet.");
+        }
+
+        function fullScreen() {
+            alert("Full screen mode not implemented yet.");
+        }
+
+        function updateProgress(stage) {
+            let width = '0%';
+            let color = '#ddd';
+            let stageIndex = 0;
+
+            switch (stage) {
+                case 'Submit': width = '25%'; color = 'red'; stageIndex = 0; break;
+                case 'Reached Editor': width = '50%'; color = 'orange'; stageIndex = 1; break;
+                case 'Edits Made': width = '75%'; color = 'yellow'; stageIndex = 2; break;
+                case 'Approved': width = '100%'; color = 'green'; stageIndex = 3; break;
+            }
+
+            const progressBar = document.getElementById('progressBar');
+            progressBar.style.width = width;
+            progressBar.style.backgroundColor = color;
+
+            const stages = document.querySelectorAll('.progress-stages .stage');
+            stages.forEach((el, i) => {
+                if (i <= stageIndex) {
+                    el.classList.add('active');
+                } else {
+                    el.classList.remove('active');
+                }
+            });
+        }
+
+        async function loadJournalData() {
+            document.getElementById('loadingSpinner').style.display = 'block';
+
+            const fileURL = sessionStorage.getItem('uploadedFileURL');
+            const description = sessionStorage.getItem('journalDescription');
+            const comments = sessionStorage.getItem('editorComments');
+            const journalId = sessionStorage.getItem('journalId');
+
+            if (fileURL) {
+                document.getElementById('fileIframe').src = fileURL;
+            }
+
+            if (description) {
+                document.getElementById('journalName').innerText = description;
+            }
+
+            if (comments) {
+                document.getElementById('editorComments').innerText = comments;
+            }
+
+            try {
+                const response = await fetch(`/api/getProgress?journalId=${journalId}`);
+                const data = await response.json();
+                updateProgress(data.stage);
+            } catch (err) {
+                console.error('Failed to load progress:', err);
+                updateProgress('Submit');
+            } finally {
+                document.getElementById('loadingSpinner').style.display = 'none';
+            }
+        }
+
+        async function submitComment() {
+            const comment = document.getElementById('userComment').value;
+            const journalId = sessionStorage.getItem('journalId');
+
+            if (!comment.trim()) {
+                alert('Please enter a comment.');
+                return;
+            }
+
+            try {
+                const response = await fetch('/api/saveComment', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ journalId, comment })
+                });
+
+                if (response.ok) {
+                    alert('Comment submitted!');
+                    document.getElementById('userComment').value = '';
+                } else {
+                    alert('Failed to submit comment.');
+                }
+            } catch (error) {
+                console.error('Submission error:', error);
+                alert('Error submitting comment.');
+            }
+        }
+
+        window.onload = loadJournalData;
+    </script>
+</body>
+
+{% endblock content %}
+</html>

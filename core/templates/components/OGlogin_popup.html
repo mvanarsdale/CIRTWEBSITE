@@ -70,7 +70,7 @@
             errorMessagesDiv.innerHTML = '';
 
             // Code from ChatGPT Send an AJAX request to log the user in
-            fetch('/core/ajax_login/', {
+            fetch('{% url "ajax_login" %}', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/x-www-form-urlencoded',
