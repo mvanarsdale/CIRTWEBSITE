@@ -12,20 +12,27 @@
 
     <!-- Header -->
     <header>
-        <div class="primary_header">
-            <p class="thumbnail_align">&nbsp; </p>
-            <!-- Header with logo on the top-left Code from ChatGPT -->
-            <img src="{% static 'core/images/CIRT_LOGO.png' %}" alt="Logo" class="logo">
-            <h1 class="title">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;CRIMINOLOGY INSTITUTE FOR RESEARCH/TRAINING (CIRT)</h1>
-            <div class="search-container">
-                <input type="text" id="searchInput" placeholder="Search this site..." onkeyup="searchFunction()">
-                 <!-- Login/Signup Buttons || Code from ChatGPT -->
-                <button id="loginBtn" class="login-button" onclick="openPopup()">Login</button>
-                <button id="signUpBtn" class="popup-content" onclick="openSignUpPopup()">Register</button>
-                <ul id="searchResults"></ul>
-            </div>
+        <div class="primary_header" style="display: flex; align-items: center; justify-content: space-between; padding: 15px 40px;">
+          
+          <!-- Logo -->
+          <img src="{% static 'core/images/CIRT_LOGO.png' %}" alt="Logo" class="logo" style="height: 120px;">
+      
+          <!-- Title -->
+          <h1 class="title" style="flex: 1; text-align: center; font-size: 1.8rem; color: white;">
+            CRIMINOLOGY INSTITUTE FOR RESEARCH/TRAINING (CIRT)
+          </h1>
+      
+          <!-- Search + Buttons -->
+          <div class="search-container" style="display: flex; align-items: center; justify-content: flex-end; gap: 12px;">
+            <input type="text" id="searchInput" placeholder="Search this site..." onkeyup="searchFunction()" style="padding: 6px 10px; border-radius: 5px;">
+            <div id="login-area" style="display: flex; flex-direction: column; align-items: flex-end;"></div>
+          </div>
+          
+          </div>
+      
         </div>
     </header>
+      
 
     <!-- Navigation -->
     <nav class="secondary_header">
@@ -43,11 +50,11 @@
             <button class="button">Posters</button>
             </a>
             <!-- Link to the 'Faculty'  page //WORK IN PROGRESS RABBIT HOLE BUTTON// -->
-            <a href="{% url 'index' %}">
+            <a href="{% url 'contact' %}">
                 <button class="button">Faculty</button>
             </a>
             <!-- Link to the 'DashBoard'  page //WORK IN PROGRESS RABBIT HOLE BUTTON// -->
-            <a href="{% url 'dashboard' %}">
+            <a href="{% url 'Dashboard' %}">
                 <button class="button">Dashboard</button>
             </a>
             <!-- Link to the 'FAQ' page (define 'faq' view and URL if needed) -->
@@ -72,6 +79,95 @@
 {% include 'components/login_popup.html' %}
 {% include 'components/signup_popup.html' %}
 
+<!-- Hidden CSRF token to set cookie -->
+<form style="display: none;">
+    {% csrf_token %}
+</form>
+
+<script>
+    function getCookie(name) {
+        let cookieValue = null;
+        if (document.cookie && document.cookie !== '') {
+            const cookies = document.cookie.split(';');
+            for (let cookie of cookies) {
+                cookie = cookie.trim();
+                if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }
+    
+    function renderLoginState() {
+        fetch('/core/check_login_status/')
+            .then(response => response.json())
+            .then(data => {
+                const loginArea = document.getElementById('login-area');
+    
+                if (data.is_logged_in) {
+                    loginArea.innerHTML = `
+                        <div style="display: flex; flex-direction: column; align-items: flex-start; gap: 4px;">
+                            <span style="color: white; font-size: 0.95rem;">
+                                Hello, <strong>${data.username}</strong>
+                            </span>
+                            <button id="logoutBtn" style="
+                                padding: 6px 12px;
+                                font-size: 0.85rem;
+                                font-weight: bold;
+                                background-color: #3b0000;
+                                color: white;
+                                border: none;
+                                border-radius: 6px;
+                                cursor: pointer;
+                            ">Log Out</button>
+                        </div>
+                    `;
+    
+                    document.getElementById('logoutBtn').addEventListener('click', () => {
+                        fetch('/core/logout/', {
+                            method: 'POST',
+                            headers: {
+                                'X-CSRFToken': getCookie('csrftoken')
+                            }
+                        }).then(() => {
+                            location.reload();
+                        });
+                    });
+    
+                } else {
+                    loginArea.innerHTML = `
+                        <button id="loginBtn" onclick="openPopup()" style="
+                            background-color: #3b0000;
+                            color: white;
+                            border: none;
+                            border-radius: 6px;
+                            padding: 6px 12px;
+                            font-weight: bold;
+                            cursor: pointer;
+                        ">Login</button>
+                        <button id="signUpBtn" style="
+                            background-color: #3b0000;
+                            color: white;
+                            border: none;
+                            border-radius: 6px;
+                            padding: 6px 12px;
+                            font-weight: bold;
+                            cursor: pointer;
+                        ">Register</button>
+                    `;
+    
+                    // Attach event AFTER button is in DOM
+                    document.getElementById('signUpBtn').addEventListener('click', openSignUpPopup);
+                }
+            });
+    }
+    
+    document.addEventListener("DOMContentLoaded", renderLoginState);
+    </script>    
+
 </body>
 </html>
+
    

@@ -5,67 +5,80 @@ from django.contrib.auth import logout
 from django.contrib.auth import get_user_model
 
 
+
 from django.contrib.auth import authenticate, login
 from django.http import JsonResponse
 
 # for messages with log in success / failure
 from django.contrib import messages
 
-from .models import CustomUser
+from core.models import CustomUser
 
-from django.contrib.auth.decorators import login_required, user_passes_test
-from django.shortcuts import render
-
-# an attempt to fix my redirect problem 
+# page views
 def old_to_new_redirect(request):
     return render(request, 'core/index.html')
 
+# for the homepage
 def index(request):
     return render(request, 'core/index.html')
 
+# for the posters page
 def posters(request):
     return render(request, 'core/posters.html')
 
+# for the homepage
+def contact(request):
+    return render(request, 'core/contact.html')
+
+# for the FAQ page
 def FAQ(request):
     return render(request, 'core/FAQ.html')
 
+# for the publications page
 def journals(request):
     return render(request, 'core/journals.html')
 
+# for the dashboard page
 def Dashboard(request):
-    return render(request, 'core/dashboard.html')
+    return render(request, 'core/Dashboard.html')
+
+# portals 
+# editor portal
+def editPort(request):
+    return render(request, 'core/editPort.html')
+
+# reviewer portal
+def reviewPort(request):
+    return render(request, 'core/reviewPort.html')
+
+# author portal
+def authPort(request):
+    return render(request, 'core/authPort.html')
+
+# poster submit view 
+def PosterSubmit(request):
+    return render(request, 'core/PosterSubmit.html')
+
+# 
+def posterSub(request):
+    return render(request, 'core/posterSub.html')
 
 def Portal(request):
     return render(request, 'core/Portal.html')
 
-def editPort(request):
-    return render(request, 'core/editPort.html')
-
-def reviewPort(request):
-    return render(request, 'core/reviewPort.html')
-
-def authPort(request):
-    return render(request, 'core/authPort.html')
-
-def posterSub(request):
-    return render(request, 'core/posterSub.html')
 def journalSub(request):
     return render(request, 'core/journalSub.html')
 
 def JournalProc(request):
     return render(request, 'core/Journal_Process.html')
 
-
-
-
 def subComp(request):
     return render(request, 'core/subComp.html')
 
 
-
-
-# code from ChatGPT
+# code pulled from ChatGPT
 def signup(request):
+    # defines new user variables
     if request.method == 'POST':
         name = request.POST.get('name')
         email = request.POST.get('email')
@@ -81,22 +94,23 @@ def signup(request):
             messages.error(request, 'Email is already in use!')
             return redirect('signup')
         
+        # create a user object
         CustomUser.objects.create_user(username=username, password=password, email=email, first_name=name, role=role)        
-        # Save role if using a Profile model
-        #Profile.objects.create(user=user, role=role)
         
         #messages.success(request, 'Account created successfully!')
         return redirect(ajax_login(request))
     
     return render(request, 'components/signup_popup.html')
 
-# move to users later 
-# Code from ChatGPT
+# Code generated from ChatGPT
 def ajax_login(request):
+    # checks for user in database
     if request.method == 'POST':
+        # variables for username and password
         username = request.POST.get('username')
         password = request.POST.get('password')
 
+        # defines user username and password to be checked
         user = authenticate(request, username=username, password=password)
         
         # check for user in database
@@ -115,19 +129,8 @@ def ajax_login(request):
                 'success': False,
                 'error_message': 'Invalid credentials'
             })
-       
-# check to see if the user is author
-def is_author(user):
-    return user.groups.filter(name="Author").exists()
-  
-# requires user to be logged in and have correct permissions 
-@login_required
-@user_passes_test(is_author)
-# code from chatGPT
-def author_portal(request):
-    return render(request, 'author_portal.html')
 
-# Jamie's code to keep track of user
+# Jamie's code
 def check_login_status(request):
     if request.user.is_authenticated:
         return JsonResponse({
@@ -136,7 +139,8 @@ def check_login_status(request):
         })
     else:
         return JsonResponse({'is_logged_in': False})
-# Jamie's code to keep track of user
+  
+# Jamie's code  
 @csrf_exempt  # Only use this if you aren't passing CSRF token properly
 def logout_view(request):
     if request.method == 'POST':
@@ -152,7 +156,7 @@ def ajax_signup(request):
         email = request.POST.get('email')
         username = request.POST.get('username')
         password = request.POST.get('password')
-        #role = request.POST.get('role')
+        role = request.POST.get('role')
 
         if User.objects.filter(username=username).exists():
             return JsonResponse({'success': False, 'error_message': 'Username already taken'})
