@@ -14,48 +14,53 @@ from django.contrib import messages
 
 from core.models import CustomUser
 
-# an attempt to fix my redirect problem 
+# page views
 def old_to_new_redirect(request):
     return render(request, 'core/index.html')
 
+# for the homepage
 def index(request):
     return render(request, 'core/index.html')
 
+# for the posters page
 def posters(request):
     return render(request, 'core/posters.html')
 
+# for the FAQ page
 def FAQ(request):
     return render(request, 'core/FAQ.html')
 
+# for the publications page
 def journals(request):
     return render(request, 'core/journals.html')
 
+# for the dashboard page
 def Dashboard(request):
     return render(request, 'core/Dashboard.html')
 
-def Portal(request):
-    return render(request, 'core/Portal.html')
-
-def PosterSubmit(request):
-    return render(request, 'core/PosterSubmit.html')
-
-def Dashboard(request):
-    return render(request, 'core/dashboard.html')
-
-def Portal(request):
-    return render(request, 'core/Portal.html')
-
+# portals 
+# editor portal
 def editPort(request):
     return render(request, 'core/editPort.html')
 
+# reviewer portal
 def reviewPort(request):
     return render(request, 'core/reviewPort.html')
 
+# author portal
 def authPort(request):
     return render(request, 'core/authPort.html')
 
+# poster submit view 
+def PosterSubmit(request):
+    return render(request, 'core/PosterSubmit.html')
+
+# 
 def posterSub(request):
     return render(request, 'core/posterSub.html')
+
+def Portal(request):
+    return render(request, 'core/Portal.html')
 
 def journalSub(request):
     return render(request, 'core/journalSub.html')
@@ -67,8 +72,9 @@ def subComp(request):
     return render(request, 'core/subComp.html')
 
 
-# code from ChatGPT
+# code pulled from ChatGPT
 def signup(request):
+    # defines new user variables
     if request.method == 'POST':
         name = request.POST.get('name')
         email = request.POST.get('email')
@@ -84,22 +90,23 @@ def signup(request):
             messages.error(request, 'Email is already in use!')
             return redirect('signup')
         
+        # create a user object
         CustomUser.objects.create_user(username=username, password=password, email=email, first_name=name, role=role)        
-        # Save role if using a Profile model
-        #Profile.objects.create(user=user, role=role)
         
         #messages.success(request, 'Account created successfully!')
         return redirect(ajax_login(request))
     
     return render(request, 'components/signup_popup.html')
 
-# move to users later 
-# Code from ChatGPT
+# Code generated from ChatGPT
 def ajax_login(request):
+    # checks for user in database
     if request.method == 'POST':
+        # variables for username and password
         username = request.POST.get('username')
         password = request.POST.get('password')
 
+        # defines user username and password to be checked
         user = authenticate(request, username=username, password=password)
         
         # check for user in database
@@ -119,6 +126,7 @@ def ajax_login(request):
                 'error_message': 'Invalid credentials'
             })
 
+# Jamie's code
 def check_login_status(request):
     if request.user.is_authenticated:
         return JsonResponse({
@@ -127,7 +135,8 @@ def check_login_status(request):
         })
     else:
         return JsonResponse({'is_logged_in': False})
-    
+  
+# Jamie's code  
 @csrf_exempt  # Only use this if you aren't passing CSRF token properly
 def logout_view(request):
     if request.method == 'POST':
