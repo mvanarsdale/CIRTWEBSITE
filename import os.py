@@ -33,16 +33,15 @@ with get_db_connection() as conn:
         conn.commit()
 
 # Step 3: Define upload route
-@app.route("/upload", methods=["POST"])
-def upload_file():
+@app.route("/submit-journal", methods=["POST"])
+def submit_journal():
     if "file" not in request.files:
         return jsonify({"error": "No file uploaded!"}), 400
-    
-    file = request.files["file"]
 
+    file = request.files["file"]
     if file.filename == "":
         return jsonify({"error": "Invalid file name!"}), 400
-    
+
     if file:
         filename = file.filename
         file_data = file.read()
