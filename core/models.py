@@ -16,11 +16,8 @@ from django.db.models.functions import Lower
 
 # abstract user automattically includes nessary user fields 
 class CustomUser(AbstractUser):
-    # Your custom user model fields
-    #username = models.CharField(max_length=150, unique=True)
+    # custom user model fields
     name = models.CharField(max_length=150, blank=True)
-    #email = models.EmailField(blank=True)
-    #password = models.CharField(max_length=150, blank=True)
     
     
     # roles
@@ -33,6 +30,8 @@ class CustomUser(AbstractUser):
     # Role field with a dropdown
     role = models.CharField(max_length=20, choices=ROLE_CHOICES, default='user')
     
+    
+    
     groups = models.ManyToManyField(
         'auth.Group', 
         blank=True, 
@@ -44,17 +43,10 @@ class CustomUser(AbstractUser):
         related_name='core_user_permissions'  # Specify a unique related_name
     )
 
-class Role(models.Model):
-    name = models.CharField(max_length=20, unique=True)
-
-    def __str__(self):
-        return self.name
- 
-
+# model for authors
 class Author(models.Model):
-    user = models.OneToOneField(CustomUser, on_delete=models.CASCADE, related_name='author_profile', default=1)
+    user = models.OneToOneField(CustomUser, on_delete=models.CASCADE)
     
-
     class Meta:
         permissions = [ 
                        ("can_submit_PDF", "Can submit PDF"),
@@ -67,6 +59,45 @@ class Author(models.Model):
 
     def __str__(self):
         return f"{self.user.name}"
+    
+# model for reviewers
+class Reviewer(models.Model):
+    user = models.OneToOneField(CustomUser, on_delete=models.CASCADE, related_name='reviewer_profile', default=1)
+    
+    class Meta:
+        permissions = [ 
+                       ("can_reviewF", "Can review"),
+                       ("can_communicate", "Can communicate")
+                       ]
+
+    def get_absolute_url(self):
+        """Returns the URL to access a particular author instance."""
+        return reverse('reviewer-detail', args=[str(self.id)])
+
+    def __str__(self):
+        return f"{self.user.name}"
+
+# model for reviewers
+class Editor(models.Model):
+    user = models.OneToOneField(CustomUser, on_delete=models.CASCADE, related_name='editor_profile', default=1)
+    
+    class Meta:
+        permissions = [ 
+                       ("can_edit", "Can edit"),
+                       ("can_communicate", "Can communicate")
+                       ]
+
+    def get_absolute_url(self):
+        """Returns the URL to access a particular author instance."""
+        return reverse('editor-detail', args=[str(self.id)])
+
+    def __str__(self):
+        return f"{self.user.name}"
+
+
+
+
+
 
 
  
