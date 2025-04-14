@@ -43,6 +43,8 @@ urlpatterns = [
     # for journal process submit view 
     path('JournalProc/', views.JournalProc, name='JournalProc'),
     
+    path('upload_poster/', views.upload_poster, name='upload_poster'),
+    
     
 
 ]

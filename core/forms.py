@@ -1,10 +1,7 @@
 from django import forms
-from django.contrib.auth.forms import UserCreationForm
-from .models import CustomUser  # Or your custom user model
+from .models import Poster
 
-class CustomUserCreationForm(UserCreationForm):
-    role = forms.ChoiceField(choices=CustomUser.ROLE_CHOICES, required=True)
-
+class PosterForm(forms.ModelForm):
     class Meta:
-        model = CustomUser
-        fields = ('username', 'email', 'role')  # Add role to fields
+        model = Poster
+        fields = ['title', 'author']

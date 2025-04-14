@@ -221,7 +221,7 @@
         document.getElementById('fileModal').style.display = 'none';
     }
 
-    // Handle file submission and store in sessionStorage
+    // Handle file submission and store in sessionStorage - from ChatGPT
     function submitFile() {
         const fileInput = document.getElementById('fileInput');
         const file = fileInput.files[0];
@@ -241,7 +241,7 @@
     }
 
 
-    // Open fullscreen view of the file
+    // Open fullscreen view of the file - from ChatGPT
     function openFullScreen() {
         const fileIframe = document.getElementById('fullscreenIframe').src;
         if (fileIframe) {
@@ -250,7 +250,6 @@
             alert("No file selected.");
         }
     }
-
     function closeFullScreen() {
         document.getElementById('fullscreenModal').style.display = 'none';
     }

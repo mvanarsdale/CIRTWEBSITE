@@ -3,17 +3,22 @@ from django.urls import reverse
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth import logout
 from django.contrib.auth import get_user_model
-from . import models
-
-
+#from . import models
 
 from django.contrib.auth import authenticate, login
 from django.http import JsonResponse
 
 # for messages with log in success / failure
-from django.contrib import messages
+#from django.contrib import messages
 
-from core.models import Editor, Reviewer, Author, CustomUser
+
+from core.models import Editor, Reviewer, Author #CustomUser
+
+# for poster upload
+from .forms import PosterForm
+from .models import CustomUser, Poster
+
+
 
 # page views
 def old_to_new_redirect(request):
@@ -59,7 +64,6 @@ def authPort(request):
 # poster submit view 
 def PosterSubmit(request):
     return render(request, 'core/PosterSubmit.html')
-
 # 
 def posterSub(request):
     return render(request, 'core/posterSub.html')
@@ -156,3 +160,25 @@ def ajax_signup(request):
         return JsonResponse({'success': True, 'username': user.username})
     
     return JsonResponse({'success': False, 'error_message': 'Invalid request'})
+
+# view for poster submit form
+def upload_poster(request):
+    if request.method == 'POST':
+        title = request.POST.get('title')
+        #author = request.POST.get('author')
+        pdf = request.FILES.get('pdf')
+        
+        # getting the authors specfic username - help from ChatGPT
+        user = request.user
+        #usern = CustomUser.objects.get(user=user)
+        #username = user.username
+        #author = CustomUser.objects.get(author=author)
+        
+    
+        poster = Poster.objects.create(title=title, author=user, pdf=pdf)
+        poster.save()
+        
+    
+        return redirect('subComp')  # or wherever you want to go after upload (づ￣ ³￣)づ
+    else:
+        return render(request, 'core/subComp.html')
