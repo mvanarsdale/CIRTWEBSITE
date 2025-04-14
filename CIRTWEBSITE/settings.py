@@ -77,8 +77,15 @@ WSGI_APPLICATION = 'CIRTWEBSITE.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'cirtdb',
+        'USER': 'admin',
+        'PASSWORD': 'tQ0u1QD0k21cR0su775Q3Are',
+        'HOST': 'nearly-famous-sunfish.a1.pgedge.io',
+        'PORT': '5432',  
+        'OPTIONS': {
+            'sslmode': 'require',  # SSL encryption (very important for pgEdge)
+        }
     }
 }
 
