@@ -2,11 +2,11 @@ import psycopg as psycopg2
 import os
 from flask import Flask, request, jsonify
 from dotenv import load_dotenv
-os.environ['PGHOST'] = 'recently-welcomed-mongrel.a1.pgedge.io'
+os.environ['PGHOST'] = 'nearly-famous-sunfish.a1.pgedge.io'
 os.environ['PGUSER'] = 'app'
-os.environ['PGDATABASE'] = 'defaultdb'
+os.environ['PGDATABASE'] = 'cirtdb'
 os.environ['PGSSLMODE'] = 'require'
-os.environ['PGPASSWORD'] = 'ty6NNb39tI642nC79Q1jep3V'
+os.environ['PGPASSWORD'] = 'E7V5i712eEE19DFD6JhSM7k7'
 
 # Load environment variables
 load_dotenv()
