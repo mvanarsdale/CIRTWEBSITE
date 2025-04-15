@@ -73,12 +73,20 @@ WSGI_APPLICATION = 'CIRTWEBSITE.wsgi.application'
 
 
 # Database
-# https://docs.djangoproject.com/en/4.2/ref/settings/#databases
+# updated postgresql database connection
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'cirtdb',
+        'USER': 'admin',
+        'PASSWORD': 'tQ0u1QD0k21cR0su775Q3Are',
+        'HOST': 'nearly-famous-sunfish.a1.pgedge.io',
+        'PORT': '5432',  
+        'OPTIONS': {
+             # SSL encryption
+            'sslmode': 'require',  
+        }
     }
 }
 
@@ -132,4 +140,4 @@ STATICFILES_DIRS = [
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # instead of the default update to use custom
-#AUTH_USER_MODEL = 'users.User'
+AUTH_USER_MODEL = 'core.CustomUser'
