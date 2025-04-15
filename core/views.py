@@ -17,8 +17,10 @@ from django.contrib.auth.decorators import login_required
 from core.models import Editor, Reviewer, Author #CustomUser
 
 # for poster upload
-from .forms import PosterForm
-from .models import CustomUser, Poster
+
+
+from django.http import FileResponse, Http404
+from .models import Poster
 
 
 
@@ -189,3 +191,10 @@ def upload_poster(request):
     else:
         return render(request, 'core/subComp.html')
     
+# view to save poster form ChatGPT
+def serve_poster_pdf(request, poster_id):
+    try:
+        poster = Poster.objects.get(id=poster_id)
+        return FileResponse(poster.pdf.open('rb'), content_type='application/pdf')
+    except Poster.DoesNotExist:
+        raise Http404("Poster not found")

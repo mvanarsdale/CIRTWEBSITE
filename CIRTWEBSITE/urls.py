@@ -36,10 +36,13 @@ urlpatterns = [
     # django authentication system
     path('accounts/', include('django.contrib.auth.urls')),
     # django auth views 
-    path('login/', user_view.ajax_login, name='ajax_login'),
+    path('login/', auth_views.LoginView.as_view(), name='login'),
     path('logout/', auth_views.LogoutView.as_view(), name='logout'),
     path('password_change/', auth_views.PasswordChangeView.as_view(), name='password_change'),
     path('password_change/done/', auth_views.PasswordChangeDoneView.as_view(), name='password_change_done'),
+    
+    
+    
     
     
     
