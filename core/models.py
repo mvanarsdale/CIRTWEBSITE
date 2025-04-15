@@ -11,16 +11,15 @@ from django.contrib.auth.models import AbstractUser
 from django.db.models import UniqueConstraint
 from django.db.models.functions import Lower
 
+from CIRTWEBSITE import settings
+
 
 #from core import admin
 
 # abstract user automattically includes nessary user fields 
 class CustomUser(AbstractUser):
-    # Your custom user model fields
-    #username = models.CharField(max_length=150, unique=True)
+    # custom user model fields
     name = models.CharField(max_length=150, blank=True)
-    #email = models.EmailField(blank=True)
-    #password = models.CharField(max_length=150, blank=True)
     
     
     # roles
@@ -44,17 +43,20 @@ class CustomUser(AbstractUser):
         related_name='core_user_permissions'  # Specify a unique related_name
     )
 
-class Role(models.Model):
-    name = models.CharField(max_length=20, unique=True)
 
-    def __str__(self):
-        return self.name
- 
+# base for user role groups
+# skeleton provided by chatGPT
+class BaseGroup(models.Model):
+    user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    #date_joined = models.DateTimeField(auto_now_add=True)
 
-class Author(models.Model):
-    user = models.OneToOneField(CustomUser, on_delete=models.CASCADE, related_name='author_profile', default=1)
+    class Meta:
+        abstract = True  # ← This makes it an abstract base class!
+
+
+# model for authors
+class Author(BaseGroup):
     
-
     class Meta:
         permissions = [ 
                        ("can_submit_PDF", "Can submit PDF"),
@@ -67,6 +69,43 @@ class Author(models.Model):
 
     def __str__(self):
         return f"{self.user.name}"
+    
+# model for reviewers
+class Reviewer(BaseGroup):
+    
+    class Meta:
+        permissions = [ 
+                       ("can_reviewF", "Can review"),
+                       ("can_communicate", "Can communicate")
+                       ]
+
+    def get_absolute_url(self):
+        """Returns the URL to access a particular author instance."""
+        return reverse('reviewer-detail', args=[str(self.id)])
+
+    def __str__(self):
+        return f"{self.user.name}"
+
+# model for reviewers
+class Editor(BaseGroup):
+    
+    class Meta:
+        permissions = [ 
+                       ("can_edit", "Can edit"),
+                       ("can_communicate", "Can communicate")
+                       ]
+
+    def get_absolute_url(self):
+        """Returns the URL to access a particular author instance."""
+        return reverse('editor-detail', args=[str(self.id)])
+
+    def __str__(self):
+        return f"{self.user.name}"
+
+
+
+
+
 
 
  
@@ -145,19 +184,22 @@ class Paper(models.Model):
     
 
 class Poster(models.Model):
-    """Model representing a paper"""
+    """Model representing a poster"""
+    # poster title
     title = models.CharField(max_length=200)
     # foreign key - only one author , authors can have multiple papers
     # .RESCRICT keeps the paper up even if the author is deleted 
-    author = models.ForeignKey('Author', on_delete=models.RESTRICT, null=True)
+    # author of the poster 
+    author = models.ForeignKey('CustomUser', on_delete=models.RESTRICT, null=True)
     
     # add image field for the poster PDF
-    
-    submitted_date = models.DateField(null=True, blank=True)
-    
+    pdf = models.FileField(upload_to='posters/', null=True, blank=True)  # This saves files to MEDIA_ROOT/posters/
+        
     def __str__(self):
         """represents model object"""
         return self.title
+ 
+ 
     
 # code from ChatGPT
 class Profile(models.Model):

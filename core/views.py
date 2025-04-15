@@ -3,16 +3,22 @@ from django.urls import reverse
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth import logout
 from django.contrib.auth import get_user_model
-
-
+#from . import models
 
 from django.contrib.auth import authenticate, login
 from django.http import JsonResponse
 
 # for messages with log in success / failure
-from django.contrib import messages
+#from django.contrib import messages
 
-from core.models import CustomUser
+
+from core.models import Editor, Reviewer, Author #CustomUser
+
+# for poster upload
+from .forms import PosterForm
+from .models import CustomUser, Poster
+
+
 
 # page views
 def old_to_new_redirect(request):
@@ -58,7 +64,6 @@ def authPort(request):
 # poster submit view 
 def PosterSubmit(request):
     return render(request, 'core/PosterSubmit.html')
-
 # 
 def posterSub(request):
     return render(request, 'core/posterSub.html')
@@ -75,32 +80,6 @@ def JournalProc(request):
 def subComp(request):
     return render(request, 'core/subComp.html')
 
-
-# code pulled from ChatGPT
-def signup(request):
-    # defines new user variables
-    if request.method == 'POST':
-        name = request.POST.get('name')
-        email = request.POST.get('email')
-        username = request.POST.get('username')
-        password = request.POST.get('password')
-        role = request.POST.get('role')
-        
-        # Check if username or email already exists
-        if CustomUser.objects.filter(username=username).exists():
-            messages.error(request, 'Username already taken!')
-            return redirect('signup')
-        if CustomUser.objects.filter(email=email).exists():
-            messages.error(request, 'Email is already in use!')
-            return redirect('signup')
-        
-        # create a user object
-        CustomUser.objects.create_user(username=username, password=password, email=email, first_name=name, role=role)        
-        
-        #messages.success(request, 'Account created successfully!')
-        return redirect(ajax_login(request))
-    
-    return render(request, 'components/signup_popup.html')
 
 # Code generated from ChatGPT
 def ajax_login(request):
@@ -163,10 +142,43 @@ def ajax_signup(request):
 
         user = User.objects.create_user(username=username, password=password, email=email)
         user.first_name = name
+        
+        if role:
+            user.role = role  # ←💥 ADD THIS LINE to set the role!
         user.save()
+
+
+        if role == 'Author':
+            Author.objects.create(user=user)
+        elif role == 'Editor':
+            Editor.objects.create(user=user)
+        elif role == 'Reviewer':
+            Reviewer.objects.create(user=user)
 
         login(request, user)
 
         return JsonResponse({'success': True, 'username': user.username})
     
     return JsonResponse({'success': False, 'error_message': 'Invalid request'})
+
+# view for poster submit form
+def upload_poster(request):
+    if request.method == 'POST':
+        title = request.POST.get('title')
+        #author = request.POST.get('author')
+        pdf = request.FILES.get('pdf')
+        
+        # getting the authors specfic username - help from ChatGPT
+        user = request.user
+        #usern = CustomUser.objects.get(user=user)
+        #username = user.username
+        #author = CustomUser.objects.get(author=author)
+        
+    
+        poster = Poster.objects.create(title=title, author=user, pdf=pdf)
+        poster.save()
+        
+    
+        return redirect('subComp')  # or wherever you want to go after upload (づ￣ ³￣)づ
+    else:
+        return render(request, 'core/subComp.html')

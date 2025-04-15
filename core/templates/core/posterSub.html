@@ -167,29 +167,40 @@
  
  {% block content %}
 <!-- Main Content -->
-<div class="container">
-    <div class="author-info">
-        <h2>Author's Name: <span id="authorName">John Doe</span></h2>
-        <p>Date: <span id="currentDate"></span></p>
-    </div>
-
-    <div class="sections">
-        <div class="left-section">
-            <h3>File Preview</h3>
-            <div class="file-preview" id="filePreview">No file selected</div>
-            <div class="choose-btn" onclick="openModal()">Choose File</div>
-            <div class="fullscreen-btn" onclick="openFullScreen()">Full Screen</div>
+<form method="POST" enctype="multipart/form-data" action="{% url 'upload_poster' %}">
+    {% csrf_token %}
+    <!-- Updated to connect to backend -->
+     <!-- code from chatGPT-->
+    <div class="container">
+        <div class="author-info">
+            <h2>Author's Name: <span id="authorName">John Doe</span></h2>
+            <p>Date: <span id="currentDate"></span></p>
         </div>
 
-        <div class="right-section">
-            <h3>Description Box</h3>
-            <textarea class="text-area" placeholder="Enter description here..."></textarea>
-            <div class="submit-section">
-            <a href="{% url 'subComp' %}" class="portal-button">Submit</a>
+        <div class="sections">
+            <div class="left-section">
+                <h3>File Preview</h3>
+                <div class="file-preview" id="filePreview">No file selected</div>
+                
+                <!-- PDF File Input -->
+                <input type="file" id="id_pdf" name="pdf" accept="application/pdf" onchange="previewPDF(this)" hidden>
+                <div class="choose-btn" onclick="document.getElementById('id_pdf').click()">Choose File</div>
+
+                <div class="fullscreen-btn" onclick="openFullScreen()">Full Screen</div>
+            </div>
+
+            <div class="right-section">
+                <h3>Description Box</h3>
+                <!-- Description Field -->
+                <textarea class="text-area" name="title" placeholder="Enter description here..."></textarea>
+
+                <div class="submit-section">
+                    <button type="submit" class="portal-button">Submit</button>
+                </div>
             </div>
         </div>
     </div>
-</div>
+</form>
 
 <!-- File Upload Modal -->
 <div class="modal" id="fileModal">
@@ -210,6 +221,31 @@
 </div>
 
 <script>
+    function previewPDF(input) {
+        const file = input.files[0];
+        const previewContainer = document.getElementById('filePreview');
+
+        if (file && file.type === "application/pdf") {
+            const fileURL = URL.createObjectURL(file);
+            previewContainer.innerHTML = `<iframe src="${fileURL}" width="100%" height="400px"></iframe>`;
+        } else {
+            previewContainer.textContent = "Invalid file type. Please select a PDF.";
+        }
+    }
+
+    function openFullScreen() {
+        const iframe = document.querySelector('#filePreview iframe');
+        if (iframe) {
+            const url = iframe.src;
+            window.open(url, '_blank').focus();
+        } else {
+            alert("No PDF to view fullscreen (´-ω-`)");
+        }
+    }
+    
+    
+    
+    
     document.getElementById('currentDate').innerText = new Date().toLocaleDateString();
 
     function openModal() {
