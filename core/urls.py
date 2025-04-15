@@ -1,6 +1,7 @@
 from django.urls import path
 from . import views
 
+
 urlpatterns = [
     # for default / homepage (index) view
     path('', views.index, name='index'),
@@ -44,7 +45,7 @@ urlpatterns = [
     path('JournalProc/', views.JournalProc, name='JournalProc'),
     
     path('upload_poster/', views.upload_poster, name='upload_poster'),
-    
+    path('poster/pdf/<int:poster_id>/', views.serve_poster_pdf, name='serve_poster_pdf'),
     
 
 
