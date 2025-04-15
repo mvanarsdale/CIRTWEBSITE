@@ -720,9 +720,20 @@
                         <strong>New Posters</strong>
                         <a href={% url 'posterSub' %} class="new-journal">Submit New Poster</a>
                     </div>
+                    {% if posters %}
                     <div class="section">
                         <strong>My Posters</strong>
-                        <p>View and manage uploaded posters.</p>
+                        {% for poster in posters %}
+                        <div class="poster-card">
+                            <img src="{{ poster.image.url }}" alt="{{ poster.title }}">
+                            <p>{{ poster.title }}</p>
+                          </div>
+                        {% endfor %}
+                      </div>
+                    {% else %}
+                      <p>You haven’t uploaded any posters yet! (*´▽｀)ﾉﾉ</p>
+                    {% endif %}
+                         <!-- <p>View and manage uploaded posters.</p>  -->
                     </div>
                 </div>
             </div>

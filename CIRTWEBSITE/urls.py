@@ -23,6 +23,10 @@ from django.contrib.auth import views as auth_views
 from core import views as user_view
 from django.contrib.auth import views as auth
 
+# for poster pdf uploads
+from django.conf import settings
+from django.conf.urls.static import static
+
 urlpatterns = [
 
     # Redirect from root to the core app's homepage
@@ -32,11 +36,16 @@ urlpatterns = [
     # django authentication system
     path('accounts/', include('django.contrib.auth.urls')),
     # django auth views 
-    path('login/', auth_views.LoginView.as_view(), name='login'),
+    path('login/', user_view.ajax_login, name='ajax_login'),
     path('logout/', auth_views.LogoutView.as_view(), name='logout'),
     path('password_change/', auth_views.PasswordChangeView.as_view(), name='password_change'),
     path('password_change/done/', auth_views.PasswordChangeDoneView.as_view(), name='password_change_done'),
     
+    
+    
     #path('register/', user_view.signup, name ='register'),
     
-]
+] 
+
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
