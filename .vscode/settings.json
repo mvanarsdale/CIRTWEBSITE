@@ -1,13 +1,16 @@
 {
     "sqltools.connections": [
         {
+            "pgOptions": {
+                "ssl": {
+                    "rejectUnauthorized": true
+                }
+            },
             "previewLimit": 50,
             "server": "localhost",
-            "port": 5432,
             "driver": "PostgreSQL",
-            "name": "nearly-famous-sunfish.a1.pgedge.io",
-            "database": "cirtdb",
-            "username": "app"
+            "connectString": "postgresql://app:E7V5i712eEE19DFD6JhSM7k7@nearly-famous-sunfish.a1.pgedge.io/cirtdb?sslmode=require",
+            "name": "cirtdb"
         }
     ]
 }
