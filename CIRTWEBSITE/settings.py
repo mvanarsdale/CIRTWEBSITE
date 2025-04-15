@@ -146,3 +146,6 @@ AUTH_USER_MODEL = 'core.CustomUser'
 # for media uploads code form chatGPT
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
+
+# for dashboard login requirement
+LOGIN_URL = '/login-required/'

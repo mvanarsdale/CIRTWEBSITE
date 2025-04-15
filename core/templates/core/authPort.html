@@ -708,9 +708,8 @@
         </script>
         
 
-        <!-- Main Content -->
         <div class="main-content">
-            <!-- Posters Dropdown -->
+            <!-- Posters Dropdown Code from ChatGPT -->
             <div class="dropdown">
                 <div class="dropdown-header" onclick="toggleDropdown('posters')">
                     Posters ▼
@@ -718,26 +717,31 @@
                 <div class="dropdown-content" id="posters">
                     <div class="section">
                         <strong>New Posters</strong>
-                        <a href={% url 'posterSub' %} class="new-journal">Submit New Poster</a>
+                        <a href="{% url 'posterSub' %}" class="new-journal">Submit New Poster</a>
                     </div>
                     {% if posters %}
                     <div class="section">
-                        <strong>My Posters</strong>
                         {% for poster in posters %}
-                        <div class="poster-card">
-                            <img src="{{ poster.image.url }}" alt="{{ poster.title }}">
-                            <p>{{ poster.title }}</p>
-                          </div>
+                            <div class="thumbnail" data-student="{{ poster.student_name }}" data-poster="{{ poster.title }}">
+                                <div class="pdf-preview">
+                                    <iframe 
+                                        src="{{ poster.pdf.url }}"
+                                        width="300"
+                                        height="400"
+                                        frameborder="0">
+                                    </iframe>
+                                </div>
+                                <h4>{{ poster.title }}</h4>
+                            </div>
                         {% endfor %}
-                      </div>
-                    {% else %}
-                      <p>You haven’t uploaded any posters yet! (*´▽｀)ﾉﾉ</p>
-                    {% endif %}
-                         <!-- <p>View and manage uploaded posters.</p>  -->
                     </div>
+                    {% else %}
+                        <p>No posters available yet.</p>
+                    {% endif %}
                 </div>
             </div>
-
+        </div>
+        
             <!-- Journals Dropdown -->
             <div class="dropdown">
                 <div class="dropdown-header" onclick="toggleDropdown('journals')">

@@ -187,6 +187,9 @@ class Poster(models.Model):
     
     # add image field for the poster PDF
     pdf = models.FileField(upload_to='posters/', null=True, blank=True)  # This saves files to MEDIA_ROOT/posters/
+    
+    # thumbnail for the poster 
+    thumbnail = models.ImageField(upload_to='posters/thumbnails/', blank=True, null=True)
         
     def __str__(self):
         """represents model object"""

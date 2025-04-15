@@ -48,9 +48,10 @@ def journals(request):
     return render(request, 'core/journals.html')
 
 # for the dashboard page
+#@login_required
 def Dashboard(request):
     return render(request, 'core/Dashboard.html')
-
+        
 # portals 
 # editor portal
 def editPort(request):
@@ -187,3 +188,4 @@ def upload_poster(request):
         return redirect('subComp')  # or wherever you want to go after upload (づ￣ ³￣)づ
     else:
         return render(request, 'core/subComp.html')
+    
