@@ -323,30 +323,17 @@
         <input type="text" id="filterInput" placeholder="Enter filter term">
     </div>
 
-    <!-- Poster Gallery -->
+    <!-- Poster Gallery Code from ChartGPT-->
     <div class="gallery">
-        <div class="thumbnail" data-student="John Doe" data-poster="Poster Title 1" data-date="2024">
-            <a href="#" class="poster-link" data-src="poster1.pdf">
-                <img src="images/pexels-cottonbro-4547587.jpg" alt="Poster 1" class="cards">
+        {% for poster in posters %}
+        <div class="thumbnail"
+             
+            <a href="#" class="poster-link" data-src="{{ poster.pdf.url }}">
+                <img src="{{ poster.image.url }}" alt="{{ poster.title }}" class="cards">
             </a>
-            <h4>Poster Title 1</h4>
-            <p class="caption">Student: John Doe | Major: Criminology | Created: 2024</p>
+            <h4>{{ poster.title }}</h4>
         </div>
-        <div class="thumbnail" data-student="Jane Smith" data-poster="Poster Title 2" data-date="2023">
-            <a href="#" class="poster-link" data-src="poster2.pdf">
-                <img src="images/pexels-fotios-photos-5653734.jpg" alt="Poster 2" class="cards">
-            </a>
-            <h4>Poster Title 2</h4>
-            <p class="caption">Student: Jane Smith | Major: Criminology | Created: 2023</p>
-        </div>
-        <div class="thumbnail" data-student="Sarah Lee" data-poster="Poster Title 3" data-date="2022">
-            <a href="#" class="poster-link" data-src="poster3.pdf">
-                <img src="images/pexels-inga-sv-4066761.jpg" alt="Poster 3" class="cards">
-            </a>
-            <h4>Poster Title 3</h4>
-            <p class="caption">Student: Sarah Lee | Major: Psychology | Created: 2022</p>
-        </div>
-        
+        {% endfor %}
     </div>
 
     <!-- Modal for displaying posters -->

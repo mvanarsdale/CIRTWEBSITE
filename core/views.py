@@ -8,6 +8,8 @@ from django.contrib.auth import get_user_model
 from django.contrib.auth import authenticate, login
 from django.http import JsonResponse
 
+from django.contrib.auth.decorators import login_required
+
 # for messages with log in success / failure
 #from django.contrib import messages
 
@@ -30,7 +32,8 @@ def index(request):
 
 # for the posters page
 def posters(request):
-    return render(request, 'core/posters.html')
+    posters = Poster.objects.all()
+    return render(request, 'core/posters.html', {'posters': posters})
 
 # for the homepage
 def contact(request):
@@ -58,8 +61,10 @@ def reviewPort(request):
     return render(request, 'core/reviewPort.html')
 
 # author portal
+@login_required
 def authPort(request):
-    return render(request, 'core/authPort.html')
+    user_posters = Poster.objects.filter(author=request.user)
+    return render(request, 'core/authPort.html', {'posters': user_posters})
 
 # poster submit view 
 def PosterSubmit(request):

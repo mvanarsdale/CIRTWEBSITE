@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
+import os
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -73,7 +74,7 @@ WSGI_APPLICATION = 'CIRTWEBSITE.wsgi.application'
 
 
 # Database
-# https://docs.djangoproject.com/en/4.2/ref/settings/#databases
+# updated postgresql database connection
 
 DATABASES = {
     'default': {
@@ -84,7 +85,8 @@ DATABASES = {
         'HOST': 'nearly-famous-sunfish.a1.pgedge.io',
         'PORT': '5432',  
         'OPTIONS': {
-            'sslmode': 'require',  # SSL encryption (very important for pgEdge)
+             # SSL encryption
+            'sslmode': 'require',  
         }
     }
 }
@@ -140,3 +142,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # instead of the default update to use custom
 AUTH_USER_MODEL = 'core.CustomUser'
+
+# for media uploads code form chatGPT
+MEDIA_URL = '/media/'
+MEDIA_ROOT = BASE_DIR / 'media'

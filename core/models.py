@@ -20,8 +20,7 @@ from CIRTWEBSITE import settings
 class CustomUser(AbstractUser):
     # custom user model fields
     name = models.CharField(max_length=150, blank=True)
-    
-    
+  
     # roles
     ROLE_CHOICES = [
         ('user', 'User'),
@@ -103,12 +102,6 @@ class Editor(BaseGroup):
         return f"{self.user.name}"
 
 
-
-
-
-
-
- 
 # https://developer.mozilla.org/en-US/docs/Learn_web_development/Extensions/Server-side/Django
 class KeyWord(models.Model):
     """Model that represents the keywords class"""
