@@ -181,9 +181,10 @@ def upload_poster(request):
         #usern = CustomUser.objects.get(user=user)
         #username = user.username
         #author = CustomUser.objects.get(author=author)
+        date = request.submitted_date
         
     
-        poster = Poster.objects.create(title=title, author=user, pdf=pdf)
+        poster = Poster.objects.create(title=title, author=user, date=date, pdf=pdf)
         poster.save()
         
     

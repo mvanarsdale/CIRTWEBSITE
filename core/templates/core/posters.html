@@ -323,14 +323,16 @@
         <div class="thumbnail" data-student="{{ poster.student_name }}" data-poster="{{ poster.title }}">
             <div class="pdf-preview">
                 <iframe 
-    src="{{ poster.pdf.url }}" 
-    width="300" 
-    height="400"
-    style="border: none;">
-</iframe>
+                    src="{{ poster.pdf.url }}" 
+                    width="300" 
+                    height="400"
+                    style="border: none;">
+                </iframe>
 
             </div>
             <h4>{{ poster.title }}</h4>
+            <h4>{{ poster.author }}</h4>
+            <h4>{{ poster.date }}</h4>
         </div>
         {% endfor %}
     </div>

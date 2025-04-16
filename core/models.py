@@ -185,6 +185,9 @@ class Poster(models.Model):
     # author of the poster 
     author = models.ForeignKey('CustomUser', on_delete=models.RESTRICT, null=True)
     
+    # date 
+    submitted_date = models.DateField(auto_now_add=True)
+    
     # add image field for the poster PDF
     pdf = models.FileField(upload_to='posters/', null=True, blank=True)  # This saves files to MEDIA_ROOT/posters/
     
