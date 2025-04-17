@@ -37,7 +37,24 @@ with get_db_connection() as conn:
         """)
         conn.commit()
 
-# Step 3: Define upload route
+# Step 3: Create table for storing comments
+@app.route('/comment', methods=['POST'])
+def add_comment():
+    data = request.json
+    pdf_id = data['pdf_id']
+    comment = data['comment']
+
+    with get_db_connection() as conn:
+        with conn.cursor() as cursor:
+            cursor.execute(
+                "INSERT INTO pdf_comments (pdf_id, comment) VALUES (%s, %s)",
+                (pdf_id, comment)
+            )
+            conn.commit()
+
+    return jsonify({"message": "Comment added"})
+
+# Step 4: Define upload route
 @app.route("/upload", methods=["POST"])
 def upload_file():
     if "file" not in request.files:
@@ -64,7 +81,7 @@ def upload_file():
         except Exception as e:
             return jsonify({"error": str(e)}), 500
 
-# Step 4: Run the Flask app
+# Step 5: Run the Flask app
 if __name__ == "__main__":
     app.run(debug=True, port=5000)
     
