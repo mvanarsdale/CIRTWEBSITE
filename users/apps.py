@@ -35,7 +35,7 @@ def get_db_connection():
 def initialize_db():
     with get_db_connection() as conn:
         with conn.cursor() as cursor:
-            with open("Project.session.sql", "r") as sql_file:
+            with open("users\Project.session.sql", "r") as sql_file:
                 cursor.execute(sql_file.read())
         conn.commit()
 
