@@ -148,4 +148,6 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 
 # for dashboard login requirement
-LOGIN_URL = '/login-required/'
+#LOGIN_URL = '/login-required/'
+
+# testing
