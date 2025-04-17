@@ -38,6 +38,13 @@ with get_db_connection() as conn:
         conn.commit()
 
 # Step 3: Create table for storing comments
+CREATE TABLE pdf_comments (
+    id SERIAL PRIMARY KEY,
+    pdf_id INTEGER REFERENCES pdf_storage(id) ON DELETE CASCADE,
+    comment TEXT,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+#Step 4: Define route for comments
 @app.route('/comment', methods=['POST'])
 def add_comment():
     data = request.json
@@ -54,7 +61,26 @@ def add_comment():
 
     return jsonify({"message": "Comment added"})
 
-# Step 4: Define upload route
+Step 5: Get comments for PDFs from comments TABLE
+@app.route('/comments/<int:pdf_id>', methods=['GET'])
+def get_comments(pdf_id):
+    with get_db_connection() as conn:
+        with conn.cursor() as cursor:
+            cursor.execute(
+                "SELECT comment, created_at FROM pdf_comments WHERE pdf_id = %s ORDER BY created_at DESC",
+                (pdf_id,)
+            )
+            comments = cursor.fetchall()
+
+    return jsonify([
+        {"comment": row[0], "created_at": row[1].isoformat()} for row in comments
+    ])
+
+if __name__ == '__main__':
+    app.run(debug=True)
+
+
+# Step 6: Define upload route
 @app.route("/upload", methods=["POST"])
 def upload_file():
     if "file" not in request.files:
@@ -81,7 +107,7 @@ def upload_file():
         except Exception as e:
             return jsonify({"error": str(e)}), 500
 
-# Step 5: Run the Flask app
+# Step 7: Run the Flask app
 if __name__ == "__main__":
     app.run(debug=True, port=5000)
     
