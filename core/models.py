@@ -210,6 +210,29 @@ class Profile(models.Model):
         
     user = models.OneToOneField(CustomUser, on_delete=models.CASCADE)
     role = models.CharField(max_length=20, choices=ROLE_CHOICES)
+    
+    
+# ---------MODELS FOR ADMIN PORTAL----------------
+class News(models.Model):
+    """Model representing a poster"""
+    # news title title
+    title = models.CharField(max_length=30)
+    # author of the poster 
+    abstract = models.CharField(max_length=100)
+    
+    # add image field for the news preview PDF
+    pdf = models.FileField(upload_to='news/', null=True, blank=True)  # This saves files to MEDIA_ROOT/posters/
+
+        
+    def __str__(self):
+        """represents model object"""
+        return self.title
+
+class FAQ(models.Model):
+    # question 
+    question = models.CharField(max_length=100)
+    # answer 
+    answer = models.CharField(max_length=200)
    
     
     
