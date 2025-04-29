@@ -1,299 +1,299 @@
-    <style>
+<style>
         
-        .popup-overlay {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.5);
-        }
-        .popup {
-            display: none;
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background: #999;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
-            color: black !important;
-            position: relative;
-        }
-        .popup-content {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
-        .close-btn {
-            position: absolute;
-            top: 10px;
-            right: 15px;
-            font-size: 24px;
-            cursor: pointer;
-        }
-        
-        input[type="text"], input[type="password"] {
-            color: black !important;
-            background-color: white !important;
-            border: 1px solid #ccc;
-            padding: 8px;
-            border-radius: 4px;
-        }
-        
-        label, h2 {
-            color: black !important;  
-        }
-        
-        /* HEADER STYLING */
-        .header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background-color: #692022;
-            color: white;
-            padding: 15px 20px;
-        }
-        .logo img {
-            height: 50px;
-        }
-        .title {
-            font-size: 24px;
-            font-weight: bold;
-        }
-        .search-logout-container {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
+    .popup-overlay {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.5);
+    }
+    .popup {
+        display: none;
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background: #999;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+        color: black !important;
+        position: relative;
+    }
+    .popup-content {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+    .close-btn {
+        position: absolute;
+        top: 10px;
+        right: 15px;
+        font-size: 24px;
+        cursor: pointer;
+    }
+    
+    input[type="text"], input[type="password"] {
+        color: black !important;
+        background-color: white !important;
+        border: 1px solid #ccc;
+        padding: 8px;
+        border-radius: 4px;
+    }
+    
+    label, h2 {
+        color: black !important;  
+    }
+    
+    /* HEADER STYLING */
+    .header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background-color: #692022;
+        color: white;
+        padding: 15px 20px;
+    }
+    .logo img {
+        height: 50px;
+    }
+    .title {
+        font-size: 24px;
+        font-weight: bold;
+    }
+    .search-logout-container {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
 
-        .search-box input {
-            padding: 8px;
-            border: none;
-            border-radius: 4px;
-        }
+    .search-box input {
+        padding: 8px;
+        border: none;
+        border-radius: 4px;
+    }
 
-        .search-box button {
-            padding: 8px 12px;
-            background-color: #555;
-            color: white;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-        }
+    .search-box button {
+        padding: 8px 12px;
+        background-color: #555;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+    }
 
-        .search-box button:hover {
-            background-color: #777;
-        }
+    .search-box button:hover {
+        background-color: #777;
+    }
 
-        #logoutBtn {
-            padding: 8px 12px;
-            background-color: #555;
-            color: white;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-        }
+    #logoutBtn {
+        padding: 8px 12px;
+        background-color: #555;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+    }
 
-        #logoutBtn:hover {
-            background-color: #777;
-        }
-        
-        /* Navigation Bar */
-        .secondary_header {
-            background-color: #000000;
-            padding: 15px;
-            display: flex;
-            justify-content: center;
-        }
+    #logoutBtn:hover {
+        background-color: #777;
+    }
+    
+    /* Navigation Bar */
+    .secondary_header {
+        background-color: #000000;
+        padding: 15px;
+        display: flex;
+        justify-content: center;
+    }
 
-        .button-container {
-            display: flex;
-            justify-content: space-evenly;
-            width: 100%;
-        }
+    .button-container {
+        display: flex;
+        justify-content: space-evenly;
+        width: 100%;
+    }
 
-        .button-container .button {
-            background-color: #000000;
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            font-size: 16px;
-            cursor: pointer;
-            border-radius: 5px;
-        }
+    .button-container .button {
+        background-color: #000000;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        font-size: 16px;
+        cursor: pointer;
+        border-radius: 5px;
+    }
 
-        .button-container .button:hover {
-            background-color: #4B0909;
-        }
-        
-        /* Ensure both header elements span full width */
-        .header, .secondary_header {
-            width: 100%;
-            box-sizing: border-box;
-        }
+    .button-container .button:hover {
+        background-color: #4B0909;
+    }
+    
+    /* Ensure both header elements span full width */
+    .header, .secondary_header {
+        width: 100%;
+        box-sizing: border-box;
+    }
 
-        /* Remove any default margin from the body or header elements */
-        .body, .header {
-            margin: 0;
-            padding: 0;
-        }
+    /* Remove any default margin from the body or header elements */
+    .body, .header {
+        margin: 0;
+        padding: 0;
+    }
 
-        /* Filter Section Styling */
-        .filter-section {
-            margin: 20px 0;
-            padding: 10px;
-            background-color: #f4f4f4;
-            display: flex;
-            justify-content: flex-start;
-            align-items: center;
-            gap: 10px;
-        }
+    /* Filter Section Styling */
+    .filter-section {
+        margin: 20px 0;
+        padding: 10px;
+        background-color: #f4f4f4;
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        gap: 10px;
+    }
 
-        #filterSelect {
-            padding: 8px;
-            font-size: 16px;
-        }
+    #filterSelect {
+        padding: 8px;
+        font-size: 16px;
+    }
 
-        #filterInput {
-            padding: 8px;
-            font-size: 16px;
-            width: 200px;
-        }
+    #filterInput {
+        padding: 8px;
+        font-size: 16px;
+        width: 200px;
+    }
 
 
-        /* Gallery Styling */
-        .gallery {
-            display: flex;
-            justify-content: center;
-            flex-wrap: wrap;
-            background-color: #FFFFFF;
-            padding: 20px;
-        }
+    /* Gallery Styling */
+    .gallery {
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+        background-color: #FFFFFF;
+        padding: 20px;
+    }
 
-        .thumbnail {
-            width: 30%;
-            text-align: center;
-            margin: 15px;
-            background-color: #F8F8F8;
-            padding-bottom: 20px;
-            border-radius: 5px;
-            padding-top: 20px;
-            border-bottom: 4px solid #692022;
-        }
+    .thumbnail {
+        width: 30%;
+        text-align: center;
+        margin: 15px;
+        background-color: #F8F8F8;
+        padding-bottom: 20px;
+        border-radius: 5px;
+        padding-top: 20px;
+        border-bottom: 4px solid #692022;
+    }
 
-        .gallery .thumbnail h4 {
-            margin-top: 10px;
-            color: #692022;
-            text-align: center;
-        }
+    .gallery .thumbnail h4 {
+        margin-top: 10px;
+        color: #692022;
+        text-align: center;
+    }
 
-        /* Poster Thumbnails */
-        .cards {
-            width: 100%;
-            height: auto;
-            max-width: 300px;
-            opacity: 0.9;
-            cursor: pointer;
-            transition: transform 0.2s ease-in-out;
-        }
+    /* Poster Thumbnails */
+    .cards {
+        width: 100%;
+        height: auto;
+        max-width: 300px;
+        opacity: 0.9;
+        cursor: pointer;
+        transition: transform 0.2s ease-in-out;
+    }
 
-        .cards:hover {
-            transform: scale(1.05);
-        }
+    .cards:hover {
+        transform: scale(1.05);
+    }
 
-        /* Modal Styling */
-        .modal {
-            display: none;
-            position: fixed;
-            z-index: 1000;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0,0,0,0.8);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
+    /* Modal Styling */
+    .modal {
+        display: none;
+        position: fixed;
+        z-index: 1000;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0,0,0,0.8);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
 
-        .close-modal {
-            position: absolute;
-            top: 15px;
-            right: 30px;
-            color: white;
-            font-size: 30px;
-            cursor: pointer;
+    .close-modal {
+        position: absolute;
+        top: 15px;
+        right: 30px;
+        color: white;
+        font-size: 30px;
+        cursor: pointer;
 }
 
 
 
 .copyright {
-    color: #FFFFFF;
-    text-transform: uppercase;
-    font-weight: lighter;
-    letter-spacing: 2px;
+color: #FFFFFF;
+text-transform: uppercase;
+font-weight: lighter;
+letter-spacing: 2px;
 }
 #popupOverlay, #loginPopup, #posterModal {
-    display: none;
+display: none;
 }
 /* Popup Styling */
 .popup-overlay {
-    display: none;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.6);
-    z-index: 999;
+display: none;
+position: fixed;
+top: 0;
+left: 0;
+width: 100%;
+height: 100%;
+background: rgba(0, 0, 0, 0.6);
+z-index: 999;
 }
 
 .popup {
-    display: none;
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background: white;
-    padding: 20px;
-    border-radius: 8px;
-    z-index: 1000;
-    width: 300px;
-    text-align: center;
+display: none;
+position: fixed;
+top: 50%;
+left: 50%;
+transform: translate(-50%, -50%);
+background: white;
+padding: 20px;
+border-radius: 8px;
+z-index: 1000;
+width: 300px;
+text-align: center;
 }
 
 .popup-content input {
-    width: 100%;
-    padding: 8px;
-    margin: 5px 5;
+width: 100%;
+padding: 8px;
+margin: 5px 5;
 }
 
 .popup-content button {
-    background: #4B0909;
-    color: white;
-    border: none;
-    padding: 10px;
-    cursor: pointer;
+background: #4B0909;
+color: white;
+border: none;
+padding: 10px;
+cursor: pointer;
 }
 
 .popup-content button:hover {
-    background: #B7A28E;
+background: #B7A28E;
 }
 
 .close-btn {
-    position: absolute;
-    top: 10px;
-    right: 15px;
-    font-size: 20px;
-    cursor: pointer;
+position: absolute;
+top: 10px;
+right: 15px;
+font-size: 20px;
+cursor: pointer;
 }
 
-        
-        
-    </style>
+    
+    
+</style>
 <!-- templates/about.html -->
 {% extends 'core/base.html' %}
 
@@ -302,136 +302,160 @@
 {% block title %}Posters{% endblock %}
 
 {% block page_css %}
-    <link rel="stylesheet" href="{% static 'core/css/posterstyle.css' %}">
+<link rel="stylesheet" href="{% static 'core/css/posterstyle.css' %}">
 {% endblock %}
 
 {% block content %}
-    <!-- Filter Section -->
-    <div class="filter-section">
-        <label for="filterSelect">Filter by:</label>
-        <select id="filterSelect">
-            <option value="student">Student Name</option>
-            <option value="poster">Poster Title</option>
-            <option value="date">Date Created</option>
-        </select>
-        <input type="text" id="filterInput" placeholder="Enter filter term">
+<!-- Filter Section -->
+<form method="get" action="{% url 'posters' %}" class="filter-section" style="display: flex; align-items: center; gap: 10px;">
+    <label for="filterSelect">Filter by:</label>
+    <select id="filterSelect" name="filter_by" style="padding: 8px;">
+        <option value="author">Author</option>
+        <option value="title">Poster Title</option>
+        <option value="submitted_date">Date Submitted</option>
+    </select>
+
+    <input type="text" id="filterInput" name="filter_term" placeholder="Enter filter term" style="padding: 8px;">
+
+    <!-- Sorting dropdown -->
+    <label for="sortSelect" style="margin-left: auto;">Sort by:</label>
+    <select id="sortSelect" name="sort_by" style="padding: 8px;">
+        <option value="author_asc">Author A-Z</option>
+        <option value="author_desc">Author Z-A</option>
+        <option value="newest">Newest Published</option>
+        <option value="oldest">Oldest Published</option>
+    </select>
+
+    <button type="submit" style="padding: 8px 12px; background-color: #3b0000; color: white; border: none; border-radius: 6px; cursor: pointer;">
+        Search
+    </button>
+</form>
+{% if request.GET.filter_term or request.GET.sort_by %}
+    <div style="margin-top: 15px;">
+        <a href="{% url 'posters' %}">
+            <button style="padding: 8px 12px; background-color: #777; color: white; border: none; border-radius: 6px; cursor: pointer;">
+                Clear Search / Go Back
+            </button>
+        </a>
     </div>
+{% endif %}
 
-    <!-- Poster Gallery Code from ChatGPT-->
-    <div class="gallery">
-        {% for poster in posters %}
-        <div class="thumbnail" data-student="{{ poster.student_name }}" data-poster="{{ poster.title }}">
-            <div class="pdf-preview">
-                <iframe 
-                    src="{{ poster.pdf.url }}" 
-                    width="300" 
-                    height="400"
-                    style="border: none;">
-                </iframe>
 
-            </div>
-            <h4>{{ poster.title }}</h4>
-            <h4>{{ poster.author }}</h4>
-            <h4>{{ poster.date }}</h4>
+<!-- Poster Gallery Code from ChatGPT-->
+<div class="gallery">
+    {% for poster in posters %}
+    <div class="thumbnail" data-student="{{ poster.student_name }}" data-poster="{{ poster.title }}">
+        <div class="pdf-preview">
+            <!-- Display the thumbnail image -->
+            {% if poster.thumbnail %}
+                <img src="{{ poster.thumbnail.url }}" width="300" height="400" style="border: none;" />
+            {% else %}
+                <!-- For now -->
+                <a href="{{ poster.pdf.url }}" target="_blank">View Full PDF</a>
+            {% endif %}
         </div>
-        {% endfor %}
+        <h4>{{ poster.title }}</h4>
+        <h4>{{ poster.author }}</h4>
+        <h4>{{ poster.submitted_date }}</h4>
     </div>
+    {% endfor %}
+</div>
 
-    <!-- Modal for displaying posters -->
-    <div id="posterModal" class="modal">
-        <span class="close-modal">&times;</span>
-        <iframe id="posterFrame" src=""></iframe>
-    </div>
+<!-- Modal for displaying posters -->
+<div id="posterModal" class="modal">
+    <span class="close-modal">&times;</span>
+    <iframe id="posterFrame" src=""></iframe>
+</div>
 
 
 
-    <!-- JavaScript -->
-    <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            // Handle the login popup
-            const loginBtn = document.getElementById('loginBtn');
-            const loginPopup = document.getElementById('loginPopup');
-            const popupOverlay = document.getElementById('popupOverlay');
-            const closeBtn = document.querySelector('.close-btn');
+<!-- JavaScript -->
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        // Handle the login popup
+        const loginBtn = document.getElementById('loginBtn');
+        const loginPopup = document.getElementById('loginPopup');
+        const popupOverlay = document.getElementById('popupOverlay');
+        const closeBtn = document.querySelector('.close-btn');
 
-            // Show pop-up when login button is clicked
-            loginBtn.addEventListener('click', () => {
-                loginPopup.style.display = 'block';
-                popupOverlay.style.display = 'block';
-            });
+        // Show pop-up when login button is clicked
+        loginBtn.addEventListener('click', () => {
+            loginPopup.style.display = 'block';
+            popupOverlay.style.display = 'block';
+        });
 
-            // Hide pop-up when close button or overlay is clicked
-            closeBtn.addEventListener('click', () => {
-                loginPopup.style.display = 'none';
-                popupOverlay.style.display = 'none';
-            });
+        // Hide pop-up when close button or overlay is clicked
+        closeBtn.addEventListener('click', () => {
+            loginPopup.style.display = 'none';
+            popupOverlay.style.display = 'none';
+        });
 
-            popupOverlay.addEventListener('click', () => {
-                loginPopup.style.display = 'none';
-                popupOverlay.style.display = 'none';
-            });
+        popupOverlay.addEventListener('click', () => {
+            loginPopup.style.display = 'none';
+            popupOverlay.style.display = 'none';
+        });
 
-            // Filter Functionality
-            document.getElementById("filterInput").addEventListener("input", function () {
-                let filterValue = this.value.toLowerCase();
-                let filterType = document.getElementById("filterSelect").value;
-                let thumbnails = document.querySelectorAll(".thumbnail");
+        // Filter Functionality
+        document.getElementById("filterInput").addEventListener("input", function () {
+            let filterValue = this.value.toLowerCase();
+            let filterType = document.getElementById("filterSelect").value;
+            let thumbnails = document.querySelectorAll(".thumbnail");
 
-                thumbnails.forEach(thumbnail => {
-                    let filterData = thumbnail.getAttribute(`data-${filterType}`).toLowerCase();
-                    if (filterData.includes(filterValue)) {
-                        thumbnail.style.display = "block";
-                    } else {
-                        thumbnail.style.display = "none";
-                    }
-                });
-            });
-
-            // Search Functionality (same as before)
-            document.getElementById("searchInput").addEventListener("input", function () {
-                let filter = this.value.toLowerCase();
-                let thumbnails = document.querySelectorAll(".thumbnail");
-
-                thumbnails.forEach(thumbnail => {
-                    let title = thumbnail.querySelector("h4").textContent.toLowerCase();
-                    let caption = thumbnail.querySelector(".caption").textContent.toLowerCase();
-                    if (title.includes(filter) || caption.includes(filter)) {
-                        thumbnail.style.display = "block";
-                    } else {
-                        thumbnail.style.display = "none";
-                    }
-                });
-            });
-
-            // Poster Modal Functionality
-            document.querySelectorAll(".poster-link").forEach(link => {
-                link.addEventListener("click", function (event) {
-                    event.preventDefault();
-                    let pdfSrc = this.getAttribute("data-src");
-                    let modal = document.getElementById("posterModal");
-                    let iframe = document.getElementById("posterFrame");
-
-                    iframe.src = pdfSrc;
-                    modal.style.display = "flex";
-                });
-            });
-
-            // Close Modal
-            document.querySelector(".close-modal").addEventListener("click", function () {
-                document.getElementById("posterModal").style.display = "none";
-                document.getElementById("posterFrame").src = ""; // Reset iframe
-            });
-
-            // Close modal when clicking outside the iframe
-            window.addEventListener("click", function (event) {
-                let modal = document.getElementById("posterModal");
-                if (event.target === modal) {
-                    modal.style.display = "none";
-                    document.getElementById("posterFrame").src = "";
+            thumbnails.forEach(thumbnail => {
+                let filterData = thumbnail.getAttribute(`data-${filterType}`).toLowerCase();
+                if (filterData.includes(filterValue)) {
+                    thumbnail.style.display = "block";
+                } else {
+                    thumbnail.style.display = "none";
                 }
             });
         });
-    </script>
+
+        // Search Functionality (same as before)
+        document.getElementById("searchInput").addEventListener("input", function () {
+            let filter = this.value.toLowerCase();
+            let thumbnails = document.querySelectorAll(".thumbnail");
+
+            thumbnails.forEach(thumbnail => {
+                let title = thumbnail.querySelector("h4").textContent.toLowerCase();
+                let caption = thumbnail.querySelector(".caption").textContent.toLowerCase();
+                if (title.includes(filter) || caption.includes(filter)) {
+                    thumbnail.style.display = "block";
+                } else {
+                    thumbnail.style.display = "none";
+                }
+            });
+        });
+
+        // Poster Modal Functionality
+        document.querySelectorAll(".poster-link").forEach(link => {
+            link.addEventListener("click", function (event) {
+                event.preventDefault();
+                let pdfSrc = this.getAttribute("data-src");
+                let modal = document.getElementById("posterModal");
+                let iframe = document.getElementById("posterFrame");
+
+                iframe.src = pdfSrc;
+                modal.style.display = "flex";
+            });
+        });
+
+        // Close Modal
+        document.querySelector(".close-modal").addEventListener("click", function () {
+            document.getElementById("posterModal").style.display = "none";
+            document.getElementById("posterFrame").src = ""; // Reset iframe
+        });
+
+        // Close modal when clicking outside the iframe
+        window.addEventListener("click", function (event) {
+            let modal = document.getElementById("posterModal");
+            if (event.target === modal) {
+                modal.style.display = "none";
+                document.getElementById("posterFrame").src = "";
+            }
+        });
+    });
+</script>
 
 </body>
 </html>
