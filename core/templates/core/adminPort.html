@@ -1,0 +1,1447 @@
+    <style>
+        {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family:  'Lora', 'Times New Roman', serif;}.primary_header;
+        
+
+        body {
+            background-color: #f4f4f4;
+        }
+
+        /* Header */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #692022;
+            padding: 15px 20px;
+            color: white;
+        }
+
+        .logo img {
+            height: 50px;
+        }
+
+        .nav {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+        }
+
+        .nav a {
+            color: white;
+            text-decoration: none;
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        .logout {
+            margin-left: auto;
+        }
+
+        .logout-btn {
+            background-color: #555;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            cursor: pointer;
+            border-radius: 5px;
+            text-decoration: none
+        }
+
+        .logout-btn:hover {
+            background-color: #cc0000;
+        }
+        
+        /* Navigation Bar */
+        .secondary_header {
+            background-color: #000000;
+            padding: 15px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .button-container {
+            display: flex;
+            justify-content: space-evenly; /* Evenly space the buttons across the container */
+            width: 100%; /* Stretch the container to full width */
+        }
+
+        .button-container .button {
+            background-color: #000000;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        .button-container .button:hover {
+            background-color: #4B0909;  
+        }
+        
+        .sidebar-link {
+            width: 100%;
+            padding: 10px;
+            background-color: #555;
+            color: white;
+            border: none;
+            cursor: pointer;
+            text-align: left;
+            text-decoration: none;
+            display: block;
+            font-size: 16px;
+            border-radius: 0; /* Match button style */
+        }
+
+        .sidebar-link:hover {
+            background-color: #777;
+        }
+        
+        /* Layout */
+        .container {
+            display: flex;
+            height: calc(100vh - 70px);
+        }
+
+        {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background-color: #f4f4f4;
+        }
+        
+        /* Sidebar */
+        .sidebar {
+            width: 200px;
+            background-color: #692022;
+            padding: 15px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .sidebar button, .sidebar a {
+            width: 100%;
+            padding: 10px;
+            background-color: #555;
+            color: white;
+            border: none;
+            cursor: pointer;
+            text-align: left;
+            text-decoration: none;
+            display: block;
+            font-size: 16px;
+        }
+
+
+        .sidebar button:hover, .sidebar a:hover {
+            background-color: #777;
+        }
+
+        .sidebar button:hover {
+            background-color: #777;
+        }
+        
+        
+
+        
+        /* Profile Popup */
+        .profile-popup {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 400px;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+            z-index: 1000;
+        }
+
+        .profile-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .profile-header img {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            margin-right: 10px;
+        }
+
+        .profile-info {
+            flex: 1;
+        }
+
+        .profile-section {
+            margin-bottom: 15px;
+        }
+
+        .profile-section h3 {
+            margin-bottom: 5px;
+            font-size: 16px;
+        }
+
+        .profile-section p {
+            font-size: 14px;
+            color: #555;
+        }
+
+        .edit-input {
+            width: 100%;
+            padding: 5px;
+            font-size: 14px;
+            display: none;
+        }
+
+        /* Buttons */
+        .button-group {
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+        }
+
+        .button-group button {
+            padding: 8px 12px;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        .edit-btn {
+            background: #007bff;
+            color: white;
+        }
+
+        .save-btn {
+            background: #28a745;
+            color: white;
+            display: none;
+        }
+
+        .close-btn {
+            background: #ff4d4d;
+            color: white;
+        }
+
+        /* Overlay */
+        .overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 999;
+        }
+        
+        /* Settings Popup */
+        .settings-popup {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 400px;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+            z-index: 1000;
+        }
+
+        .settings-header {
+            font-size: 20px;
+            font-weight: bold;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .settings-section {
+            margin-bottom: 15px;
+        }
+
+        .settings-section h3 {
+            font-size: 16px;
+            margin-bottom: 5px;
+        }
+
+        /* Time Zone Dropdown */
+        .settings-section select {
+            width: 100%;
+            padding: 5px;
+            font-size: 14px;
+            display: none;
+        }
+
+        /* Notifications Toggle */
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 40px;
+            height: 20px;
+        }
+
+        .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            border-radius: 20px;
+            transition: 0.4s;
+        }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 14px;
+            width: 14px;
+            left: 3px;
+            bottom: 3px;
+            background-color: white;
+            border-radius: 50%;
+            transition: 0.4s;
+        }
+
+        input:checked + .slider {
+            background-color: #007bff;
+        }
+
+        input:checked + .slider:before {
+            transform: translateX(20px);
+        }
+
+        /* Display Name */
+        .settings-section input[type="text"] {
+            width: 100%;
+            padding: 5px;
+            font-size: 14px;
+            display: none;
+        }
+
+        /* Buttons */
+        .button-group {
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+        }
+
+        .button-group button {
+            padding: 8px 12px;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        .edit-btn {
+            background: #007bff;
+            color: white;
+        }
+
+        .save-btn {
+            background: #28a745;
+            color: white;
+            display: none;
+        }
+
+        .close-btn {
+            background: #ff4d4d;
+            color: white;
+        }
+
+        /* Overlay */
+        .overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 999;
+        } 
+        
+        .popup-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+        }
+
+        .popup {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            z-index: 1001;
+            width: 300px;
+            text-align: center;
+        }
+
+        textarea {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .popup-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .popup-buttons button {
+            padding: 8px 12px;
+            border: none;
+            background: #007bff;
+            color: white;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .popup-buttons button:hover {
+            background: #0056b3;
+        }
+        
+        .message-popup {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 600px;
+            background: #1e1e1e;
+            color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+            z-index: 1001;
+            padding: 20px;
+        }
+
+        .message-body {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .message-input {
+            background: #2b2b2b;
+            color: white;
+            border: none;
+            padding: 10px;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+
+        .message-textarea {
+            background: #2b2b2b;
+            color: white;
+            border: none;
+            padding: 10px;
+            border-radius: 5px;
+            font-size: 14px;
+            height: 140px;
+            resize: vertical;
+        }
+
+        .message-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 10px;
+        }
+
+        .attach-label {
+            background: #444;
+            padding: 8px 12px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: background 0.3s ease;
+        }
+
+        .attach-label:hover {
+            background: #555;
+        }
+
+        .file-input {
+            display: none;
+        }
+
+        .send-btn {
+            background: #0078d4;
+            color: white;
+            padding: 8px 16px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .send-btn:hover {
+            background: #005fa3;
+        }
+
+        .close-message {
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            background: transparent;
+            color: white;
+            font-size: 20px;
+            border: none;
+            cursor: pointer;
+        }
+
+        .tab-container {
+          flex: 1;
+          padding: 20px;
+          overflow-y: auto;
+        }
+
+        .tab-buttons {
+          display: flex;
+          gap: 10px;
+          margin-bottom: 20px;
+        }
+
+        .tab-buttons button {
+          padding: 10px;
+          background-color: #555;
+          color: white;
+          border: none;
+          border-radius: 5px;
+          cursor: pointer;
+        }
+
+        .tab-buttons button:hover {
+          background-color: #777;
+        }
+
+        .tab-content {
+          background: white;
+          padding: 15px;
+          border-radius: 10px;
+          box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .card, .user-card {
+          background-color: #f9f9f9;
+          padding: 10px;
+          margin-bottom: 15px;
+          border-left: 4px solid #692022;
+        }
+
+        .user-grid {
+          display: grid;
+          grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+          gap: 10px;
+        }
+
+        .message-btn, .accept-btn, .deny-btn, .upload-btn {
+          margin-top: 10px;
+          padding: 8px 12px;
+          border: none;
+          border-radius: 5px;
+          color: white;
+          cursor: pointer;
+        }
+
+        .message-btn {
+          background-color: #007bff;
+        }
+
+        .accept-btn {
+          background-color: #28a745;
+        }
+
+        .deny-btn {
+          background-color: #dc3545;
+        }
+
+        .upload-btn {
+          background-color: #692022;
+        }
+        
+        .news-upload-card {
+          background-color: #ffffff;
+          padding: 25px;
+          border-radius: 12px;
+          box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+          max-width: 600px;
+        }
+
+        .news-upload-card h2 {
+          margin-bottom: 20px;
+          color: #692022;
+        }
+
+        .form-group {
+          margin-bottom: 20px;
+        }
+
+        .form-group label {
+          display: block;
+          font-weight: bold;
+          margin-bottom: 8px;
+          color: #333;
+        }
+
+        .form-group input[type="text"],
+        .form-group input[type="file"],
+        .form-group textarea {
+          width: 100%;
+          padding: 10px;
+          border: 1px solid #ccc;
+          border-radius: 6px;
+          font-size: 15px;
+        }
+
+        .form-actions {
+          text-align: right;
+        }
+
+        .upload-btn {
+          background-color: #692022;
+          padding: 10px 20px;
+          font-size: 16px;
+          border: none;
+          color: white;
+          border-radius: 6px;
+          cursor: pointer;
+          transition: background 0.3s ease;
+        }
+
+        .upload-btn:hover {
+          background-color: #4b1618;
+        }
+        
+        .flag-card {
+          background-color: #fff;
+          border-left: 4px solid #cc0000;
+          padding: 15px 20px;
+          border-radius: 10px;
+          margin-bottom: 20px;
+          box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+
+        .flag-header {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          margin-bottom: 10px;
+        }
+
+        .flag-source {
+          font-weight: bold;
+          color: #555;
+        }
+
+        .flag-tag {
+          background-color: #ffdddd;
+          color: #cc0000;
+          padding: 4px 10px;
+          font-size: 13px;
+          border-radius: 6px;
+        }
+
+        .flagged-text {
+          font-style: italic;
+          color: #444;
+          margin: 10px 0;
+          padding-left: 15px;
+          border-left: 3px solid #ccc;
+        }
+
+        .moderation-actions {
+          margin-top: 10px;
+          display: flex;
+          gap: 10px;
+        }
+
+        .moderation-actions button {
+          padding: 8px 14px;
+          font-size: 14px;
+          border: none;
+          border-radius: 6px;
+          color: white;
+          cursor: pointer;
+          transition: background 0.3s ease;
+        }
+
+        .approve-btn {
+          background-color: #28a745;
+        }
+
+        .approve-btn:hover {
+          background-color: #218838;
+        }
+
+        .remove-btn {
+          background-color: #dc3545;
+        }
+
+        .remove-btn:hover {
+          background-color: #c82333;
+        }
+
+        .warn-btn {
+          background-color: #ffc107;
+          color: #000;
+        }
+
+        .warn-btn:hover {
+          background-color: #e0a800;
+        }
+
+        .moderation-filter {
+          margin-bottom: 20px;
+          display: flex;
+          align-items: center;
+          gap: 10px;
+        }
+
+        .moderation-filter select {
+          padding: 6px 12px;
+          font-size: 14px;
+          border-radius: 6px;
+          border: 1px solid #ccc;
+        }
+
+        .view-btn {
+          background-color: #17a2b8;
+        }
+
+        .view-btn:hover {
+          background-color: #138496;
+        }
+
+        /* Modal Styles */
+        .modal-overlay {
+          display: none;
+          position: fixed;
+          top: 0; left: 0;
+          width: 100%; height: 100%;
+          background: rgba(0,0,0,0.5);
+          z-index: 999;
+        }
+
+        .context-modal {
+          display: none;
+          position: fixed;
+          top: 50%; left: 50%;
+          transform: translate(-50%, -50%);
+          background: white;
+          padding: 25px;
+          width: 400px;
+          border-radius: 10px;
+          z-index: 1000;
+          box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+
+        .context-modal h3 {
+          margin-top: 0;
+          color: #692022;
+        }
+
+        .close-modal-btn {
+          margin-top: 20px;
+          background-color: #692022;
+          color: white;
+          border: none;
+          padding: 8px 14px;
+          border-radius: 6px;
+          cursor: pointer;
+        }
+        
+        .user-table {
+          width: 100%;
+          border-collapse: collapse;
+          font-size: 14px;
+          margin-top: 20px;
+        }
+
+        .user-table thead {
+          background-color: #f3f3f3;
+          font-weight: bold;
+        }
+
+        .user-table th,
+        .user-table td {
+          padding: 12px 10px;
+          border-bottom: 1px solid #ddd;
+          text-align: left;
+        }
+
+        .user-table th {
+          color: #333;
+        }
+
+        .user-table td {
+          vertical-align: middle;
+        }
+
+        .user-table input[type="checkbox"] {
+          transform: scale(1.1);
+        }
+
+        .action-icons {
+          text-align: center;
+          font-size: 16px;
+        }
+
+        .edit-icon,
+        .delete-icon {
+          cursor: pointer;
+          margin: 0 8px;
+          color: #007bff;
+        }
+
+        .edit-icon:hover {
+          color: #0056b3;
+        }
+
+        .delete-icon {
+          color: #dc3545;
+        }
+
+        .delete-icon:hover {
+          color: #b52a36;
+        }
+
+
+    </style>
+        
+        {% extends 'core/base.html' %}
+
+        {% load static %} 
+                
+        {% block title %}Admin Portal{% endblock %}
+                
+        {% block content %} 
+            
+    
+    <!-- Sidebar Layout -->
+    <div class="container">
+        
+        <!-- Sidebar -->
+    <div class="sidebar">
+    <button onclick="openProfile()">My Profile</button>
+    <button onclick="openSettings()">Settings</button>
+    <button onclick="openMessage()">Message</button> 
+</div>
+
+    <!-- Profile Popup -->
+        <div class="overlay" id="profileOverlay" onclick="closeProfile()"></div>
+
+        <div class="profile-popup" id="profilePopup">
+            <div class="profile-header">
+                <img id="profileImage" src="default-profile.png" alt="Profile">
+
+                <!-- Profile Image Upload -->
+                <input type="file" id="profileImageUpload" accept="image/*" style="display: none;" onchange="previewImage(event)">
+                <button id="changeProfilePicBtn" onclick="document.getElementById('profileImageUpload').click()">Change Profile Picture</button>
+
+                <div class="profile-info">
+                    <h2 id="profileName">John Doe</h2>
+                    <input type="text" id="editName" class="edit-input" style="display: none;">
+                </div>
+            </div>
+
+            <div class="profile-section">
+                <h3>Contact</h3>
+                <p id="contactInfo">Enter your contact details here.</p>
+                <input type="text" id="editContact" class="edit-input" style="display: none;">
+            </div>
+
+            <div class="profile-section">
+                <h3>Biography</h3>
+                <p id="bioInfo">Enter a short biography about yourself.</p>
+                <textarea id="editBio" class="edit-input" style="display: none;"></textarea>
+            </div>
+
+            <div class="profile-section">
+                <h3>Links</h3>
+                <p id="linksInfo">Add your social media or website links.</p>
+                <input type="text" id="editLinks" class="edit-input" style="display: none;">
+            </div>
+
+            <div class="button-group">
+                <button class="edit-btn" onclick="enableEdit()">Edit</button>
+                <button class="save-btn" onclick="saveChanges()" style="display: none;">Save</button>
+                <button class="close-btn" onclick="closeProfile()">Close</button>
+            </div>
+        </div>
+
+        <script>
+            function openProfile() {
+                document.getElementById("profilePopup").style.display = "block";
+                document.getElementById("profileOverlay").style.display = "block";
+            }
+
+            function closeProfile() {
+                document.getElementById("profilePopup").style.display = "none";
+                document.getElementById("profileOverlay").style.display = "none";
+            }
+
+            function enableEdit() {
+                // Show input fields
+                document.getElementById("editName").style.display = "block";
+                document.getElementById("editContact").style.display = "block";
+                document.getElementById("editBio").style.display = "block";
+                document.getElementById("editLinks").style.display = "block";
+
+                // Copy text from existing profile fields
+                document.getElementById("editName").value = document.getElementById("profileName").innerText;
+                document.getElementById("editContact").value = document.getElementById("contactInfo").innerText;
+                document.getElementById("editBio").value = document.getElementById("bioInfo").innerText;
+                document.getElementById("editLinks").value = document.getElementById("linksInfo").innerText;
+
+                // Hide existing text fields
+                document.getElementById("profileName").style.display = "none";
+                document.getElementById("contactInfo").style.display = "none";
+                document.getElementById("bioInfo").style.display = "none";
+                document.getElementById("linksInfo").style.display = "none";
+
+                // Show file upload button
+                document.getElementById("changeProfilePicBtn").style.display = "block";
+
+                // Toggle buttons
+                document.querySelector(".edit-btn").style.display = "none";
+                document.querySelector(".save-btn").style.display = "block";
+            }
+
+            function previewImage(event) { 
+                const file = event.target.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        document.getElementById("profileImage").src = e.target.result;
+                    };
+                    reader.readAsDataURL(file);
+                }
+            }
+
+            async function saveChanges() {
+                const name = document.getElementById("editName").value;
+                const contact = document.getElementById("editContact").value;
+                const bio = document.getElementById("editBio").value;
+                const links = document.getElementById("editLinks").value;
+
+                // Handle Image Upload
+                const imageInput = document.getElementById("profileImageUpload");
+                const file = imageInput.files[0];
+
+                const formData = new FormData();
+                formData.append("name", name);
+                formData.append("contact", contact);
+                formData.append("bio", bio);
+                formData.append("links", links);
+                if (file) {
+                    formData.append("profileImage", file);
+                }
+
+                // Send data to backend
+                try {
+                    const response = await fetch("/save-profile", {
+                        method: "POST",
+                        body: formData
+                    });
+
+                    const data = await response.json();
+                    if (data.success) {
+                        alert("Profile updated successfully!");
+
+                        // Update displayed text
+                        document.getElementById("profileName").innerText = name;
+                        document.getElementById("contactInfo").innerText = contact;
+                        document.getElementById("bioInfo").innerText = bio;
+                        document.getElementById("linksInfo").innerText = links;
+
+                        // Hide input fields and show updated values
+                        document.getElementById("profileName").style.display = "block";
+                        document.getElementById("contactInfo").style.display = "block";
+                        document.getElementById("bioInfo").style.display = "block";
+                        document.getElementById("linksInfo").style.display = "block";
+
+                        document.getElementById("editName").style.display = "none";
+                        document.getElementById("editContact").style.display = "none";
+                        document.getElementById("editBio").style.display = "none";
+                        document.getElementById("editLinks").style.display = "none";
+
+                        // Hide file upload button
+                        document.getElementById("changeProfilePicBtn").style.display = "none";
+
+                        // Toggle buttons
+                        document.querySelector(".edit-btn").style.display = "block";
+                        document.querySelector(".save-btn").style.display = "none";
+                    } else {
+                        alert("Error saving profile.");
+                    }
+                } catch (error) {
+                    console.error("Error:", error);
+                    alert("Something went wrong!");
+                }
+            }
+        </script>
+
+        
+        
+        <!-- Settings Popup -->
+        <div class="overlay" id="settingsOverlay" onclick="closeSettings()"></div>
+
+        <div class="settings-popup" id="settingsPopup">
+            <div class="settings-header">Settings</div>
+
+          <div class="settings-section">
+                <h3>Time Zone:</h3>
+                <p id="timeZoneText">Select your time zone</p>
+                <select id="editTimeZone" class="edit-input">
+                    <option value="UTC-12">UTC-12:00</option>
+                    <option value="UTC-11">UTC-11:00</option>
+                    <option value="UTC-10">UTC-10:00</option>
+                    <option value="UTC-9">UTC-09:00</option>
+                    <option value="UTC-8">Pacific Time (UTC-08:00)</option>
+                    <option value="UTC-7">Mountain Time (UTC-07:00)</option>
+                    <option value="UTC-6">Central Time (UTC-06:00)</option>
+                    <option value="UTC-5">Eastern Time (UTC-05:00)</option>
+                    <option value="UTC+1">UTC+01:00</option>
+                    <option value="UTC+2">UTC+02:00</option>
+                </select>
+            </div>
+
+            <div class="settings-section">
+                <h3>Notifications:</h3>
+                <label class="switch">
+                    <input type="checkbox" id="notificationToggle" disabled>
+                    <span class="slider"></span>
+                </label>
+            </div>
+
+            <div class="settings-section">
+                <h3>Display Name:</h3>
+                <p id="displayNameText">John Doe</p>
+                <input type="text" id="editDisplayName" class="edit-input">
+            </div>
+
+            <div class="button-group">
+                <button class="edit-btn" onclick="enableSettingsEdit()">Edit</button>
+                <button class="save-btn" onclick="saveSettings()">Save</button>
+                <button class="close-btn" onclick="closeSettings()">Close</button>
+            </div>
+        </div>
+
+        <script>
+            function openSettings() {
+                document.getElementById("settingsPopup").style.display = "block";
+                document.getElementById("settingsOverlay").style.display = "block";
+            }
+
+            function closeSettings() {
+                document.getElementById("settingsPopup").style.display = "none";
+                document.getElementById("settingsOverlay").style.display = "none";
+            }
+
+            function enableSettingsEdit() {
+                document.getElementById("editTimeZone").style.display = "block";
+                document.getElementById("notificationToggle").disabled = false;
+                document.getElementById("editDisplayName").style.display = "block";
+
+                document.querySelector(".edit-btn").style.display = "none";
+                document.querySelector(".save-btn").style.display = "block";
+            }
+
+            function saveSettings() {
+                document.getElementById("timeZoneText").innerText = document.getElementById("editTimeZone").value;
+                document.getElementById("displayNameText").innerText = document.getElementById("editDisplayName").value;
+
+                document.getElementById("editTimeZone").style.display = "none";
+                document.getElementById("editDisplayName").style.display = "none";
+                document.querySelector(".edit-btn").style.display = "block";
+                document.querySelector(".save-btn").style.display = "none";
+            }
+        </script>
+        
+        <!-- Message Popup -->
+        <div class="overlay" id="messageOverlay" onclick="closeMessage()"></div>
+
+        <div class="message-popup" id="messagePopup" onclick="event.stopPropagation()">
+            <div class="message-body">
+                <input type="text" placeholder="To" class="message-input" />
+                <input type="text" placeholder="Cc" class="message-input" />
+                <input type="text" placeholder="Add a subject" class="message-input" />
+                <textarea placeholder="Type / to insert files and more" class="message-textarea"></textarea>
+
+                <div class="message-footer">
+                    <label for="fileUpload" class="attach-label">📎 Attach File</label>
+                    <input type="file" id="fileUpload" class="file-input" />
+                    <button class="send-btn">Send</button>
+                </div>
+            </div>
+            </div>
+
+        
+        <script>    
+            function openMessage() {
+                document.getElementById("messagePopup").style.display = "block";
+                document.getElementById("messageOverlay").style.display = "block";
+            }
+
+            function closeMessage() {
+                document.getElementById("messagePopup").style.display = "none";
+                document.getElementById("messageOverlay").style.display = "none";
+            }
+            
+        </script>
+            
+        
+        <div class="tab-container">
+          <div class="tab-buttons">
+            <button onclick="openTab('helpRequests')">Help Requests</button>
+            <button onclick="openTab('outsideRequests')">Outside Requests</button>
+            <button onclick="openTab('newsSection')">News</button>
+            <button onclick="openTab('moderation')">Moderation</button>
+            <button onclick="openTab('user-database')">User Database</button>
+			<button onclick="openTab('FAQsSection')">Edit FAQs</button>
+          </div>
+
+          <!-- Help Requests -->
+          <div class="tab-content" id="helpRequests">
+            <h3>Help Requests</h3>
+            <div class="card">
+              <p><strong>Name:</strong> Jane Doe</p>
+              <p><strong>Account Type:</strong> Student</p>
+              <p><strong>Request:</strong> Assistance with journal submission</p>
+              <button class="message-btn">Message</button>
+            </div>
+          </div>
+
+          <!-- Outside Requests -->
+          <div class="tab-content" id="outsideRequests" style="display:none;">
+            <h3>Outside Requests</h3>
+            <div class="card">
+              <p><strong>Name:</strong> Mark Smith</p>
+              <p><strong>Organization:</strong> NYU</p>
+              <p><strong>Reason:</strong> Requesting access to view restricted content</p>
+              <button class="accept-btn">Accept</button>
+              <button class="deny-btn">Deny</button>
+            </div>
+          </div>
+
+        <!-- News Section -->
+          <div class="tab-content" id="newsSection" style="display:none;">
+              <h2>News Upload Center</h2>
+              <div class="news-upload-card">
+                <form id="newsUploadForm">
+                  <div class="form-group">
+                    <label for="newsTitle">Title</label>
+                    <input type="text" id="newsTitle" name="newsTitle" placeholder="Enter a news title" required />
+                  </div>
+
+          <div class="form-group">
+            <label for="newsDescription">Description</label>
+            <textarea id="newsDescription" name="newsDescription" rows="4" placeholder="Write a brief description..." required></textarea>
+          </div>
+
+          <div class="form-group">
+            <label for="pdfUpload">Attach PDF</label>
+            <input type="file" id="pdfUpload" name="pdfUpload" accept=".pdf" required />
+          </div>
+
+          <div class="form-actions">
+            <button type="submit" class="upload-btn">Upload News</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+        <!-- Moderation Tab-->
+          <div class="tab-content" id="moderation" style="display:none;">
+              <h2>Moderation Panel</h2>
+
+              <!-- Filter Dropdown -->
+              <div class="moderation-filter">
+                <label for="flagFilter">Filter by Type:</label>
+                <select id="flagFilter" onchange="filterFlags()">
+                  <option value="all">All</option>
+                  <option value="hate">Hate Speech</option>
+                  <option value="abuse">Abusive Language</option>
+                </select>
+              </div>
+
+              <!-- Flagged Comment Example -->
+              <div class="flag-card" data-type="hate">
+                <div class="flag-header">
+                  <span class="flag-source">Page: Journal Page</span>
+                  <span class="flag-tag">Flagged for Hate Speech</span>
+                </div>
+                <p><strong>User:</strong> Alice</p>
+                <p class="flagged-text">"This journal is trash!"</p>
+                <div class="moderation-actions">
+                  <button onclick="viewContext('Alice - Full comment thread including flagged comment.')" class="view-btn">View Context</button>
+                  <button class="approve-btn">Approve</button>
+                  <button class="remove-btn">Remove</button>
+                  <button class="warn-btn">Warn User</button>
+                </div>
+              </div>
+
+              <div class="flag-card" data-type="abuse">
+                <div class="flag-header">
+                  <span class="flag-source">Page: Direct Message</span>
+                  <span class="flag-tag">Flagged for Abusive Language</span>
+                </div>
+                <p><strong>User:</strong> Bob</p>
+                <p class="flagged-text">"You're an idiot."</p>
+                <div class="moderation-actions">
+                  <button onclick="viewContext('Bob - Chat log with increasingly rude messages.')" class="view-btn">View Context</button>
+                  <button class="approve-btn">Approve</button>
+                  <button class="remove-btn">Remove</button>
+                  <button class="warn-btn">Warn User</button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Modal Popup for Context -->
+            <div class="modal-overlay" id="contextOverlay" onclick="closeModal()"></div>
+            <div class="context-modal" id="contextModal">
+              <h3>Message Context</h3>
+              <p id="contextText">Full message/thread here.</p>
+              <button class="close-modal-btn" onclick="closeModal()">Close</button>
+            </div>
+
+
+
+          <div class="tab-content" id="user-database" style="display:none;">
+              <h2>User Database</h2>
+              <table class="user-table">
+                <thead>
+                  <tr>
+                    <th><input type="checkbox" /></th>
+                    <th>Name</th>
+                    <th>Role</th>
+                    <th>Organization/University</th>
+                    <th>Email</th>
+                    <th>Password</th>
+                    <th style="text-align:center;">Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><input type="checkbox" /></td>
+                    <td>Jane Doe</td>
+                    <td>Admin</td>
+                    <td>Harvard University</td>
+                    <td>jane.doe@email.com</td>
+                    <td>•••••••</td>
+                    <td class="action-icons">
+                      <span class="edit-icon" title="Edit">&#9998;</span>
+                      <span class="delete-icon" title="Delete">&#128465;</span>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td><input type="checkbox" /></td>
+                    <td>John Smith</td>
+                    <td>User</td>
+                    <td>Stanford University</td>
+                    <td>john.smith@email.com</td>
+                    <td>•••••••</td>
+                    <td class="action-icons">
+                      <span class="edit-icon" title="Edit">&#9998;</span>
+                      <span class="delete-icon" title="Delete">&#128465;</span>
+                    </td>
+                  </tr>
+                  <!-- Add more rows as needed -->
+                </tbody>
+              </table>
+            </div>
+			
+			<!-- Edit FAQs Section -->
+<div class="tab-content" id="FAQsSection" style="display:none;">
+  <h2>Edit FAQs</h2>
+  <div class="news-upload-card">
+    <form id="faqForm">
+      <div class="form-group">
+        <label for="faqQuestion">Question</label>
+        <input type="text" id="faqQuestion" placeholder="Enter a question" required />
+      </div>
+      <div class="form-group">
+        <label for="faqAnswer">Answer</label>
+        <textarea id="faqAnswer" rows="4" placeholder="Write the answer..." required></textarea>
+      </div>
+      <div class="form-actions">
+        <button type="submit" class="upload-btn">Add FAQ</button>
+      </div>
+    </form>
+  </div>
+
+  <div id="faqList"></div>
+</div>
+
+        <script>
+            function openTab(tabId) {
+              const tabs = document.querySelectorAll(".tab-content");
+              tabs.forEach(tab => tab.style.display = "none");
+              document.getElementById(tabId).style.display = "block";
+            }
+        </script>
+        
+        <script>
+            document.getElementById("newsUploadForm").addEventListener("submit", function(e) {
+              e.preventDefault();
+              alert("News successfully uploaded!");
+              this.reset();
+            });
+        </script>
+        
+        
+        <script>
+            function filterFlags() {
+              const value = document.getElementById("flagFilter").value;
+              const cards = document.querySelectorAll(".flag-card");
+
+              cards.forEach(card => {
+                const type = card.getAttribute("data-type");
+                if (value === "all" || value === type) {
+                  card.style.display = "block";
+                } else {
+                  card.style.display = "none";
+                }
+              });
+            }
+
+            function viewContext(context) {
+              document.getElementById("contextText").innerText = context;
+              document.getElementById("contextOverlay").style.display = "block";
+              document.getElementById("contextModal").style.display = "block";
+            }
+
+            function closeModal() {
+              document.getElementById("contextOverlay").style.display = "none";
+              document.getElementById("contextModal").style.display = "none";
+            }
+        </script>
+			
+		<!-- Edit FAQs Section -->
+		<script>
+  let faqs = [];
+			
+	function renderFAQs() {
+  const list = document.getElementById("faqList");
+  list.innerHTML = "";
+
+  faqs.forEach((faq, index) => {
+    const card = document.createElement("div");
+    card.className = "card";
+    card.innerHTML = `
+      <div id="faqDisplay-${index}">
+        <strong>Q:</strong> <span>${faq.question}</span><br>
+		<strong>A:</strong> <span>${faq.answer}</span><br>
+    	<button onclick="editFAQ(${index})" class="flag-btn">Edit</button>
+		<button onclick="deleteFAQ(${index})" class="deny-btn">Delete</button>
+     </div>
+
+      <div id="faqEdit-${index}" style="display: none;">
+        <strong>Q:</strong> <input type="text" id="editQuestion-${index}" value="${faq.question}" style="width: 100%;"><br>
+        <strong>A:</strong> <textarea rows="3" id="editAnswer-${index}" style="width: 100%;">${faq.answer}</textarea>
+        <button onclick="saveFAQ(${index})" class="flag-btn">Save</button>
+        <button onclick="cancelEdit(${index})" class="deny-btn">Cancel</button>
+      </div>
+    `;
+    list.appendChild(card);
+  });
+}
+
+
+
+  function updateFAQ(index, field, value) {
+    faqs[index][field] = value;
+    // You could add save-to-server logic here
+  }
+
+  function deleteFAQ(index) {
+    faqs.splice(index, 1);
+    renderFAQs();
+  }
+  function editFAQ(index) {
+  document.getElementById(`faqDisplay-${index}`).style.display = "none";
+  document.getElementById(`faqEdit-${index}`).style.display = "block";
+}
+
+function cancelEdit(index) {
+  document.getElementById(`faqEdit-${index}`).style.display = "none";
+  document.getElementById(`faqDisplay-${index}`).style.display = "block";
+}
+
+function saveFAQ(index) {
+  const newQuestion = document.getElementById(`editQuestion-${index}`).value.trim();
+  const newAnswer = document.getElementById(`editAnswer-${index}`).value.trim();
+
+  if (newQuestion && newAnswer) {
+    faqs[index] = { question: newQuestion, answer: newAnswer };
+    renderFAQs();
+  } else {
+    alert("Question and answer cannot be empty.");
+  }
+}
+
+
+
+  document.getElementById("faqForm").addEventListener("submit", function(e) {
+    e.preventDefault();
+    const question = document.getElementById("faqQuestion").value.trim();
+    const answer = document.getElementById("faqAnswer").value.trim();
+
+    if (question && answer) {
+      faqs.push({ question, answer });
+      this.reset();
+      renderFAQs();
+    }
+  });
+
+  // Example Questions (which appear as "current questions")
+  faqs = [
+    { question: "How do I reset my password?", answer: "Click 'Forgot Password' on the login page." },
+    { question: "Where can I view my submissions?", answer: "Navigate to the 'My Submissions' tab after logging in." }
+  ];
+  renderFAQs();
+</script>
+
+            
+        
+{% endblock content %} 
+           
+<body>
+</body>
+</html>
