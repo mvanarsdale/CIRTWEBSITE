@@ -3,11 +3,15 @@ from django.urls import reverse
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth import logout
 from django.contrib.auth import get_user_model
-#from . import models
-
 from django.contrib.auth import authenticate, login
 from django.http import JsonResponse
+# for messages with log in success / failure
+from django.contrib import messages
+from core.models import CustomUser
+from django.db.models import Q
 
+
+#to be sure that login is required for the dashboard 
 from django.contrib.auth.decorators import login_required
 
 # for messages with log in success / failure
@@ -34,7 +38,32 @@ def index(request):
 
 # for the posters page
 def posters(request):
+    query = request.GET.get('filter_term')
+    filter_by = request.GET.get('filter_by')
+    sort_by = request.GET.get('sort_by')
+
     posters = Poster.objects.all()
+
+    # First, apply filtering
+    if query and filter_by:
+        if filter_by == 'author':
+            posters = posters.filter(author__username__icontains=query)
+        elif filter_by == 'title':
+            posters = posters.filter(title__icontains=query)
+        elif filter_by == 'submitted_date':
+            posters = posters.filter(submitted_date__icontains=query)
+
+    # Now apply sorting
+    if sort_by:
+        if sort_by == 'author_asc':
+            posters = posters.order_by('author__username')  # A → Z
+        elif sort_by == 'author_desc':
+            posters = posters.order_by('-author__username')  # Z → A
+        elif sort_by == 'newest':
+            posters = posters.order_by('-submitted_date')  # Newest first
+        elif sort_by == 'oldest':
+            posters = posters.order_by('submitted_date')  # Oldest first
+
     return render(request, 'core/posters.html', {'posters': posters})
 
 # for the homepage
@@ -69,6 +98,9 @@ def authPort(request):
     user_posters = Poster.objects.filter(author=request.user)
     return render(request, 'core/authPort.html', {'posters': user_posters})
 
+def adminPort(request):
+    return render(request, 'core/adminPort.html')
+
 # poster submit view 
 def PosterSubmit(request):
     return render(request, 'core/PosterSubmit.html')
@@ -88,16 +120,17 @@ def JournalProc(request):
 def subComp(request):
     return render(request, 'core/subComp.html')
 
+def logout_view(request):
+    logout(request)
+    return redirect('home')
 
-# Code generated from ChatGPT
+# move to users later 
+# Code from ChatGPT
 def ajax_login(request):
-    # checks for user in database
     if request.method == 'POST':
-        # variables for username and password
         username = request.POST.get('username')
         password = request.POST.get('password')
 
-        # defines user username and password to be checked
         user = authenticate(request, username=username, password=password)
         
         # check for user in database
@@ -117,7 +150,6 @@ def ajax_login(request):
                 'error_message': 'Invalid credentials'
             })
 
-# Jamie's code
 def check_login_status(request):
     if request.user.is_authenticated:
         return JsonResponse({
@@ -125,9 +157,10 @@ def check_login_status(request):
             'username': request.user.username
         })
     else:
-        return JsonResponse({'is_logged_in': False})
-  
-# Jamie's code  
+        return JsonResponse({
+            'is_logged_in': False
+        })
+    
 @csrf_exempt  # Only use this if you aren't passing CSRF token properly
 def logout_view(request):
     if request.method == 'POST':
@@ -150,18 +183,7 @@ def ajax_signup(request):
 
         user = User.objects.create_user(username=username, password=password, email=email)
         user.first_name = name
-        
-        if role:
-            user.role = role  # ←💥 ADD THIS LINE to set the role!
         user.save()
-
-
-        if role == 'Author':
-            Author.objects.create(user=user)
-        elif role == 'Editor':
-            Editor.objects.create(user=user)
-        elif role == 'Reviewer':
-            Reviewer.objects.create(user=user)
 
         login(request, user)
 
@@ -178,13 +200,12 @@ def upload_poster(request):
         
         # getting the authors specfic username - help from ChatGPT
         user = request.user
-        #usern = CustomUser.objects.get(user=user)
-        #username = user.username
-        #author = CustomUser.objects.get(author=author)
-        date = request.submitted_date
         
-    
-        poster = Poster.objects.create(title=title, author=user, date=date, pdf=pdf)
+        # date poster as submitted
+        submitted_date = request.POST.get('submitted_date')
+
+        # create and save poster
+        poster = Poster.objects.create(title=title, author=user, submitted_date=submitted_date, pdf=pdf)
         poster.save()
         
     
