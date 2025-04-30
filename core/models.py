@@ -1,32 +1,29 @@
-
+# imports
 import uuid
 from django.db import models
-
 # Used in get_absolute_url() to get URL for specified ID
 from django.urls import reverse 
-
 # allows the abillity to change django default user
 from django.contrib.auth.models import AbstractUser
-
 from django.db.models import UniqueConstraint
 from django.db.models.functions import Lower
-
 from CIRTWEBSITE import settings
 
-
-#from core import admin
-
 # abstract user automattically includes nessary user fields 
+# custom user
 class CustomUser(AbstractUser):
     # custom user model fields
     name = models.CharField(max_length=150, blank=True)
   
-    # roles
+    # roles users can have
     ROLE_CHOICES = [
+        # default choice
         ('user', 'User'),
+        # students
         ('author', 'Author'),
         ('viewer', 'Reviewer'),
         ('editor', 'Editor'),
+        ('admin', 'Admin')
     ]
     # Role field with a dropdown
     role = models.CharField(max_length=20, choices=ROLE_CHOICES, default='user')
@@ -103,6 +100,7 @@ class Editor(BaseGroup):
 
 
 # https://developer.mozilla.org/en-US/docs/Learn_web_development/Extensions/Server-side/Django
+# NOT USED IN WEBSITE
 class KeyWord(models.Model):
     """Model that represents the keywords class"""
     # using the char field 
@@ -112,7 +110,6 @@ class KeyWord(models.Model):
         unique = True,
         help_text = "Enter key words"
     )
-
 
     def __str__(self):
         """String for representing the Model object"""
@@ -140,12 +137,13 @@ class Paper(models.Model):
     title = models.CharField(max_length=200)
     # foreign key - only one author , authors can have multiple papers
     # .RESCRICT keeps the paper up even if the author is deleted 
-    author = models.ForeignKey('Author', on_delete=models.RESTRICT, null=True)
+    author = models.ForeignKey('CustomUser', on_delete=models.RESTRICT, null=True)
     
-    summary = models.TextField(
-        max_length=1000, help_text="Enter a brief description of the paper")
+   
     submitted_date = models.DateField(null=True, blank=True)
-    
+
+    # add image field for the poster PDF
+    pdf = models.FileField(upload_to='papers/', null=True, blank=True)  # This saves files to MEDIA_ROOT/posters/
     
     # Use UUID for the article_number (auto-generates) from CHATGPT
     article_number = models.UUIDField(
@@ -155,11 +153,29 @@ class Paper(models.Model):
          # Ensures each article has a unique UUID
         unique=True, 
     )
-    
+
+    """Four step journal publication process """
+    STATUS_CHOICES = [
+        # work in progress 
+        ('WIP', 'WIP'),
+        # submited to editor
+        ('submitted', 'Submitted'),
+        # editor downloaded pdf 
+        ('editor_reached', 'Editor_reached'),
+        # reviewer submitted comments
+        ('reviewer_reached', 'Reviewer_reached'),
+        # editor approves 
+        ('approved', 'Approved'),
+        # editor denies
+        ('denied', 'Denied')
+    ]
+    # Role field with a dropdown
+    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='WIP')
+
     # manytomany field so that the paper can have many key words and key words can have many papers
-    key_word = models.ManyToManyField(
-        KeyWord, help_text="Select a key word for this paper"
-    )
+    #key_word = models.ManyToManyField(
+       # KeyWord, help_text="Select a key word for this paper"
+    #)
     
     def __str__(self):
         """represents model object"""
@@ -168,12 +184,12 @@ class Paper(models.Model):
     def get_absolute_url(self):
         return reverse('paper-detail', args = [str(self.id)])
     
-    def display_key_word(self):
-        """Create a string for the Genre. 
-    This is required to display genre in Admin."""
-        return ', '.join(key_word.name for key_word in self.key_word.all()[:3])
+    #def display_key_word(self):
+       # """Create a string for the keyword. 
+   # This is required to display genre in Admin."""
+      #  return ', '.join(key_word.name for key_word in self.key_word.all()[:3])
 
-    display_key_word.short_description = 'Key Word'
+   # display_key_word.short_description = 'Key Word'
     
 
 class Poster(models.Model):
@@ -198,9 +214,8 @@ class Poster(models.Model):
         """represents model object"""
         return self.title
  
- 
     
-# code from ChatGPT
+# code from ChatGPT - NOT USED IN WEBSITE
 class Profile(models.Model):
     ROLE_CHOICES = [
         ('author', 'Author'),
@@ -221,7 +236,7 @@ class News(models.Model):
     abstract = models.CharField(max_length=100)
     
     # add image field for the news preview PDF
-    pdf = models.FileField(upload_to='news/', null=True, blank=True)  # This saves files to MEDIA_ROOT/posters/
+    pdf = models.FileField(upload_to='news/', null=True, blank=True)  # This saves files to MEDIA_ROOT/news/
 
         
     def __str__(self):
@@ -234,11 +249,6 @@ class FAQ(models.Model):
     # answer 
     answer = models.CharField(max_length=200)
    
-    
-    
-    
-
-    
     
 
 

@@ -1,15 +1,19 @@
 from django.apps import AppConfig
 
-
-class CoreConfig(AppConfig):
-    default_auto_field = 'django.db.models.BigAutoField'
-    name = 'core'
-
 import os
 import psycopg as psycopg2
 from flask import Flask, request, jsonify
 from dotenv import load_dotenv
 from flask_cors import CORS
+
+
+class CoreConfig(AppConfig):
+    default_auto_field = 'django.db.models.BigAutoField'
+    name = 'core'
+
+def ready(self):
+    import core.signals
+
 
 # Set environment variables (for local development; use .env override if needed)
 os.environ['PGHOST'] = 'nearly-famous-sunfish.a1.pgedge.io'
@@ -165,4 +169,7 @@ def get_comments(pdf_id):
 # Start the server
 if __name__ == '__main__':
     app.run(debug=True, port=5000)
+
+
+
 
