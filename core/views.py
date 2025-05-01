@@ -1,3 +1,4 @@
+"""Giant list of imports from django""" 
 from django.shortcuts import redirect, render
 from django.urls import reverse
 from django.views.decorators.csrf import csrf_exempt
@@ -5,36 +6,33 @@ from django.contrib.auth import logout
 from django.contrib.auth import get_user_model
 from django.contrib.auth import authenticate, login
 from django.http import JsonResponse
-# for messages with log in success / failure
 from django.contrib import messages
-from core.models import CustomUser
 from django.db.models import Q
-
-
-#to be sure that login is required for the dashboard 
 from django.contrib.auth.decorators import login_required
-
-# for messages with log in success / failure
-#from django.contrib import messages
-
-
-from core.models import Editor, Reviewer, Author #CustomUser
-
-# for poster upload
-
-
 from django.http import FileResponse, Http404
-from .models import Poster
+
+"""Imports from core app models""" 
+from core.models import Editor, Reviewer, Author, CustomUser
+from .models import Paper, Poster
 
 
 
-# page views
+# page views - Helping an issue specfic to Mercedes' system
 def old_to_new_redirect(request):
     return render(request, 'core/index.html')
 
+###################################################
+
+
+
+"""Views for the main six pages""" 
 # for the homepage
 def index(request):
     return render(request, 'core/index.html')
+
+# for the publications page
+def journals(request):
+    return render(request, 'core/journals.html')
 
 # for the posters page
 def posters(request):
@@ -70,23 +68,31 @@ def posters(request):
 def contact(request):
     return render(request, 'core/contact.html')
 
-# for the FAQ page
-def FAQ(request):
-    return render(request, 'core/FAQ.html')
-
-# for the publications page
-def journals(request):
-    return render(request, 'core/journals.html')
-
 # for the dashboard page
 #@login_required
 def Dashboard(request):
     return render(request, 'core/Dashboard.html')
+
+# for the FAQ page
+def FAQ(request):
+    return render(request, 'core/FAQ.html')
         
-# portals 
-# editor portal
+###############################################
+
+
+
+"""Portal Views""" 
+# editor portal - code from ChatGPT
 def editPort(request):
-    return render(request, 'core/editPort.html')
+    new_papers = Paper.objects.filter(status='submitted')
+    in_progress_papers = Paper.objects.filter(status='editor_reached')
+
+    context = {
+        'new_papers': new_papers,
+        'in_progress_papers': in_progress_papers,
+    }
+
+    return render(request, 'core/editPort.html', context)
 
 # reviewer portal
 def reviewPort(request):
@@ -98,33 +104,36 @@ def authPort(request):
     user_posters = Poster.objects.filter(author=request.user)
     return render(request, 'core/authPort.html', {'posters': user_posters})
 
+# admin portal
 def adminPort(request):
     return render(request, 'core/adminPort.html')
 
-# poster submit view 
-def PosterSubmit(request):
-    return render(request, 'core/PosterSubmit.html')
-# 
+#################################################
+
+
+
+"""Page views for PDF Submissions""" 
+# view user sees to submit a poster
 def posterSub(request):
     return render(request, 'core/posterSub.html')
 
-def Portal(request):
-    return render(request, 'core/Portal.html')
-
-def journalSub(request):
-    return render(request, 'core/journalSub.html')
-
-def JournalProc(request):
-    return render(request, 'core/Journal_Process.html')
-
+# view user sees once poster is submit (party screen)
 def subComp(request):
     return render(request, 'core/subComp.html')
 
-def logout_view(request):
-    logout(request)
-    return redirect('home')
+# view for page user sees when submitted journal
+def journalSub(request):
+    return render(request, 'core/journalSub.html')
 
-# move to users later 
+# view for page showing the progress bar and comments of a paper
+def JournalProc(request):
+    return render(request, 'core/Journal_Process.html')
+
+
+
+
+
+"""User authentication views""" 
 # Code from ChatGPT
 def ajax_login(request):
     if request.method == 'POST':
@@ -149,7 +158,6 @@ def ajax_login(request):
                 'success': False,
                 'error_message': 'Invalid credentials'
             })
-
 def check_login_status(request):
     if request.user.is_authenticated:
         return JsonResponse({
@@ -160,7 +168,6 @@ def check_login_status(request):
         return JsonResponse({
             'is_logged_in': False
         })
-    
 @csrf_exempt  # Only use this if you aren't passing CSRF token properly
 def logout_view(request):
     if request.method == 'POST':
@@ -191,11 +198,13 @@ def ajax_signup(request):
     
     return JsonResponse({'success': False, 'error_message': 'Invalid request'})
 
-# view for poster submit form
+"""Uploading PDF views""" 
 def upload_poster(request):
     if request.method == 'POST':
+        # title of poster
         title = request.POST.get('title')
-        #author = request.POST.get('author')
+        
+        # pdf for poster
         pdf = request.FILES.get('pdf')
         
         # getting the authors specfic username - help from ChatGPT
@@ -207,12 +216,45 @@ def upload_poster(request):
         # create and save poster
         poster = Poster.objects.create(title=title, author=user, submitted_date=submitted_date, pdf=pdf)
         poster.save()
-        
     
-        return redirect('subComp')  # or wherever you want to go after upload (づ￣ ³￣)づ
+
+        return redirect('subComp')  
     else:
         return render(request, 'core/subComp.html')
     
+
+# view for journal submit
+def upload_journal(request):
+    if request.method == 'POST':
+        # title for journal 
+        title = request.POST.get('title')
+        
+        # pdf for journal
+        pdf = request.FILES.get('pdf')
+        
+        # getting the authors specfic username - help from ChatGPT
+        user = request.user
+        
+        # date poster as submitted
+        submitted_date = request.POST.get('submitted_date')
+
+        # create and save journal 
+        journal = Paper.objects.create(
+            title=title,
+            author=user,
+            submitted_date=submitted_date,
+            pdf=pdf,
+            status='submitted',
+        )
+        # save journal 
+        journal.save()
+        
+    
+        # redirect to journal process page
+        return redirect('JournalProc') 
+    else:
+        return render(request, 'core/JournalProc.html')
+
 # view to save poster form ChatGPT
 def serve_poster_pdf(request, poster_id):
     try:
