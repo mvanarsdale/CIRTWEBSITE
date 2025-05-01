@@ -703,89 +703,55 @@
             }
         </script>
         
-        <!-- Main Content -->
-        <div class="main-content">
-            <!-- Posters Dropdown -->
-            <div class="dropdown">
-                <div class="dropdown-header" onclick="toggleDropdown('posters')">
-                    Posters ▼
-                </div>
-                <div class="dropdown-content" id="posters">
-                    <div class="section">
-                        <strong>New Poster Submissions</strong>
-                        <div style="display: flex; gap: 20px; flex-wrap: wrap; margin-top: 15px;">
-                            <a href="poster1.pdf" style="text-decoration: none; color: inherit; text-align: center; width: 120px;">
-                                <img src="images/pdf-icon.png" width="80" alt="PDF">
-                                <p>Poster Title 1</p>
-                                <p>Author A</p>
-                            </a>
-                            <a href="poster2.pdf" style="text-decoration: none; color: inherit; text-align: center; width: 120px;">
-                                <img src="images/pdf-icon.png" width="80" alt="PDF">
-                                <p>Poster Title 2</p>
-                                <p>Author B</p>
-                            </a>
-                            <a href="poster3.pdf" style="text-decoration: none; color: inherit; text-align: center; width: 120px;">
-                                <img src="images/pdf-icon.png" width="80" alt="PDF">
-                                <p>Poster Title 3</p>
-                                <p>Author C</p>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Journals Dropdown -->
-            <div class="dropdown">
-                <div class="dropdown-header" onclick="toggleDropdown('journals')">
-                    Journals ▼
-                </div>
-                <div class="dropdown-content" id="journals">
-                    <div class="section">
-                        <strong>New Journal Submissions</strong>
-                        <div style="display: flex; gap: 20px; flex-wrap: wrap; margin-top: 15px;">
-                            <a href="journal1.pdf" style="text-decoration: none; color: inherit; text-align: center; width: 120px;">
-                                <img src="images/pdf-icon.png" width="80" alt="PDF">
-                                <p>Journal Title 1</p>
-                                <p>Author X</p>
-                            </a>
-                            <a href="journal2.pdf" style="text-decoration: none; color: inherit; text-align: center; width: 120px;">
-                                <img src="images/pdf-icon.png" width="80" alt="PDF">
-                                <p>Journal Title 2</p>
-                                <p>Author Y</p>
-                            </a>
-                            <a href="journal3.pdf" style="text-decoration: none; color: inherit; text-align: center; width: 120px;">
-                                <img src="images/pdf-icon.png" width="80" alt="PDF">
-                                <p>Journal Title 3</p>
-                                <p>Author Z</p>
-                            </a>
-                        </div>
-                    </div>
-                    <div class="section">
-                        <strong>Journals In Process</strong>
-                        <div style="display: flex; gap: 20px; flex-wrap: wrap; margin-top: 15px;">
-                            <a href="journal4.pdf" style="text-decoration: none; color: inherit; text-align: center; width: 120px;">
-                                <img src="images/pdf-icon.png" width="80" alt="PDF">
-                                <p>Journal Title 4</p>
-                                <p>Author M</p>
-                                <p>Stage: Reviewing</p>
-                            </a>
-                            <a href="journal5.pdf" style="text-decoration: none; color: inherit; text-align: center; width: 120px;">
-                                <img src="images/pdf-icon.png" width="80" alt="PDF">
-                                <p>Journal Title 5</p>
-                                <p>Author N</p>
-                                <p>Stage: Editing</p>
-                            </a>
-                            <a href="journal6.pdf" style="text-decoration: none; color: inherit; text-align: center; width: 120px;">
-                                <img src="images/pdf-icon.png" width="80" alt="PDF">
-                                <p>Journal Title 6</p>
-                                <p>Author O</p>
-                                <p>Stage: Publishing</p>
-                            </a>
-                        </div>
-                    </div>
+        <!-- Main Content ChatGPT provided fixes-->
+<div class="main-content">
+    <!-- New Journals Dropdown -->
+    <div class="dropdown">
+        <div class="dropdown-header" onclick="toggleDropdown('new-journals')">
+            New Journals ▼
+        </div>
+        <div class="dropdown-content" id="new-journals">
+            <div class="section">
+                <strong>New Journal Submissions</strong>
+                <div style="display: flex; gap: 20px; flex-wrap: wrap; margin-top: 15px;">
+                    {% for paper in new_papers %}
+                        <a href="{{ paper.file.url }}" style="text-decoration: none; color: inherit; text-align: center; width: 120px;">
+                            <img src="{% static 'images/pdf-icon.png' %}" width="80" alt="PDF">
+                            <p>{{ paper.title }}</p>
+                            <p>{{ paper.submitted_by.username }}</p>
+                        </a>
+                    {% empty %}
+                        <p>No new submissions</p>
+                    {% endfor %}
                 </div>
             </div>
         </div>
+    </div>
+
+    <!-- In Progress Journals Dropdown -->
+    <div class="dropdown">
+        <div class="dropdown-header" onclick="toggleDropdown('in-progress-journals')">
+            In Progress Journals ▼
+        </div>
+        <div class="dropdown-content" id="in-progress-journals">
+            <div class="section">
+                <strong>Journals Being Reviewed</strong>
+                <div style="display: flex; gap: 20px; flex-wrap: wrap; margin-top: 15px;">
+                    {% for paper in in_progress_papers %}
+                        <a href="{{ paper.file.url }}" style="text-decoration: none; color: inherit; text-align: center; width: 120px;">
+                            <img src="{% static 'images/pdf-icon.png' %}" width="80" alt="PDF">
+                            <p>{{ paper.title }}</p>
+                            <p>{{ paper.submitted_by.username }}</p>
+                        </a>
+                    {% empty %}
+                        <p>No in-progress journals right now</p>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
         <!-- Right Sidebar (Inbox) -->
         <div class="inbox">
             <div class="dropdown">
