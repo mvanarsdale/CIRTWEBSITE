@@ -348,10 +348,10 @@ cursor: pointer;
         <div class="pdf-preview">
             <!-- Display the thumbnail image -->
             {% if poster.thumbnail %}
-                <img src="{{ poster.thumbnail.url }}" width="300" height="400" style="border: none;" />
+                <img src="{{ posters.thumbnail.url }}" width="300" height="400" style="border: none;" />
             {% else %}
                 <!-- For now -->
-                <a href="{{ poster.pdf.url }}" target="_blank">View Full PDF</a>
+                <a href="{{ posters.pdf.url }}" target="_blank">View Full PDF</a>
             {% endif %}
         </div>
         <h4>{{ poster.title }}</h4>

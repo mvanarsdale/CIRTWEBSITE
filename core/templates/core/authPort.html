@@ -709,38 +709,36 @@
         
 
         <div class="main-content">
-            <!-- Posters Dropdown Code from ChatGPT -->
+            <!-- Posters Dropdown -->
             <div class="dropdown">
                 <div class="dropdown-header" onclick="toggleDropdown('posters')">
                     Posters ▼
                 </div>
                 <div class="dropdown-content" id="posters">
                     <div class="section">
-                        <strong>New Posters</strong>
+                        <strong>My Posters</strong>
                         <a href="{% url 'posterSub' %}" class="new-journal">Submit New Poster</a>
                     </div>
                     {% if posters %}
-                    <div class="section">
-                        {% for poster in posters %}
-                            <div class="thumbnail" data-student="{{ poster.student_name }}" data-poster="{{ poster.title }}">
-                                <div class="pdf-preview">
-                                    <iframe 
-                                        src="{{ poster.pdf.url }}"
-                                        width="300"
-                                        height="400"
-                                        frameborder="0">
-                                    </iframe>
+                        <div class="section">
+                            {% for poster in posters %}
+                                <div class="thumbnail" data-student="{{ poster.student_name }}" data-poster="{{ poster.title }}">
+                                    <div class="pdf-preview">
+                                        {% if poster.thumbnail %}
+                                            <img src="{{ posters.thumbnail.url }}" width="300" height="400" style="border: none;" />
+                                        {% else %}
+                                            <a href="{{ posters.pdf.url }}" target="_blank">View Full PDF</a>
+                                        {% endif %}
+                                    </div>
+                                    <h4>{{ poster.title }}</h4>
                                 </div>
-                                <h4>{{ poster.title }}</h4>
-                            </div>
-                        {% endfor %}
-                    </div>
+                            {% endfor %}
+                        </div>
                     {% else %}
                         <p>No posters available yet.</p>
                     {% endif %}
                 </div>
             </div>
-        </div>
         
             <!-- Journals Dropdown -->
             <div class="dropdown">
@@ -754,35 +752,52 @@
                     </div>
                     <div class="section">
                         <strong>My Journals</strong>
-                        <p>View and manage published journals.</p>
+                        {% if journals %}
+                            <div class="section">
+                                {% for journal in journals %}
+                                    <div class="thumbnail" data-student="{{ journal.student_name }}" data-poster="{{ journal.title }}">
+                                        <div class="pdf-preview">
+                                            {% if journal.thumbnail %}
+                                                <img src="{{ journal.thumbnail.url }}" width="300" height="400" style="border: none;" />
+                                            {% else %}
+                                                <a href="{{ journal.pdf.url }}" target="_blank">View Full PDF</a>
+                                            {% endif %}
+                                        </div>
+                                        <h4>{{ journal.title }}</h4>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        {% else %}
+                            <p>No journals available yet.</p>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        
+            <!-- Right Sidebar (Inbox) -->
+            <div class="inbox">
+                <div class="dropdown">
+                    <div class="dropdown-header" onclick="toggleDropdown('inbox')">
+                        Inbox ▼
+                    </div>
+                    <div class="dropdown-content" id="inbox">
+                        <div class="section">
+                            <strong>Editors</strong>
+                            <p>No New Messages from Editors</p>
+                        </div>
+                        <div class="section">
+                            <strong>Authors</strong>
+                            <p>No New Messages from Authors</p>
+                        </div>
+                        <div class="section">
+                            <strong>Others</strong>
+                            <p>No New other Messages.</p>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-
-        <!-- Right Sidebar (Inbox) -->
-        <div class="inbox">
-            <div class="dropdown">
-                <div class="dropdown-header" onclick="toggleDropdown('inbox')">
-                    Inbox ▼
-                </div>
-                <div class="dropdown-content" id="inbox">
-                    <div class="section">
-                        <strong>Editors</strong>
-                        <p>No New Messages from Editors</p>
-                    </div>
-                    <div class="section">
-                        <strong>Authors</strong>
-                        <p>No New Messages from Authors</p>
-                    </div>
-                    <div class="section">
-                        <strong>Others</strong>
-                        <p>No New other Messages.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+        
 
    
 
