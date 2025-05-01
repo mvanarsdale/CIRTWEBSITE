@@ -35,7 +35,8 @@ def get_db_connection():
 def initialize_db():
     with get_db_connection() as conn:
         with conn.cursor() as cursor:
-            with open("users\Project.session.sql", "r") as sql_file:
+            sql_file_path = os.path.join("users", "Project.session.sql")
+            with open(sql_file_path, "r") as sql_file:
                 cursor.execute(sql_file.read())
         conn.commit()
 
@@ -79,6 +80,9 @@ def get_comments(pdf_id):
 def upload_file():
     if "file" not in request.files:
         return jsonify({"error": "No file uploaded!"}), 400
+    if not allowed_file(file.filename):
+        return jsonify({"error": "Only PDF files are allowed!"}), 400
+
 
     file = request.files["file"]
     if file.filename == "":

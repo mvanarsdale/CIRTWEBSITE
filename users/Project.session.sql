@@ -2,7 +2,8 @@
 CREATE TABLE IF NOT EXISTS pdf_storage (
     id SERIAL PRIMARY KEY,
     filename TEXT,
-    file_data BYTEA
+    file_data BYTEA,
+    uploaded_at TIMESTAMP DEFAULT NOW()
 );
 
 CREATE TABLE IF NOT EXISTS pdf_comments (
@@ -11,3 +12,5 @@ CREATE TABLE IF NOT EXISTS pdf_comments (
     comment TEXT,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
+
+CREATE INDEX IF NOT EXISTS idx_pdf_comments_pdf_id ON pdf_comments (pdf_id);
