@@ -151,108 +151,117 @@
         border-radius: 5px;
         font-size: 14px;
     }
-
+    </style>
+    
 </style>
 <!-- templates/about.html -->
-{% extends 'core/base.html' %}
+    {% extends 'core/base.html' %}
 
-{% load static %} 
+    {% load static %}
+    
+    {% block title %}Journal Submission{% endblock %}
+    
+    {% block content %}
 
-{% block title %}Journal Submission{% endblock %}
-
-{% block content %} 
-
-
-<!-- Main Content -->
-<div class="container">
-<div class="author-info">
-    <h2>Author's Name: <span id="authorName">John Doe</span></h2>
-    <p>Date: <span id="currentDate"></span></p>
-</div>
-
-<div class="sections">
-    <div class="left-section">
-        <h3>File Preview</h3>
-        <div class="file-preview" id="filePreview">No file selected</div>
-        <div class="choose-btn" onclick="openModal()">Choose File</div>
-        <div class="fullscreen-btn" onclick="openFullScreen()">Full Screen</div>
-    </div>
-
-    <div class="right-section">
-        <h3>Description Box</h3>
+    
+    <!-- Main Content -->
+    <div class="container">
+        <div class="author-info">
+            <h2>Author's Name: <span id="authorName">John Doe</span></h2>
+            <p>Date: <span id="currentDate"></span></p>
+        </div>
+    
+        <!-- NEW: Django Form -->
+        <form method="POST" enctype="multipart/form-data" action="{% url 'JournalProc' %}">
+            {% csrf_token %}
+            <div class="sections">
+                <div class="left-section">
+                    <h3>File Preview</h3>
+                    <div class="file-preview" id="filePreview">No file selected</div>
+    
+                    <!-- Hidden file input to keep modal + real upload -->
+                    <input type="file" id="realFileInput" name="poster_file" accept="application/pdf" style="display:none;" required>
+    
+                    <div class="choose-btn" onclick="openModal()">Choose File</div>
+                    <div class="fullscreen-btn" onclick="openFullScreen()">Full Screen</div>
+                </div>
+    
+                <div class="right-section">
+                    <h3>Description Box</h3>
         <textarea class="text-area" placeholder="Enter description here..."></textarea>
-        <h3>Comments</h3>
+                    <h3>Comments</h3>
         <textarea class="text-area" placeholder="Enter comments here..."></textarea>
-        <div class="submit-section">
+                    <div class="submit-section">
             <button onclick="submitSubmission()">Submit</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+    
+    <!-- File Upload Modal -->
+    <div class="modal" id="fileModal">
+        <h3>Submit the journal in PDF format</h3>
+        <input type="file" id="fileInput" accept="application/pdf">
+        <div class="modal-buttons">
+            <button class="submit-btn" onclick="submitFile()">Submit</button>
+            <button class="close-btn" onclick="closeModal()">Close</button>
         </div>
     </div>
-</div>
-</div>
+    
+    <!-- Fullscreen Modal -->
+    <div class="fullscreen-modal" id="fullscreenModal">
+        <div class="fullscreen-content">
+            <button class="close-fullscreen" onclick="closeFullScreen()">Close</button>
+            <iframe id="fullscreenIframe"></iframe>
+        </div>
+    </div>
+    
+    <script>
+    // Set the current date
+    document.getElementById('currentDate').innerText = new Date().toLocaleDateString();
+    
+    // Open and close modal
+    function openModal() {
+        document.getElementById('fileModal').style.display = 'block';
+    }
 
-<!-- File Upload Modal -->
-<div class="modal" id="fileModal">
-<h3>Submit the journal in PDF format</h3>
-<input type="file" id="fileInput" accept="application/pdf">
-<div class="modal-buttons">
-    <button class="submit-btn" onclick="submitFile()">Submit</button>
-    <button class="close-btn" onclick="closeModal()">Close</button>
-</div>
-</div>
-
-<!-- Fullscreen Modal -->
-<div class="fullscreen-modal" id="fullscreenModal">
-<div class="fullscreen-content">
-    <button class="close-fullscreen" onclick="closeFullScreen()">Close</button>
-    <iframe id="fullscreenIframe"></iframe>
-</div>
-</div>
-
-<script>
-// Set the current date
-document.getElementById('currentDate').innerText = new Date().toLocaleDateString();
-
-// Open and close modal
-function openModal() {
-    document.getElementById('fileModal').style.display = 'block';
-}
-
-function closeModal() {
-    document.getElementById('fileModal').style.display = 'none';
-}
-
+    function closeModal() {
+        document.getElementById('fileModal').style.display = 'none';
+    }
+    
 // Handle file submission and store in sessionStorage - from ChatGPT
-function submitFile() {
-    const fileInput = document.getElementById('fileInput');
-    const file = fileInput.files[0];
-
-    if (file && file.type === "application/pdf") {
-        const fileURL = URL.createObjectURL(file);
-        document.getElementById('filePreview').innerHTML = `<iframe src="${fileURL}"></iframe>`;
-        document.getElementById('fullscreenIframe').src = fileURL;
-
+    function submitFile() {
+        const fileInput = document.getElementById('fileInput');
+        const file = fileInput.files[0];
+    
+        if (file && file.type === "application/pdf") {
+            const fileURL = URL.createObjectURL(file);
+            document.getElementById('filePreview').innerHTML = `<iframe src="${fileURL}"></iframe>`;
+            document.getElementById('fullscreenIframe').src = fileURL;
+    
         // Store the file URL in sessionStorage
         sessionStorage.setItem("submittedFile", fileURL);
-
-        closeModal();
-    } else {
-        alert("Please select a valid PDF file.");
+    
+            closeModal();
+        } else {
+            alert("Please select a valid PDF file.");
+        }
     }
-}
-
+    
 
 // Open fullscreen view of the file - from ChatGPT
-function openFullScreen() {
-    const fileIframe = document.getElementById('fullscreenIframe').src;
-    if (fileIframe) {
-        document.getElementById('fullscreenModal').style.display = 'flex';
-    } else {
-        alert("No file selected.");
+    function openFullScreen() {
+        const fileIframe = document.getElementById('fullscreenIframe').src;
+        if (fileIframe) {
+            document.getElementById('fullscreenModal').style.display = 'flex';
+        } else {
+            alert("No file selected.");
+        }
     }
-}
-function closeFullScreen() {
-    document.getElementById('fullscreenModal').style.display = 'none';
-}
+    function closeFullScreen() {
+        document.getElementById('fullscreenModal').style.display = 'none';
+    }
 
 // Submit the journal and save data in sessionStorage
 function submitSubmission() {
@@ -266,9 +275,9 @@ function submitSubmission() {
     alert("Journal submitted successfully!");
     window.location.replace("{% url 'JournalProc' %}"); // Redirect to the process page
 }
-</script>
+    </script>
+    
 
-
-</body>
+    </body>
 </html>
 {% endblock content %} 
