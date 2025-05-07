@@ -25,13 +25,23 @@ class CustomUser(AbstractUser):
     
     # roles
     ROLE_CHOICES = [
+<<<<<<< Updated upstream
         ('user', 'User'),
         ('author', 'Author'),
         ('viewer', 'Reviewer'),
         ('editor', 'Editor'),
+=======
+        # default choice
+        ('User', 'User'),
+        # students
+        ('Author', 'Author'),
+        ('Viewer', 'Reviewer'),
+        ('Editor', 'Editor'),
+        ('Admin', 'Admin')
+>>>>>>> Stashed changes
     ]
     # Role field with a dropdown
-    role = models.CharField(max_length=20, choices=ROLE_CHOICES, default='user')
+    role = models.CharField(max_length=20, choices=ROLE_CHOICES, default='Author')
     
     groups = models.ManyToManyField(
         'auth.Group', 
@@ -113,7 +123,23 @@ class Paper(models.Model):
     summary = models.TextField(
         max_length=1000, help_text="Enter a brief description of the paper")
     submitted_date = models.DateField(null=True, blank=True)
+<<<<<<< Updated upstream
     
+=======
+
+    # add image field for the poster PDF
+    pdf = models.FileField(upload_to='papers/', null=True, blank=True)  # This saves files to MEDIA_ROOT/posters/
+    assigned_reviewer = models.ForeignKey(
+        'CustomUser',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='assigned_reviews'
+    )
+
+    status = models.CharField(max_length=100, default='submitted')  # Example statuses: submitted, editor_reached, reviewer_reached, etc.
+
+>>>>>>> Stashed changes
     
     # Use UUID for the article_number (auto-generates) from CHATGPT
     article_number = models.UUIDField(
@@ -153,8 +179,24 @@ class Poster(models.Model):
     
     # add image field for the poster PDF
     
+<<<<<<< Updated upstream
     submitted_date = models.DateField(null=True, blank=True)
     
+=======
+    # thumbnail for the poster 
+    thumbnail = models.ImageField(upload_to='posters/thumbnails/', blank=True, null=True)
+    assigned_reviewer = models.ForeignKey(
+        'CustomUser',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='poster_assigned_reviews'
+    )
+
+    status = models.CharField(max_length=100, default='submitted')  # Example statuses: submitted, editor_reached, reviewer_reached, etc.
+
+        
+>>>>>>> Stashed changes
     def __str__(self):
         """represents model object"""
         return self.title

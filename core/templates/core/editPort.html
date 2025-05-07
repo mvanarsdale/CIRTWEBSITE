@@ -1,0 +1,803 @@
+ 
+    <style>
+        
+        /* Layout */
+        .container {
+            display: flex;
+            height: calc(100vh - 70px);
+        }
+
+        {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background-color: #f4f4f4;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: 200px;
+            background-color: #692022;
+            padding: 15px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .sidebar button, .sidebar a {
+            width: 100%;
+            padding: 10px;
+            background-color: #555;
+            color: white;
+            border: none;
+            cursor: pointer;
+            text-align: left;
+            text-decoration: none;
+            display: block;
+            font-size: 16px;
+        }
+
+        .sidebar button:hover, .sidebar a:hover {
+            background-color: #777;
+        }
+
+        .sidebar button:hover {
+            background-color: #777;
+        }
+
+        /* Profile Popup */
+        .profile-popup {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 400px;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+            z-index: 1000;
+        }
+
+        .profile-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .profile-header img {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            margin-right: 10px;
+        }
+
+        .profile-info {
+            flex: 1;
+        }
+
+        .profile-section {
+            margin-bottom: 15px;
+        }
+
+        .profile-section h3 {
+            margin-bottom: 5px;
+            font-size: 16px;
+        }
+
+        .profile-section p {
+            font-size: 14px;
+            color: #555;
+        }
+
+        .edit-input {
+            width: 100%;
+            padding: 5px;
+            font-size: 14px;
+            display: none;
+        }
+
+        /* Buttons */
+        .button-group {
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+        }
+
+        .button-group button {
+            padding: 8px 12px;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        .edit-btn {
+            background: #007bff;
+            color: white;
+        }
+
+
+        .save-btn {
+            background: #555;
+            color: white;
+            display: none;
+        }
+
+        .close-btn {
+            background: #555;
+            color: white;
+        }
+
+        /* Overlay */
+        .overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 999;
+        }
+        
+        /* Settings Popup */
+        .settings-popup {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 400px;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+            z-index: 1000;
+        }
+
+        .settings-header {
+            font-size: 20px;
+            font-weight: bold;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .settings-section {
+            margin-bottom: 15px;
+        }
+
+        .settings-section h3 {
+            font-size: 16px;
+            margin-bottom: 5px;
+        }
+
+        /* Time Zone Dropdown */
+        .settings-section select {
+            width: 100%;
+            padding: 5px;
+            font-size: 14px;
+            display: none;
+        }
+
+        /* Notifications Toggle */
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 40px;
+            height: 20px;
+        }
+
+        .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            border-radius: 20px;
+            transition: 0.4s;
+        }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 14px;
+            width: 14px;
+            left: 3px;
+            bottom: 3px;
+            background-color: white;
+            border-radius: 50%;
+            transition: 0.4s;
+        }
+
+        input:checked + .slider {
+            background-color: #007bff;
+        }
+
+        input:checked + .slider:before {
+            transform: translateX(20px);
+        }
+
+        /* Display Name */
+        .settings-section input[type="text"] {
+            width: 100%;
+            padding: 5px;
+            font-size: 14px;
+            display: none;
+        }
+
+        /* Buttons */
+        .button-group {
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+        }
+
+        .button-group button {
+            padding: 8px 12px;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        .edit-btn {
+            background: #555;
+            color: white;
+        }
+
+        .save-btn {
+            background: #555;
+            color: white;
+            display: none;
+        }
+
+        .close-btn {
+            background: #555;
+            color: white;
+        }
+
+        /* Overlay */
+        .overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 999;
+        } 
+        
+        .popup-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+        }
+
+        .popup {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            z-index: 1001;
+            width: 300px;
+            text-align: center;
+        }
+
+        textarea {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .popup-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .popup-buttons button {
+            padding: 8px 12px;
+            border: none;
+            background: #555;
+            color: white;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .popup-buttons button:hover {
+            background: #777;
+        }
+
+
+        /* Main Content */
+        .main-content {
+            width: 70%;
+            padding: 20px;
+        }
+
+        .dropdown {
+            background: white;
+            margin-bottom: 15px;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .dropdown-header {
+            background: #555;
+            color: white;
+            padding: 10px;
+            font-weight: bold;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .dropdown-content {
+            display: none;
+            padding: 10px;
+        }
+
+        .section {
+            margin-bottom: 10px;
+        }
+
+        .section button {
+            background: #555;
+            color: white;
+            border: none;
+            padding: 8px 12px;
+            cursor: pointer;
+            border-radius: 3px;
+        }
+
+        .section button:hover {
+            background: #777;
+        }
+        
+        /* New Journal Button Styles */
+        .new-journal {
+            padding: 10px 20px;
+            background: #0073e6; /* Matching the portal button color */
+            color: white;
+            font-size: 16px;
+            font-weight: bold;
+            text-decoration: none;
+            border-radius: 5px;
+            text-align: center;
+            display: inline-block; /* Make the link behave like a button */
+            transition: background 0.3s ease, transform 0.2s ease;
+        }
+
+        .new-journal:hover {
+            background: #005bb5; /* Darker shade on hover */
+            transform: translateY(-2px); /* Slight lift effect on hover */
+        }
+
+        .new-journal:active {
+            background: #003d7a; /* Even darker shade when clicked */
+            transform: translateY(0); /* Return to normal position when clicked */
+        }
+
+        .new-journal:focus {
+            outline: none; /* Remove the default focus outline */
+            box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.5); /* Custom focus outline */
+        }
+
+        /* Right Section */
+        .inbox {
+            width: 15%;
+            padding: 15px;
+        }
+
+        .inbox .dropdown {
+            width: 100%;
+        }
+    </style>
+     <!-- templates/about.html -->
+     {% extends 'core/base.html' %}
+
+     {% load static %} 
+     
+     {% block title %}Editor Portal{% endblock %}
+     
+     {% block content %}
+
+    <!-- Main Layout -->
+    <div class="container">
+        
+        <!-- Sidebar -->
+    <div class="sidebar">
+    <button onclick="openProfile()">My Profile</button>
+    <button onclick="openSettings()">Settings</button>
+    <button onclick="openHelpPopup()">Request Help</button>
+</div>
+
+    <!-- Profile Popup -->
+        <div class="overlay" id="profileOverlay" onclick="closeProfile()"></div>
+
+        <div class="profile-popup" id="profilePopup">
+            <div class="profile-header">
+                <img id="profileImage" src="default-profile.png" alt="Profile">
+
+                <!-- Profile Image Upload -->
+                <input type="file" id="profileImageUpload" accept="image/*" style="display: none;" onchange="previewImage(event)">
+                <button id="changeProfilePicBtn" onclick="document.getElementById('profileImageUpload').click()">Change Profile Picture</button>
+
+                <div class="profile-info">
+                    <h2 id="profileName">John Doe</h2>
+                    <input type="text" id="editName" class="edit-input" style="display: none;">
+                </div>
+            </div>
+
+            <div class="profile-section">
+                <h3>Contact</h3>
+                <p id="contactInfo">Enter your contact details here.</p>
+                <input type="text" id="editContact" class="edit-input" style="display: none;">
+            </div>
+
+            <div class="profile-section">
+                <h3>Biography</h3>
+                <p id="bioInfo">Enter a short biography about yourself.</p>
+                <textarea id="editBio" class="edit-input" style="display: none;"></textarea>
+            </div>
+
+            <div class="profile-section">
+                <h3>Links</h3>
+                <p id="linksInfo">Add your social media or website links.</p>
+                <input type="text" id="editLinks" class="edit-input" style="display: none;">
+            </div>
+
+            <div class="button-group">
+                <button class="edit-btn" onclick="enableEdit()">Edit</button>
+                <button class="save-btn" onclick="saveChanges()" style="display: none;">Save</button>
+                <button class="close-btn" onclick="closeProfile()">Close</button>
+            </div>
+        </div>
+
+        <script>
+            function openProfile() {
+                document.getElementById("profilePopup").style.display = "block";
+                document.getElementById("profileOverlay").style.display = "block";
+            }
+
+            function closeProfile() {
+                document.getElementById("profilePopup").style.display = "none";
+                document.getElementById("profileOverlay").style.display = "none";
+            }
+
+            function enableEdit() {
+                // Show input fields
+                document.getElementById("editName").style.display = "block";
+                document.getElementById("editContact").style.display = "block";
+                document.getElementById("editBio").style.display = "block";
+                document.getElementById("editLinks").style.display = "block";
+
+                // Copy text from existing profile fields
+                document.getElementById("editName").value = document.getElementById("profileName").innerText;
+                document.getElementById("editContact").value = document.getElementById("contactInfo").innerText;
+                document.getElementById("editBio").value = document.getElementById("bioInfo").innerText;
+                document.getElementById("editLinks").value = document.getElementById("linksInfo").innerText;
+
+                // Hide existing text fields
+                document.getElementById("profileName").style.display = "none";
+                document.getElementById("contactInfo").style.display = "none";
+                document.getElementById("bioInfo").style.display = "none";
+                document.getElementById("linksInfo").style.display = "none";
+
+                // Show file upload button
+                document.getElementById("changeProfilePicBtn").style.display = "block";
+
+                // Toggle buttons
+                document.querySelector(".edit-btn").style.display = "none";
+                document.querySelector(".save-btn").style.display = "block";
+            }
+
+            function previewImage(event) { 
+                const file = event.target.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        document.getElementById("profileImage").src = e.target.result;
+                    };
+                    reader.readAsDataURL(file);
+                }
+            }
+
+            async function saveChanges() {
+                const name = document.getElementById("editName").value;
+                const contact = document.getElementById("editContact").value;
+                const bio = document.getElementById("editBio").value;
+                const links = document.getElementById("editLinks").value;
+
+                // Handle Image Upload
+                const imageInput = document.getElementById("profileImageUpload");
+                const file = imageInput.files[0];
+
+                const formData = new FormData();
+                formData.append("name", name);
+                formData.append("contact", contact);
+                formData.append("bio", bio);
+                formData.append("links", links);
+                if (file) {
+                    formData.append("profileImage", file);
+                }
+
+                // Send data to backend
+                try {
+                    const response = await fetch("/save-profile", {
+                        method: "POST",
+                        body: formData
+                    });
+
+                    const data = await response.json();
+                    if (data.success) {
+                        alert("Profile updated successfully!");
+
+                        // Update displayed text
+                        document.getElementById("profileName").innerText = name;
+                        document.getElementById("contactInfo").innerText = contact;
+                        document.getElementById("bioInfo").innerText = bio;
+                        document.getElementById("linksInfo").innerText = links;
+
+                        // Hide input fields and show updated values
+                        document.getElementById("profileName").style.display = "block";
+                        document.getElementById("contactInfo").style.display = "block";
+                        document.getElementById("bioInfo").style.display = "block";
+                        document.getElementById("linksInfo").style.display = "block";
+
+                        document.getElementById("editName").style.display = "none";
+                        document.getElementById("editContact").style.display = "none";
+                        document.getElementById("editBio").style.display = "none";
+                        document.getElementById("editLinks").style.display = "none";
+
+                        // Hide file upload button
+                        document.getElementById("changeProfilePicBtn").style.display = "none";
+
+                        // Toggle buttons
+                        document.querySelector(".edit-btn").style.display = "block";
+                        document.querySelector(".save-btn").style.display = "none";
+                    } else {
+                        alert("Error saving profile.");
+                    }
+                } catch (error) {
+                    console.error("Error:", error);
+                    alert("Something went wrong!");
+                }
+            }
+        </script>
+        
+        
+        <!-- Settings Popup -->
+        <div class="overlay" id="settingsOverlay" onclick="closeSettings()"></div>
+
+        <div class="settings-popup" id="settingsPopup">
+            <div class="settings-header">Settings</div>
+
+            <div class="settings-section">
+                <h3>Time Zone:</h3>
+                <p id="timeZoneText">Select your time zone</p>
+                <select id="editTimeZone" class="edit-input">
+                    <option value="UTC-12">UTC-12:00</option>
+                    <option value="UTC-11">UTC-11:00</option>
+                    <option value="UTC-10">UTC-10:00</option>
+                    <option value="UTC-9">UTC-09:00</option>
+                    <option value="UTC-8">Pacific Time (UTC-08:00)</option>
+                    <option value="UTC-7">Mountain Time (UTC-07:00)</option>
+                    <option value="UTC-6">Central Time (UTC-06:00)</option>
+                    <option value="UTC-5">Eastern Time (UTC-05:00)</option>
+                    <option value="UTC+1">UTC+01:00</option>
+                    <option value="UTC+2">UTC+02:00</option>
+                </select>
+            </div>
+
+            <div class="settings-section">
+                <h3>Notifications:</h3>
+                <label class="switch">
+                    <input type="checkbox" id="notificationToggle" disabled>
+                    <span class="slider"></span>
+                </label>
+            </div>
+
+            <div class="settings-section">
+                <h3>Display Name:</h3>
+                <p id="displayNameText">John Doe</p>
+                <input type="text" id="editDisplayName" class="edit-input">
+            </div>
+
+            <div class="button-group">
+                <button class="edit-btn" onclick="enableSettingsEdit()">Edit</button>
+                <button class="save-btn" onclick="saveSettings()">Save</button>
+                <button class="close-btn" onclick="closeSettings()">Close</button>
+            </div>
+        </div>
+
+        <script>
+            function openSettings() {
+                document.getElementById("settingsPopup").style.display = "block";
+                document.getElementById("settingsOverlay").style.display = "block";
+            }
+
+            function closeSettings() {
+                document.getElementById("settingsPopup").style.display = "none";
+                document.getElementById("settingsOverlay").style.display = "none";
+            }
+
+            function enableSettingsEdit() {
+                document.getElementById("editTimeZone").style.display = "block";
+                document.getElementById("notificationToggle").disabled = false;
+                document.getElementById("editDisplayName").style.display = "block";
+
+                document.querySelector(".edit-btn").style.display = "none";
+                document.querySelector(".save-btn").style.display = "block";
+            }
+
+            function saveSettings() {
+                document.getElementById("timeZoneText").innerText = document.getElementById("editTimeZone").value;
+                document.getElementById("displayNameText").innerText = document.getElementById("editDisplayName").value;
+
+                document.getElementById("editTimeZone").style.display = "none";
+                document.getElementById("editDisplayName").style.display = "none";
+                document.querySelector(".edit-btn").style.display = "block";
+                document.querySelector(".save-btn").style.display = "none";
+            }
+        </script>
+        
+        
+        
+        <div id="helpPopupOverlay" class="popup-overlay" onclick="closeHelpPopup()"></div>
+        <div id="helpPopup" class="popup">
+            <h2>Request Help</h2>
+            <p>Report the Problem</p>
+            <textarea id="helpText" placeholder="Describe your issue..." rows="4"></textarea>
+            <div class="popup-buttons">
+                <button onclick="submitHelp()">Submit</button>
+                <button onclick="closeHelpPopup()">Close</button>
+            </div>
+        </div>
+        
+        <script>
+            function openHelpPopup() {
+                document.getElementById("helpPopup").style.display = "block";
+                document.getElementById("helpPopupOverlay").style.display = "block";
+            }
+
+            function closeHelpPopup() {
+                document.getElementById("helpPopup").style.display = "none";
+                document.getElementById("helpPopupOverlay").style.display = "none";
+            }
+
+            function submitHelp() {
+                let issueText = document.getElementById("helpText").value;
+                if (issueText.trim() === "") {
+                    alert("Please enter a description of the issue.");
+                } else {
+                    alert("Help request submitted successfully!");
+                    closeHelpPopup();
+                }
+            }
+        </script>
+        
+        <!-- Main Content ChatGPT provided fixes-->
+<div class="main-content">
+    <!-- New Journals Dropdown -->
+    <div class="dropdown">
+        <div class="dropdown-header" onclick="toggleDropdown('new-journals')">
+            New Journals ▼
+        </div>
+        <div class="dropdown-content" id="new-journals">
+            <div class="section">
+                <strong>New Journal Submissions</strong>
+                <div style="display: flex; gap: 20px; flex-wrap: wrap; margin-top: 15px;">
+                    {% for paper in new_papers %}
+                        <a href="{{ paper.file.url }}" style="text-decoration: none; color: inherit; text-align: center; width: 120px;">
+                            <img src="{% static 'images/pdf-icon.png' %}" width="80" alt="PDF">
+                            <p>{{ paper.title }}</p>
+                            <p>{{ paper.submitted_by.username }}</p>
+                            <form method="POST" action="{% url 'assign_reviewer' paper.id %}" style="margin-top: 10px;">
+                                {% csrf_token %}
+                                <label>Select Reviewer:</label>
+                                <select name="reviewer_id" required>
+                                    <option value="">-- Select Reviewer --</option>
+                                    {% for reviewer in reviewers %}
+                                        <option value="{{ reviewer.id }}">{{ reviewer.get_full_name|default:reviewer.username }}</option>
+                                    {% endfor %}
+                                </select>
+                              
+                                <label style="margin-top: 5px;">Optional Comment:</label>
+                                <textarea name="comment" placeholder="Add comment..." style="width: 100%; margin-top: 5px;"></textarea>
+                              
+                                <button type="submit" style="margin-top: 5px;">Assign to Reviewer</button>
+                              </form>                              
+                        </a>
+                    {% empty %}
+                        <p>No new submissions</p>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- In Progress Journals Dropdown -->
+    <div class="dropdown">
+        <div class="dropdown-header" onclick="toggleDropdown('in-progress-journals')">
+            In Progress Journals ▼
+        </div>
+        <div class="dropdown-content" id="in-progress-journals">
+            <div class="section">
+                <strong>Journals Being Reviewed</strong>
+                <div style="display: flex; gap: 20px; flex-wrap: wrap; margin-top: 15px;">
+                    {% for paper in in_progress_papers %}
+                        <a href="{{ paper.file.url }}" style="text-decoration: none; color: inherit; text-align: center; width: 120px;">
+                            <img src="{% static 'images/pdf-icon.png' %}" width="80" alt="PDF">
+                            <p>{{ paper.title }}</p>
+                            <p>{{ paper.submitted_by.username }}</p>
+                        </a>
+                    {% empty %}
+                        <p>No in-progress journals right now</p>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+        <!-- Right Sidebar (Inbox) -->
+        <div class="inbox">
+            <div class="dropdown">
+                <div class="dropdown-header" onclick="toggleDropdown('inbox')">
+                    Inbox ▼
+                </div>
+                <div class="dropdown-content" id="inbox">
+                    <div class="section">
+                        <strong>Editors</strong>
+                        <p>No New Messages from Editors.</p>
+                    </div>
+                    <div class="section">
+                        <strong>Authors</strong>
+                        <p>No New Messages from Authors.</p>
+                    </div>
+                    <div class="section">
+                        <strong>Others</strong>
+                        <p>No New Other Messages.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function toggleDropdown(id) {
+            let content = document.getElementById(id);
+            content.style.display = content.style.display === "block" ? "none" : "block";
+        }
+    </script>
+
+</body>
+</html>
+{% endblock %}

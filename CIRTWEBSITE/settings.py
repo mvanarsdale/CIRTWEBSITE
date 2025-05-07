@@ -25,7 +25,11 @@ SECRET_KEY = 'django-insecure-tl6=7jtx*_proz6vfi2jhn=@v(_(l0k_c&c_d4)s7nv!#v4@n9
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
+<<<<<<< Updated upstream
 ALLOWED_HOSTS = []
+=======
+ALLOWED_HOSTS = ['ec2-3-138-60-164.us-east-2.compute.amazonaws.com','127.0.0.1', 'localhost']
+>>>>>>> Stashed changes
 
 
 # Application definition

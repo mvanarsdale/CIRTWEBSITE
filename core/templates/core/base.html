@@ -12,6 +12,7 @@
 
     <!-- Header -->
     <header>
+<<<<<<< Updated upstream
         <div class="primary_header">
             <p class="thumbnail_align">&nbsp; </p>
             <!-- Header with logo on the top-left Code from ChatGPT -->
@@ -24,6 +25,25 @@
                 <button id="signUpBtn" class="popup-content" onclick="openSignUpPopup()">Register</button>
                 <ul id="searchResults"></ul>
             </div>
+=======
+        <div class="primary_header" style="display: flex; align-items: center; justify-content: space-between; padding: 15px 40px;">
+          
+          <!-- Logo -->
+          <img src="{% static 'core/images/CIRT_LOGO.png' %}" alt="Logo" class="logo">
+      
+          <!-- Title -->
+          <h1 class="title" style="flex: 1; text-align: center; font-size: 1.8rem; color: white;">
+            CRIMINOLOGY INSTITUTE FOR RESEARCH/TRAINING (CIRT)
+          </h1>
+      
+          <!-- Buttons -->
+          <div style="display: flex; align-items: center; justify-content: flex-end; gap: 12px;">
+            <div id="login-area" style="display: flex; flex-direction: column; align-items: flex-end;"></div>
+          </div>
+          
+          </div>
+      
+>>>>>>> Stashed changes
         </div>
     </header>
 
@@ -72,6 +92,107 @@
 {% include 'components/login_popup.html' %}
 {% include 'components/signup_popup.html' %}
 
+<<<<<<< Updated upstream
+=======
+<!-- Hidden CSRF token to set cookie -->
+<form style="display: none;">
+    {% csrf_token %}
+</form>
+
+<script>
+    function getCookie(name) {
+        let cookieValue = null;
+        if (document.cookie && document.cookie !== '') {
+            const cookies = document.cookie.split(';');
+            for (let cookie of cookies) {
+                cookie = cookie.trim();
+                if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }
+    
+    function renderLoginState() {
+        fetch('/core/check_login_status/')
+            .then(response => response.json())
+            .then(data => {
+                const loginArea = document.getElementById('login-area');
+    
+                if (data.is_logged_in) {
+                    const rawName = data.first_name?.trim() ? data.first_name : data.username;
+                    const displayName = rawName.toUpperCase();
+                
+                    loginArea.innerHTML = `
+                        <div style="display: inline-flex; flex-direction: column; align-items: flex-end; text-align: right;">
+                            <span style="color: white; font-size: 1rem;">
+                                Hello, <strong>${displayName}</strong>!
+                            </span>
+                            <button id="logoutBtn" style="
+                                font-size: 0.85rem;
+                                font-weight: bold;
+                                background-color: #3b0000;
+                                color: white;
+                                border: none;
+                                border-radius: 6px;
+                                cursor: pointer;
+                                width: 100%;
+                                padding: 6px 12px;
+                                box-sizing: border-box;
+                            ">Log Out</button>
+                        </div>
+                    `;
+                
+    
+                    document.getElementById('logoutBtn').addEventListener('click', () => {
+                        fetch('/core/logout/', {
+                            method: 'POST',
+                            headers: {
+                                'X-CSRFToken': getCookie('csrftoken')
+                            }
+                        }).then(() => {
+                            location.reload();
+                        });
+                    });
+    
+                } else {
+                    loginArea.innerHTML = `
+                        <button id="loginBtn" onclick="openPopup()" style="
+                            background-color: #3b0000;
+                            color: white;
+                            border: none;
+                            border-radius: 6px;
+                            padding: 10px 20px;
+                            font-size: 1rem;
+                            font-weight: bold;
+                            cursor: pointer;
+                            margin-right: 8px;
+                        ">Login</button>
+                        <button id="signUpBtn" style="
+                            background-color: #3b0000;
+                            color: white;
+                            border: none;
+                            border-radius: 6px;
+                            padding: 10px 20px;
+                            font-size: 1rem;
+                            font-weight: bold;
+                            cursor: pointer;
+                        ">Register</button>
+                    `;
+
+    
+                    // Attach event AFTER button is in DOM
+                    document.getElementById('signUpBtn').addEventListener('click', openSignUpPopup);
+                }
+            });
+    }
+    
+    document.addEventListener("DOMContentLoaded", renderLoginState);
+    </script>    
+
+>>>>>>> Stashed changes
 </body>
 </html>
    
