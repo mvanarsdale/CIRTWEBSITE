@@ -139,28 +139,17 @@ button:hover {
                 </div>
                 {% endif %}
                 
-                <div class="app-container">
-                    <a href="profile.html" class="app-box"><img src="{% static 'core/images/ProfileEP.png' %}" width="150" height="150" alt=""/></a>
-                    <span class="descript">Profile</span>
-                </div>
-     
-                <div class="app-container">
-                    <a href="email.html" class="app-box"><img src="{% static 'core/images/Envelope-icon.png' %}" width="150" height="150" alt=""/></a>
-                    <span class="descript">Email</span>
-                </div>
-        
-				<div class="app-container">
-                    <a href="settings.html" class="app-box"><img src="{% static 'core/images/settings.png' %}" width="150" height="150" alt=""/></a>
-                    <span class="descript">Settings</span>
-                </div>
-
+            
                 <div class="app-container">
                   <a href="{% url 'adminPort' %}" class="app-box"><img src="{% static 'core/images/admin_pic.png' %}" width="170" height="80" alt=""/></a>
                     <span class="descript">Admin Portal</span>
                 </div>
+            
     {% else %}
-    <div style="text-align: center;">
-        <h1>Please Log in to gain complete access</h1>
+    <div style="margin-left: 200px; margin-top: 50px;">
+        <h1 style="font-family: Arial, sans-serif; color: #444;">Please log in to gain full access</h1>
+    </div>
+    
     </div>
     </div>
     </section>

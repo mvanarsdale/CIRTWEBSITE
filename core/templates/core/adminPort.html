@@ -1127,187 +1127,75 @@
         </script>
             
         
-        <div class="tab-container">
-          <div class="tab-buttons">
-            <button onclick="openTab('helpRequests')">Help Requests</button>
-            <button onclick="openTab('outsideRequests')">Outside Requests</button>
-            <button onclick="openTab('newsSection')">News</button>
-            <button onclick="openTab('moderation')">Moderation</button>
-            <button onclick="openTab('user-database')">User Database</button>
-			<button onclick="openTab('FAQsSection')">Edit FAQs</button>
-          </div>
-
-          <!-- Help Requests -->
-          <div class="tab-content" id="helpRequests">
-            <h3>Help Requests</h3>
-            <div class="card">
-              <p><strong>Name:</strong> Jane Doe</p>
-              <p><strong>Account Type:</strong> Student</p>
-              <p><strong>Request:</strong> Assistance with journal submission</p>
-              <button class="message-btn">Message</button>
-            </div>
-          </div>
-
-          <!-- Outside Requests -->
-          <div class="tab-content" id="outsideRequests" style="display:none;">
-            <h3>Outside Requests</h3>
-            <div class="card">
-              <p><strong>Name:</strong> Mark Smith</p>
-              <p><strong>Organization:</strong> NYU</p>
-              <p><strong>Reason:</strong> Requesting access to view restricted content</p>
-              <button class="accept-btn">Accept</button>
-              <button class="deny-btn">Deny</button>
-            </div>
-          </div>
-
-        <!-- News Section -->
-          <div class="tab-content" id="newsSection" style="display:none;">
-              <h2>News Upload Center</h2>
-              <div class="news-upload-card">
-                <form id="newsUploadForm">
-                  <div class="form-group">
-                    <label for="newsTitle">Title</label>
-                    <input type="text" id="newsTitle" name="newsTitle" placeholder="Enter a news title" required />
-                  </div>
-
-          <div class="form-group">
-            <label for="newsDescription">Description</label>
-            <textarea id="newsDescription" name="newsDescription" rows="4" placeholder="Write a brief description..." required></textarea>
-          </div>
-
-          <div class="form-group">
-            <label for="pdfUpload">Attach PDF</label>
-            <input type="file" id="pdfUpload" name="pdfUpload" accept=".pdf" required />
-          </div>
-
-          <div class="form-actions">
-            <button type="submit" class="upload-btn">Upload News</button>
-          </div>
-        </form>
-      </div>
-    </div>
-
-        <!-- Moderation Tab-->
-          <div class="tab-content" id="moderation" style="display:none;">
-              <h2>Moderation Panel</h2>
-
-              <!-- Filter Dropdown -->
-              <div class="moderation-filter">
-                <label for="flagFilter">Filter by Type:</label>
-                <select id="flagFilter" onchange="filterFlags()">
-                  <option value="all">All</option>
-                  <option value="hate">Hate Speech</option>
-                  <option value="abuse">Abusive Language</option>
-                </select>
+            <div class="tab-container">
+              <div class="tab-buttons">
+                <button onclick="openTab('outsideRequests')">Outside Requests</button>
+                <button onclick="openTab('newsSection')">News</button>
+                <button onclick="openTab('FAQsSection')">Edit FAQs</button>
               </div>
-
-              <!-- Flagged Comment Example -->
-              <div class="flag-card" data-type="hate">
-                <div class="flag-header">
-                  <span class="flag-source">Page: Journal Page</span>
-                  <span class="flag-tag">Flagged for Hate Speech</span>
-                </div>
-                <p><strong>User:</strong> Alice</p>
-                <p class="flagged-text">"This journal is trash!"</p>
-                <div class="moderation-actions">
-                  <button onclick="viewContext('Alice - Full comment thread including flagged comment.')" class="view-btn">View Context</button>
-                  <button class="approve-btn">Approve</button>
-                  <button class="remove-btn">Remove</button>
-                  <button class="warn-btn">Warn User</button>
+            
+              <!-- Outside Requests -->
+              <div class="tab-content" id="outsideRequests" style="display:none;">
+                <h3>Outside Requests</h3>
+                <div class="card">
+                  <p><strong>Name:</strong> Mark Smith</p>
+                  <p><strong>Organization:</strong> NYU</p>
+                  <p><strong>Reason:</strong> Requesting access to view restricted content</p>
+                  <button class="accept-btn">Accept</button>
+                  <button class="deny-btn">Deny</button>
                 </div>
               </div>
-
-              <div class="flag-card" data-type="abuse">
-                <div class="flag-header">
-                  <span class="flag-source">Page: Direct Message</span>
-                  <span class="flag-tag">Flagged for Abusive Language</span>
-                </div>
-                <p><strong>User:</strong> Bob</p>
-                <p class="flagged-text">"You're an idiot."</p>
-                <div class="moderation-actions">
-                  <button onclick="viewContext('Bob - Chat log with increasingly rude messages.')" class="view-btn">View Context</button>
-                  <button class="approve-btn">Approve</button>
-                  <button class="remove-btn">Remove</button>
-                  <button class="warn-btn">Warn User</button>
+            
+              <!-- News Section -->
+              <div class="tab-content" id="newsSection" style="display:none;">
+                <h2>News Upload Center</h2>
+                <div class="news-upload-card">
+                  <form id="newsUploadForm">
+                    <div class="form-group">
+                      <label for="newsTitle">Title</label>
+                      <input type="text" id="newsTitle" name="newsTitle" placeholder="Enter a news title" required />
+                    </div>
+            
+                    <div class="form-group">
+                      <label for="newsDescription">Description</label>
+                      <textarea id="newsDescription" name="newsDescription" rows="4" placeholder="Write a brief description..." required></textarea>
+                    </div>
+            
+                    <div class="form-group">
+                      <label for="pdfUpload">Attach PDF</label>
+                      <input type="file" id="pdfUpload" name="pdfUpload" accept=".pdf" required />
+                    </div>
+            
+                    <div class="form-actions">
+                      <button type="submit" class="upload-btn">Upload News</button>
+                    </div>
+                  </form>
                 </div>
               </div>
+            
+              <!-- Edit FAQs Section -->
+              <div class="tab-content" id="FAQsSection" style="display:none;">
+                <h2>Edit FAQs</h2>
+                <div class="news-upload-card">
+                  <form id="faqForm">
+                    <div class="form-group">
+                      <label for="faqQuestion">Question</label>
+                      <input type="text" id="faqQuestion" placeholder="Enter a question" required />
+                    </div>
+                    <div class="form-group">
+                      <label for="faqAnswer">Answer</label>
+                      <textarea id="faqAnswer" rows="4" placeholder="Write the answer..." required></textarea>
+                    </div>
+                    <div class="form-actions">
+                      <button type="submit" class="upload-btn">Add FAQ</button>
+                    </div>
+                  </form>
+                </div>
+            
+                <div id="faqList"></div>
+              </div>
             </div>
-
-            <!-- Modal Popup for Context -->
-            <div class="modal-overlay" id="contextOverlay" onclick="closeModal()"></div>
-            <div class="context-modal" id="contextModal">
-              <h3>Message Context</h3>
-              <p id="contextText">Full message/thread here.</p>
-              <button class="close-modal-btn" onclick="closeModal()">Close</button>
-            </div>
-
-
-
-          <div class="tab-content" id="user-database" style="display:none;">
-              <h2>User Database</h2>
-              <table class="user-table">
-                <thead>
-                  <tr>
-                    <th><input type="checkbox" /></th>
-                    <th>Name</th>
-                    <th>Role</th>
-                    <th>Organization/University</th>
-                    <th>Email</th>
-                    <th>Password</th>
-                    <th style="text-align:center;">Action</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td><input type="checkbox" /></td>
-                    <td>Jane Doe</td>
-                    <td>Admin</td>
-                    <td>Harvard University</td>
-                    <td>jane.doe@email.com</td>
-                    <td>•••••••</td>
-                    <td class="action-icons">
-                      <span class="edit-icon" title="Edit">&#9998;</span>
-                      <span class="delete-icon" title="Delete">&#128465;</span>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td><input type="checkbox" /></td>
-                    <td>John Smith</td>
-                    <td>User</td>
-                    <td>Stanford University</td>
-                    <td>john.smith@email.com</td>
-                    <td>•••••••</td>
-                    <td class="action-icons">
-                      <span class="edit-icon" title="Edit">&#9998;</span>
-                      <span class="delete-icon" title="Delete">&#128465;</span>
-                    </td>
-                  </tr>
-                  <!-- Add more rows as needed -->
-                </tbody>
-              </table>
-            </div>
-			
-			<!-- Edit FAQs Section -->
-<div class="tab-content" id="FAQsSection" style="display:none;">
-  <h2>Edit FAQs</h2>
-  <div class="news-upload-card">
-    <form id="faqForm">
-      <div class="form-group">
-        <label for="faqQuestion">Question</label>
-        <input type="text" id="faqQuestion" placeholder="Enter a question" required />
-      </div>
-      <div class="form-group">
-        <label for="faqAnswer">Answer</label>
-        <textarea id="faqAnswer" rows="4" placeholder="Write the answer..." required></textarea>
-      </div>
-      <div class="form-actions">
-        <button type="submit" class="upload-btn">Add FAQ</button>
-      </div>
-    </form>
-  </div>
-
-  <div id="faqList"></div>
-</div>
+            
 
         <script>
             function openTab(tabId) {
