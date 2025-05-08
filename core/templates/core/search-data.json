@@ -1,0 +1,22 @@
+[
+    {
+        "title": "About CIRT",
+        "content": "CIRT was established in 2023 to serve as a hub for collaboration, education...",
+        "url": "index.html"
+    },
+    {
+        "title": "Journals",
+        "content": "Explore various academic and professional journals in criminology.",
+        "url": "journals.html"
+    },
+    {
+        "title": "Posters",
+        "content": "Research posters on criminology topics presented by scholars.",
+        "url": "Posters.html"
+    },
+    {
+        "title": "Faculty",
+        "content": "Meet the faculty members who contribute to CIRT research and training.",
+        "url": "faculty.html"
+    }
+]
