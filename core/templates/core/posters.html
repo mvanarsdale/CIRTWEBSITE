@@ -347,14 +347,11 @@ cursor: pointer;
     <div class="thumbnail" data-student="{{ poster.student_name }}" data-poster="{{ poster.title }}">
         <div class="pdf-preview">
             <!-- Display the thumbnail image -->
-            {% if poster.thumbnail and poster.pdf %}
-                <a href="{{ poster.pdf.url }}" target="_blank">
-                <img src="{{ poster.thumbnail.url }}" width="300" height="400" style="border: none;" />
-            </a>
-            {% elif poster.pdf %}
-                 <a href="{{ poster.pdf.url }}" target="_blank">View Full PDF</a>
+            {% if poster.thumbnail %}
+                <img src="{{ posters.thumbnail.url }}" width="300" height="400" style="border: none;" />
             {% else %}
-                <p>BROKEN</p>
+                <!-- For now -->
+                <a href="{{ posters.pdf.url }}" target="_blank">View Full PDF</a>
             {% endif %}
         </div>
         <h4>{{ poster.title }}</h4>
