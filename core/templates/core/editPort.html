@@ -714,7 +714,7 @@
             <div class="section">
                 <strong>New Journal Submissions</strong>
                 <div style="display: flex; gap: 20px; flex-wrap: wrap; margin-top: 15px;">
-                    {% for paper in papers %}
+                    {% for paper in new_papers %}
                         <a href="{{ paper.file.url }}" style="text-decoration: none; color: inherit; text-align: center; width: 120px;">
                             <img src="{% static 'images/pdf-icon.png' %}" width="80" alt="PDF">
                             <p>{{ paper.title }}</p>
@@ -752,6 +752,29 @@
     </div>
 
 </div>
+        <!-- Right Sidebar (Inbox) -->
+        <div class="inbox">
+            <div class="dropdown">
+                <div class="dropdown-header" onclick="toggleDropdown('inbox')">
+                    Inbox ▼
+                </div>
+                <div class="dropdown-content" id="inbox">
+                    <div class="section">
+                        <strong>Editors</strong>
+                        <p>No New Messages from Editors.</p>
+                    </div>
+                    <div class="section">
+                        <strong>Authors</strong>
+                        <p>No New Messages from Authors.</p>
+                    </div>
+                    <div class="section">
+                        <strong>Others</strong>
+                        <p>No New Other Messages.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <script>
         function toggleDropdown(id) {

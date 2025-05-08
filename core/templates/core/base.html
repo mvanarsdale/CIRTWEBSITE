@@ -24,6 +24,7 @@
       
           <!-- Search + Buttons -->
           <div class="search-container" style="display: flex; align-items: center; justify-content: flex-end; gap: 12px;">
+            <input type="text" id="searchInput" placeholder="Search this site..." onkeyup="searchFunction()" style="padding: 6px 10px; border-radius: 5px;">
             <div id="login-area" style="display: flex; flex-direction: column; align-items: flex-end;"></div>
           </div>
           
@@ -38,7 +39,7 @@
         <div class="button-container">
             <!-- Link to the 'About' (index) page -->
             <a href="{% url 'index' %}">
-                <button class="button">Home</button>
+                <button class="button">About</button>
             </a>
             <!-- Link to the Journals page -->
             <a href="{% url 'journals' %}">

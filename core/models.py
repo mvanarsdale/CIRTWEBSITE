@@ -40,23 +40,6 @@ class CustomUser(AbstractUser):
     )
 
 
-    def save(self, *args, **kwargs):
-        if self.email:
-            if self.email.endswith('@spartans.ut.edu'):
-                self.role = 'author'  # lowercase for consistency with ROLE_CHOICES
-            elif self.email.endswith('@ut.edu'):
-                # Keep the selected role from the form (e.g., editor, reviewer, etc.)
-                if not self.role or self.role == 'user':
-                    # You can choose to assign a default for ut.edu if none is picked
-                    self.role = 'editor'  # Or keep as-is
-            else:
-                # Any other domain — fallback to default
-                if not self.role:
-                    self.role = 'user'
-
-        super().save(*args, **kwargs)
-
-
 # base for user role groups
 # skeleton provided by chatGPT
 class BaseGroup(models.Model):
@@ -171,11 +154,6 @@ class Paper(models.Model):
         unique=True, 
     )
 
-    # inside your Paper model
-    editor_comments = models.TextField(blank=True, null=True)
-    reviewer_comments = models.TextField(blank=True, null=True)
-
-    
     """Four step journal publication process """
     STATUS_CHOICES = [
         # work in progress 
