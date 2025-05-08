@@ -20,6 +20,13 @@ from django.views.generic import RedirectView
 # django authentic view
 from django.contrib.auth import views as auth_views
 
+from core import views as user_view
+from django.contrib.auth import views as auth
+
+# for poster pdf uploads
+from django.conf import settings
+from django.conf.urls.static import static
+
 urlpatterns = [
 
     # Redirect from root to the core app's homepage
@@ -34,4 +41,14 @@ urlpatterns = [
     path('password_change/', auth_views.PasswordChangeView.as_view(), name='password_change'),
     path('password_change/done/', auth_views.PasswordChangeDoneView.as_view(), name='password_change_done'),
     
-]
+    
+    
+    
+    
+    
+    #path('register/', user_view.signup, name ='register'),
+    
+] 
+
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

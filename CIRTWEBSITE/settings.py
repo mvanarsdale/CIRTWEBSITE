@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
+import os
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -25,7 +26,7 @@ SECRET_KEY = 'django-insecure-tl6=7jtx*_proz6vfi2jhn=@v(_(l0k_c&c_d4)s7nv!#v4@n9
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['ec2-3-138-60-164.us-east-2.compute.amazonaws.com']
 
 
 # Application definition
@@ -73,12 +74,20 @@ WSGI_APPLICATION = 'CIRTWEBSITE.wsgi.application'
 
 
 # Database
-# https://docs.djangoproject.com/en/4.2/ref/settings/#databases
+# updated postgresql database connection
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'cirtdb',
+        'USER': 'admin',
+        'PASSWORD': 'tQ0u1QD0k21cR0su775Q3Are',
+        'HOST': 'nearly-famous-sunfish.a1.pgedge.io',
+        'PORT': '5432',  
+        'OPTIONS': {
+             # SSL encryption
+            'sslmode': 'require',  
+        }
     }
 }
 
@@ -132,4 +141,11 @@ STATICFILES_DIRS = [
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # instead of the default update to use custom
-#AUTH_USER_MODEL = 'users.User'
+AUTH_USER_MODEL = 'core.CustomUser'
+
+# for media uploads code form chatGPT
+MEDIA_URL = '/media/'
+MEDIA_ROOT = BASE_DIR / 'media'
+
+# for dashboard login requirement
+LOGIN_URL = '/login-required/'
