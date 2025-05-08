@@ -225,6 +225,25 @@ class Profile(models.Model):
         
     user = models.OneToOneField(CustomUser, on_delete=models.CASCADE)
     role = models.CharField(max_length=20, choices=ROLE_CHOICES)
+
+#_______________Models for Jurnal____________________
+
+class PDFStorage(models.Model):
+    file = models.FileField(upload_to='PDF/')
+    uploaded_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        db_table = 'pdf_storage'  # Makes sure it uses your existing table
+
+class PDFComment(models.Model):
+    pdf = models.ForeignKey(PDFStorage, on_delete=models.CASCADE, related_name='comments')
+    description = models.TextField()
+    comments = models.TextField(blank=True)
+    submitted_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        db_table = 'pdf_comments'  # Makes sure it uses your existing table
+
     
     
 # ---------MODELS FOR ADMIN PORTAL----------------

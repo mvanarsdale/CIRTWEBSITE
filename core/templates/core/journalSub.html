@@ -179,16 +179,25 @@
         </div>
 
         <div class="right-section">
-            <h3>Description Box</h3>
-            <textarea class="text-area" placeholder="Enter description here..."></textarea>
-            <h3>Comments</h3>
-            <textarea class="text-area" placeholder="Enter comments here..."></textarea>
-            <div class="submit-section">
-                <button onclick="submitSubmission()">Submit</button>
-            </div>
+            <form method="POST" enctype="multipart/form-data" action="{% url 'JournalProc' %}">
+                {% csrf_token %}
+                
+                <h3>Description Box</h3>
+                <textarea name="description" class="text-area" placeholder="Enter description here..." required></textarea>
+        
+                <h3>Comments</h3>
+                <textarea name="comments" class="text-area" placeholder="Enter comments here..."></textarea>
+        
+                <h3>Upload Journal PDF</h3>
+                <input type="file" name="PDF_file" accept="application/pdf" required>
+        
+                <div class="submit-section">
+                    <button type="submit">Submit</button>
+                </div>
+            </form>
         </div>
     </div>
-</div>
+</div>        
 
 <!-- File Upload Modal -->
 <div class="modal" id="fileModal">
