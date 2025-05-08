@@ -162,30 +162,31 @@
 <!-- templates/about.html -->
 {% extends 'core/base.html' %}
 
-{% load static %} 
+{% load static %}
 
 {% block title %}Poster Submission{% endblock %}
 
 {% block content %}
 
-    <div class="container">
-        <!-- Progress Bar -->
-        <div class="progress-container" aria-label="Submission Progress">
-            <div class="progress-bar" id="progressBar"></div>
-        </div>
+<div class="container">
+    <!-- Progress Bar -->
+    <div class="progress-container" aria-label="Submission Progress">
+        <div class="progress-bar" id="progressBar"></div>
+    </div>
 
-        <!-- Step Indicator -->
-        <div class="progress-stages" id="progressStages">
-            <div class="stage"><span>1</span><p>Submit</p></div>
-            <div class="stage"><span>2</span><p>Reached Editor</p></div>
-            <div class="stage"><span>3</span><p>Edits Made</p></div>
-            <div class="stage"><span>4</span><p>Approved</p></div>
-        </div>
+    <!-- Step Indicator -->
+    <div class="progress-stages" id="progressStages">
+        <div class="stage"><span>1</span><p>Submit</p></div>
+        <div class="stage"><span>2</span><p>Reached Editor</p></div>
+        <div class="stage"><span>3</span><p>Edits Made</p></div>
+        <div class="stage"><span>4</span><p>Approved</p></div>
+    </div>
 
-        <!-- Loading Spinner -->
-        <div id="loadingSpinner" class="spinner" role="status" aria-label="Loading progress..."></div>
-        
-        <div class="journal-section">
+    <!-- Loading Spinner -->
+    <div id="loadingSpinner" class="spinner" role="status" aria-label="Loading progress..."></div>
+
+    <!-- Journal Section -->
+    <div class="journal-section">
         <div class="journal-header">
             <h2 id="article-title">Journal Article Title</h2>
             <p><strong>Author:</strong> <span id="article-author">Author Name</span></p>
@@ -193,23 +194,24 @@
         </div>
 
         <!-- File Preview -->
-<div style="display: flex; gap: 30px;">
+        <div style="display: flex; gap: 30px;">
+            <!-- File Upload + Preview Section -->
             <div style="flex: 1; background: #777; padding: 20px; border-radius: 10px; box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);">
             <h3 class="section-title">File Preview</h3>
-            <div class="file-preview" id="filePreview">
-            <iframe id="fileIframe" title="Journal File Preview"></iframe>
-        </div>
+                <div class="file-preview" id="filePreview">
+                    <iframe id="fileIframe" title="Journal File Preview"></iframe>
+                </div>
 
-        <!-- Controls -->
-        <div class="actions">
-            <button onclick="downloadPDF()" aria-label="Download PDF">Download</button>
-            <button onclick="printPDF()" aria-label="Print PDF">Print</button>
-            <button onclick="editPDF()" aria-label="Edit PDF">Edit</button>
-        </div>
+                <!-- Controls -->
+                <div class="actions">
+                    <button onclick="downloadPDF()" aria-label="Download PDF">Download</button>
+                    <button onclick="printPDF()" aria-label="Print PDF">Print</button>
+                    <button onclick="editPDF()" aria-label="Edit PDF">Edit</button>
+                </div>
             </div>
 
         <!-- Journal Info -->
-           <div style="flex: 1; background: #777; padding: 20px; border-radius: 10px; box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);">
+            <div style="flex: 1; background: #777; padding: 20px; border-radius: 10px; box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);">
                 <h3 class="section-title">Editor Comments</h3>
                 <div class="comment-box">
                     <textarea readonly id="editorComments">The editor has not made any comments yet.</textarea>
@@ -225,7 +227,7 @@
                 </div>
             </div>
 
-        </div>
+    </div>
 
     <script>
         let scale = 1;
@@ -258,7 +260,7 @@
 
         function fullScreen() {
             alert("Full screen mode not implemented yet.");
-        }
+        }        
 
         function updateProgress(stage) {
             let width = '0%';
@@ -314,7 +316,7 @@
                 console.error('Failed to load progress:', err);
                 updateProgress('Submit');
             } finally {
-                document.getElementById('loadingSpinner').style.display = 'none';
+            document.getElementById('loadingSpinner').style.display = 'none';
             }
         }
 

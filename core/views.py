@@ -6,9 +6,26 @@ from django.contrib.auth import logout
 from django.contrib.auth import get_user_model
 from django.contrib.auth import authenticate, login
 from django.http import JsonResponse
+# for messages with log in success / failure
 from django.contrib import messages
+from core.models import CustomUser
+from core.models import PDFStorage, PDFComment
+from core.models import Paper
 from django.db.models import Q
+from django.shortcuts import get_object_or_404
+
+#to be sure that login is required for the dashboard 
 from django.contrib.auth.decorators import login_required
+
+# for messages with log in success / failure
+#from django.contrib import messages
+
+
+from core.models import Editor, Reviewer, Author #CustomUser
+
+# for poster upload
+
+
 from django.http import FileResponse, Http404
 
 """Imports from core app models""" 
@@ -70,24 +87,24 @@ def posters(request):
 def contact(request):
     return render(request, 'core/contact.html')
 
+# for the FAQ page
+def FAQ(request):
+    return render(request, 'core/FAQ.html')
+
+# for the publications page
+def journals(request):
+    return render(request, 'core/journals.html')
+
 # for the dashboard page
 #@login_required
 def Dashboard(request):
     return render(request, 'core/Dashboard.html')
-
-# for the FAQ page
-def FAQ(request):
-    return render(request, 'core/FAQ.html')
         
-###############################################
-
-
-
-"""Portal Views""" 
-# editor portal - code from ChatGPT
+# portals 
+# editor portal
 def editPort(request):
-    new_papers = Paper.objects.filter(status='submitted')
-    in_progress_papers = Paper.objects.filter(status='editor_reached')
+    new_journals = Paper.objects.filter(status='submitted')
+    in_progress_journals = Paper.objects.filter(status='editor_reached')
 
     context = {
         'new_papers': new_papers,
@@ -127,15 +144,48 @@ def subComp(request):
 def journalSub(request):
     return render(request, 'core/journalSub.html')
 
-# view for page showing the progress bar and comments of a paper
-def JournalProc(request):
-    return render(request, 'core/Journal_Process.html')
+def JournalProc(request, paper_id=None):
+    # ✅ Step 1: Try to fetch the Paper object if a paper_id is provided
+    paper = None
+    if paper_id:
+        paper = get_object_or_404(Paper, id=paper_id)
 
+    if request.method == 'POST':
+        poster_file = request.FILES.get('PDF_file')
+        description = request.POST.get('description')
+        comments = request.POST.get('comments')
 
+        if poster_file:
+            # 1️⃣ Save the PDF to pdf_storage
+            pdf_instance = PDFStorage.objects.create(file=poster_file)
 
+            # 2️⃣ Save the description/comments to pdf_comments (linked to the PDF)
+            PDFComment.objects.create(
+                pdf=pdf_instance,
+                description=description,
+                comments=comments
+            )
 
+            return redirect('subComp')  # ✅ Redirect to success page
 
-"""User authentication views""" 
+        else:
+            # 🚨 Handle error: no file uploaded
+            return render(request, 'core/Journal_Process.html', {
+                'error': 'No file uploaded. Please try again.',
+                'paper': paper  # ✅ Pass paper here too even if error
+            })
+
+    # ✅ For GET requests, render the form and pass 'paper'
+    return render(request, 'core/Journal_Process.html', {'paper': paper})
+
+def subComp(request):
+    return render(request, 'core/subComp.html')
+
+def logout_view(request):
+    logout(request)
+    return redirect('home')
+
+# move to users later 
 # Code from ChatGPT
 def ajax_login(request):
     if request.method == 'POST':
@@ -160,6 +210,7 @@ def ajax_login(request):
                 'success': False,
                 'error_message': 'Invalid credentials'
             })
+
 def check_login_status(request):
     if request.user.is_authenticated:
         return JsonResponse({
@@ -170,6 +221,7 @@ def check_login_status(request):
         return JsonResponse({
             'is_logged_in': False
         })
+    
 @csrf_exempt  # Only use this if you aren't passing CSRF token properly
 def logout_view(request):
     if request.method == 'POST':

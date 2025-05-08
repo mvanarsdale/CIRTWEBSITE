@@ -7,6 +7,10 @@ urlpatterns = [
     ### URL for main siz pages ###
     # for default / homepage (index) view
     path('', views.index, name='index'),
+    # for poster view
+    path('posters/', views.posters, name='posters'),
+    # for faq view
+    path('FAQ/', views.FAQ, name='FAQ'),
     # for journal view
     path('journals/', views.journals, name='journals'),
     # for poster view
@@ -24,6 +28,8 @@ urlpatterns = [
     ### URLS for user authentication ###
     # for log in view 
     path('ajax_login/', views.ajax_login, name='ajax_login'), 
+    # url for signup view 
+    #path('signup/', views.signup, name='signup'),
     # url to check if someone is logged in
     path('check_login_status/', views.check_login_status, name='check_login_status'), 
     # url to log out
@@ -36,6 +42,8 @@ urlpatterns = [
     ### URLS for user portals ###
     # for editor portal view 
     path('editPort/', views.editPort, name='editPort'),
+    # Route to allow editors to mark a journal as 'editor_reached' (updates Paper status)
+    path('mark_editor_reached/<int:paper_id>/', views.mark_editor_reached, name='mark_editor_reached'),
     # for reviewer portal view 
     path('reviewPort/', views.reviewPort, name='reviewPort'),
     # for author portal view 
@@ -53,6 +61,8 @@ urlpatterns = [
     
     # for journal submit view 
     path('journalSub/', views.journalSub, name='journalSub'),
+    # for poster submit view 
+    path('subComp/', views.subComp, name='subComp'),
     # for journal process submit view 
     path('JournalProc/', views.JournalProc, name='JournalProc'),
     
@@ -63,6 +73,7 @@ urlpatterns = [
     
     # generating pdf for posters
     path('poster/pdf/<int:poster_id>/', views.serve_poster_pdf, name='serve_poster_pdf'),
+    
     
 
 
