@@ -173,7 +173,7 @@
      <!-- code from chatGPT-->
     <div class="container">
         <div class="author-info">
-            <h2>Author's Name: <span id="authorName">John Doe</span></h2>
+            <h2>Author's Name: <span id="authorName">{{ user.username }}</span></h2>
             <p>Date: <span id="currentDate"></span></p>
         </div>
 
@@ -190,9 +190,9 @@
             </div>
 
             <div class="right-section">
-                <h3>Description Box</h3>
+                <h3>Poster Title</h3>
                 <!-- Description Field -->
-                <textarea class="text-area" name="title" placeholder="Enter description here..."></textarea>
+                <textarea class="text-area" name="title" placeholder="Enter title name..."></textarea>
 
                 <div class="submit-section">
                     <button type="submit" class="portal-button">Submit</button>

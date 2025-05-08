@@ -1,255 +1,299 @@
-
-    <style>
+<style>
         
-        /* IMAGE SECTION STYLING */
-        .image-container {
-            display: flex;
-            justify-content: center;
-            gap: 15px;
-            padding: 20px;
-            flex-wrap: wrap;
-        }
-        .image-container img {
-            width: 30%; /* Adjust size as needed */
-            height: auto;
-            border-radius: 8px;
-            box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);
-        }
+    .popup-overlay {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.5);
+    }
+    .popup {
+        display: none;
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background: #999;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+        color: black !important;
+        position: relative;
+    }
+    .popup-content {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+    .close-btn {
+        position: absolute;
+        top: 10px;
+        right: 15px;
+        font-size: 24px;
+        cursor: pointer;
+    }
+    
+    input[type="text"], input[type="password"] {
+        color: black !important;
+        background-color: white !important;
+        border: 1px solid #ccc;
+        padding: 8px;
+        border-radius: 4px;
+    }
+    
+    label, h2 {
+        color: black !important;  
+    }
+    
+    /* HEADER STYLING */
+    .header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background-color: #692022;
+        color: white;
+        padding: 15px 20px;
+    }
+    .logo img {
+        height: 50px;
+    }
+    .title {
+        font-size: 24px;
+        font-weight: bold;
+    }
+    .search-logout-container {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
 
-        /* RECENT PUBLICATIONS SECTION */
-            <title>Recent Publications</title>
-            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css">
-            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.min.css">
-            <style>
-                body {
-                font-family: Arial, sans-serif;
-            }
-        
-        .publications {
-            text-align: center;
-            padding: 20px;
-        }
-        
-        .journal-gallery {
-            display: flex;
-            justify-content: center;
-            gap: 15px;
-            max-width: 800px;
-            margin: auto;
-        }
-        .journal-gallery img {
-            width: 150px;
-            height: auto;
-            cursor: pointer;
-            transition: transform 0.3s ease;
-        }
-        .journal-gallery img:hover {
-            transform: scale(1.1);
-        }
-        .popup-overlay {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.5);
-        }
-        .popup {
-            display: none;
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background: #999;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
-            text-align: center;
-        }
-        .popup img {
-            width: 100%;
-            max-width: 400px;
-            height: auto;
-        }
-        .close-btn {
-            cursor: pointer;
-            font-size: 20px;
-            float: right;
-        }
-        .open-journal-btn {
-            display: block;
-            margin-top: 10px;
-            padding: 10px;
-            background-color: #777;
-            color: white;
-            text-decoration: none;
-            border-radius: 5px;
-        }
-        
-        .open-journal-btn:hover {
-            background-color: #555;
-        }
-        
-        /* ALL JOURNALS SECTION */
-        .all-journals {
-            width: 80%;
-            margin: 50px auto;
-            background-color: #999;
-            padding: 20px;
-            box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
-            border-radius: 8px;
-        }
+    .search-box input {
+        padding: 8px;
+        border: none;
+        border-radius: 4px;
+    }
 
-        .all-journals-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 20px;
-        }
+    .search-box button {
+        padding: 8px 12px;
+        background-color: #555;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+    }
 
-        .search-box {
-            display: flex;
-            align-items: center;
-        }
+    .search-box button:hover {
+        background-color: #777;
+    }
 
-        .search-box input {
-            padding: 8px;
-            margin-right: 10px;
-        }
+    #logoutBtn {
+        padding: 8px 12px;
+        background-color: #555;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+    }
 
-        .button-container {
-            display: flex;
-            gap: 10px;
-            align-items: center;
-        }
+    #logoutBtn:hover {
+        background-color: #777;
+    }
+    
+    /* Navigation Bar */
+    .secondary_header {
+        background-color: #000000;
+        padding: 15px;
+        display: flex;
+        justify-content: center;
+    }
 
-        .filter-container {
-            display: inline-block;
-            position: relative;
-        }
+    .button-container {
+        display: flex;
+        justify-content: space-evenly;
+        width: 100%;
+    }
 
-        .filter-button {
-            padding: 8px 12px;
-            background-color: #555;
-            color: white;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-        }
+    .button-container .button {
+        background-color: #000000;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        font-size: 16px;
+        cursor: pointer;
+        border-radius: 5px;
+    }
 
-        /* Adjusting dropdown to stay within the screen */
-        .filter-dropdown {
-            display: none;
-            position: absolute;
-            top: 100%;
-            left: 0;
-            background-color: #999;
-            max-width: 250px; /* Set a max width */
-            width: auto; /* Auto width based on content */
-            box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);
-            padding: 10px;
-            z-index: 1;
-            border-radius: 8px;
-            overflow: auto; /* Make dropdown scrollable if content is too long */
-        }
+    .button-container .button:hover {
+        background-color: #4B0909;
+    }
+    
+    /* Ensure both header elements span full width */
+    .header, .secondary_header {
+        width: 100%;
+        box-sizing: border-box;
+    }
 
-        .filter-container:hover .filter-dropdown {
-            display: block;
-        }
+    /* Remove any default margin from the body or header elements */
+    .body, .header {
+        margin: 0;
+        padding: 0;
+    }
 
-        .filter-section {
-            margin-bottom: 15px;
-        }
+    /* Filter Section Styling */
+    .filter-section {
+        margin: 20px 0;
+        padding: 10px;
+        background-color: #f4f4f4;
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        gap: 10px;
+    }
 
-        .filter-section label {
-            font-weight: bold;
-            display: block;
-            margin-bottom: 5px; /* Add margin below label */
-        }
+    #filterSelect {
+        padding: 8px;
+        font-size: 16px;
+    }
 
-        .filter-section input,
-        .filter-section select {
-            width: 100%;
-            padding: 6px;
-            margin-top: 5px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            box-sizing: border-box;
-        }
-
-        /* Ensure checkboxes are aligned */
-        .filter-section input[type="checkbox"] {
-            width: auto;
-            display: inline-block;
-            margin-right: 5px; /* Add some space between checkbox and text */
-            vertical-align: middle;
-        }
-
-        .filter-button:hover {
-            background-color: #777;
-        }
-        
-        /* JOURNAL LISTING STYLES */
-        .journal-listing {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 20px;
-            justify-content: space-between;
-        }
-
-        .journal-item {
-            display: flex;
-            flex-direction: column;
-            width: 100%;
-            max-width: 300px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            border-radius: 8px;
-            overflow: hidden;
-            background-color: #fff;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-
-        .journal-item:hover {
-            transform: scale(1.05);
-            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
-        }
-
-        .journal-image img {
-            width: 100%;
-            height: auto;
-            border-bottom: 2px solid #f1f1f1;
-        }
-
-        .journal-description {
-            padding: 15px;
-        }
-
-        .journal-description h3 {
-            font-size: 1.4em;
-            margin-bottom: 10px;
-        }
-
-        .journal-summary {
-            font-size: 1em;
-            line-height: 1.6;
-            margin-bottom: 10px;
-            color: #000;
-        }
-
-        .journal-details p {
-            font-size: 0.9em;
-            color: #000;
-        }
-
-        @media (max-width: 768px) {
-            .journal-item {
-                max-width: 100%;
-            }
-        }
+    #filterInput {
+        padding: 8px;
+        font-size: 16px;
+        width: 200px;
+    }
 
 
-    </style>
+    /* Gallery Styling */
+    .gallery {
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+        background-color: #FFFFFF;
+        padding: 20px;
+    }
+
+    .thumbnail {
+        width: 30%;
+        text-align: center;
+        margin: 15px;
+        background-color: #F8F8F8;
+        padding-bottom: 20px;
+        border-radius: 5px;
+        padding-top: 20px;
+        border-bottom: 4px solid #692022;
+    }
+
+    .gallery .thumbnail h4 {
+        margin-top: 10px;
+        color: #692022;
+        text-align: center;
+    }
+
+    /* Poster Thumbnails */
+    .cards {
+        width: 100%;
+        height: auto;
+        max-width: 300px;
+        opacity: 0.9;
+        cursor: pointer;
+        transition: transform 0.2s ease-in-out;
+    }
+
+    .cards:hover {
+        transform: scale(1.05);
+    }
+
+    /* Modal Styling */
+    .modal {
+        display: none;
+        position: fixed;
+        z-index: 1000;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0,0,0,0.8);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .close-modal {
+        position: absolute;
+        top: 15px;
+        right: 30px;
+        color: white;
+        font-size: 30px;
+        cursor: pointer;
+}
+
+
+
+.copyright {
+color: #FFFFFF;
+text-transform: uppercase;
+font-weight: lighter;
+letter-spacing: 2px;
+}
+#popupOverlay, #loginPopup, #posterModal {
+display: none;
+}
+/* Popup Styling */
+.popup-overlay {
+display: none;
+position: fixed;
+top: 0;
+left: 0;
+width: 100%;
+height: 100%;
+background: rgba(0, 0, 0, 0.6);
+z-index: 999;
+}
+
+.popup {
+display: none;
+position: fixed;
+top: 50%;
+left: 50%;
+transform: translate(-50%, -50%);
+background: white;
+padding: 20px;
+border-radius: 8px;
+z-index: 1000;
+width: 300px;
+text-align: center;
+}
+
+.popup-content input {
+width: 100%;
+padding: 8px;
+margin: 5px 5;
+}
+
+.popup-content button {
+background: #4B0909;
+color: white;
+border: none;
+padding: 10px;
+cursor: pointer;
+}
+
+.popup-content button:hover {
+background: #B7A28E;
+}
+
+.close-btn {
+position: absolute;
+top: 10px;
+right: 15px;
+font-size: 20px;
+cursor: pointer;
+}
+
+    
+    
+</style>
 <!-- templates/about.html -->
 {% extends 'core/base.html' %}
 
@@ -257,166 +301,161 @@
 
 {% block title %}Journals{% endblock %}
 
+{% block page_css %}
+<link rel="stylesheet" href="{% static 'core/css/posterstyle.css' %}">
+{% endblock %}
+
 {% block content %}
+<!-- Filter Section -->
+<form method="get" action="{% url 'journals' %}" class="filter-section" style="display: flex; align-items: center; gap: 10px;">
+    <label for="filterSelect">Filter by:</label>
+    <select id="filterSelect" name="filter_by" style="padding: 8px;">
+        <option value="author">Author</option>
+        <option value="title">Paper Title</option>
+        <option value="submitted_date">Date Submitted</option>
+    </select>
 
-    
-    <!-- IMAGE SECTION -->
-    <div class="image-container">
-        <img src="images/criminology-program-hero.jpeg" alt="Criminology Image 1">
-        <img src="images/criminology2.jpeg" alt="Criminology Image 2">
-        <img src="images/criminology3.jpeg" alt="Criminology Image 3">
+    <input type="text" id="filterInput" name="filter_term" placeholder="Enter filter term" style="padding: 8px;">
+
+    <!-- Sorting dropdown -->
+    <label for="sortSelect" style="margin-left: auto;">Sort by:</label>
+    <select id="sortSelect" name="sort_by" style="padding: 8px;">
+        <option value="author_asc">Author A-Z</option>
+        <option value="author_desc">Author Z-A</option>
+        <option value="newest">Newest Published</option>
+        <option value="oldest">Oldest Published</option>
+    </select>
+
+    <button type="submit" style="padding: 8px 12px; background-color: #3b0000; color: white; border: none; border-radius: 6px; cursor: pointer;">
+        Search
+    </button>
+</form>
+{% if request.GET.filter_term or request.GET.sort_by %}
+    <div style="margin-top: 15px;">
+        <a href="{% url 'posters' %}">
+            <button style="padding: 8px 12px; background-color: #777; color: white; border: none; border-radius: 6px; cursor: pointer;">
+                Clear Search / Go Back
+            </button>
+        </a>
     </div>
+{% endif %}
 
-    <!-- RECENT PUBLICATIONS SECTION -->
-    <body>
-    <div class="publications">
-        <h2>Recent Publications</h2>
-        <div class="journal-gallery slider">
-            <img src="journal1.jpg" alt="Journal Page 1" data-url="journal1.pdf">
-            <img src="journal2.jpg" alt="Journal Page 2" data-url="journal2.pdf">
-            <img src="journal3.jpg" alt="Journal Page 3" data-url="journal3.pdf">
+
+<!-- Poster Gallery Code from ChatGPT-->
+<div class="gallery">
+    {% for paper in papers %}
+    <div class="thumbnail" data-student="{{ journal.student_name }}" data-poster="{{ paper.title }}">
+        <div class="pdf-preview">
+            <!-- Display the thumbnail image -->
+            {% if paper.thumbnail %}
+                <img src="{{ paper.thumbnail.url }}" width="300" height="400" style="border: none;" />
+            {% else %}
+                <!-- For now -->
+                <a href="{{ papers.pdf.url }}" target="_blank">View Full PDF</a>
+            {% endif %}
         </div>
+        <h4>{{ paper.title }}</h4>
+        <h4>{{ paper.author }}</h4>
+        <h4>{{ paper.submitted_date }}</h4>
     </div>
+    {% endfor %}
+</div>
+<!-- Modal for displaying posters -->
+<div id="posterModal" class="modal">
+    <span class="close-modal">&times;</span>
+    <iframe id="posterFrame" src=""></iframe>
+</div>
 
-    <div id="popupOverlay" class="popup-overlay"></div>
-    <div id="imagePopup" class="popup">
-        <span class="close-btn">&times;</span>
-        <img id="popupImage" src="" alt="Journal Preview">
-        <a id="openJournal" href="#" target="_blank" class="open-journal-btn">Open Journal</a>
-    </div>
 
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script>
-    <script>
-        $(document).ready(function(){
-            $('.slider').slick({
-                slidesToShow: 3,
-                slidesToScroll: 1,
-                infinite: true,
-                autoplay: true,
-                autoplaySpeed: 2000,
-                arrows: true,
-                dots: true
+
+<!-- JavaScript -->
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        // Handle the login popup
+        const loginBtn = document.getElementById('loginBtn');
+        const loginPopup = document.getElementById('loginPopup');
+        const popupOverlay = document.getElementById('popupOverlay');
+        const closeBtn = document.querySelector('.close-btn');
+
+        // Show pop-up when login button is clicked
+        loginBtn.addEventListener('click', () => {
+            loginPopup.style.display = 'block';
+            popupOverlay.style.display = 'block';
+        });
+
+        // Hide pop-up when close button or overlay is clicked
+        closeBtn.addEventListener('click', () => {
+            loginPopup.style.display = 'none';
+            popupOverlay.style.display = 'none';
+        });
+
+        popupOverlay.addEventListener('click', () => {
+            loginPopup.style.display = 'none';
+            popupOverlay.style.display = 'none';
+        });
+
+        // Filter Functionality
+        document.getElementById("filterInput").addEventListener("input", function () {
+            let filterValue = this.value.toLowerCase();
+            let filterType = document.getElementById("filterSelect").value;
+            let thumbnails = document.querySelectorAll(".thumbnail");
+
+            thumbnails.forEach(thumbnail => {
+                let filterData = thumbnail.getAttribute(`data-${filterType}`).toLowerCase();
+                if (filterData.includes(filterValue)) {
+                    thumbnail.style.display = "block";
+                } else {
+                    thumbnail.style.display = "none";
+                }
             });
         });
 
-        document.querySelectorAll(".journal-gallery img").forEach(img => {
-            img.addEventListener("click", function () {
-                document.getElementById("popupImage").src = this.src;
-                document.getElementById("openJournal").href = this.dataset.url;
-                document.getElementById("popupOverlay").style.display = "block";
-                document.getElementById("imagePopup").style.display = "block";
+        // Search Functionality (same as before)
+        document.getElementById("searchInput").addEventListener("input", function () {
+            let filter = this.value.toLowerCase();
+            let thumbnails = document.querySelectorAll(".thumbnail");
+
+            thumbnails.forEach(thumbnail => {
+                let title = thumbnail.querySelector("h4").textContent.toLowerCase();
+                let caption = thumbnail.querySelector(".caption").textContent.toLowerCase();
+                if (title.includes(filter) || caption.includes(filter)) {
+                    thumbnail.style.display = "block";
+                } else {
+                    thumbnail.style.display = "none";
+                }
             });
         });
 
-        document.querySelector(".close-btn").addEventListener("click", function () {
-            document.getElementById("popupOverlay").style.display = "none";
-            document.getElementById("imagePopup").style.display = "none";
+        // Poster Modal Functionality
+        document.querySelectorAll(".poster-link").forEach(link => {
+            link.addEventListener("click", function (event) {
+                event.preventDefault();
+                let pdfSrc = this.getAttribute("data-src");
+                let modal = document.getElementById("posterModal");
+                let iframe = document.getElementById("posterFrame");
+
+                iframe.src = pdfSrc;
+                modal.style.display = "flex";
+            });
         });
 
-        document.getElementById("popupOverlay").addEventListener("click", function () {
-            document.getElementById("popupOverlay").style.display = "none";
-            document.getElementById("imagePopup").style.display = "none";
+        // Close Modal
+        document.querySelector(".close-modal").addEventListener("click", function () {
+            document.getElementById("posterModal").style.display = "none";
+            document.getElementById("posterFrame").src = ""; // Reset iframe
         });
-    </script>
-</body>
-    
 
-    <!-- ALL JOURNALS SECTION -->
-    <div class="all-journals">
-        <div class="all-journals-header">
-            <h2>All Journals</h2>
-            <div class="button-container">
-                <div class="search-box">
-                    <input type="text" placeholder="Search Journals...">
-                    <button type="submit">Search</button>
-                </div>
-                <div class="filter-container">
-                    <button class="filter-button">Filter ▼</button>
-                    <div class="filter-dropdown">
-                        <!-- AUTHOR FILTER -->
-                        <div class="filter-section">
-                            <label>Author</label>
-                            <input type="checkbox"> A-Z Order <br>
-                            <input type="text" placeholder="Enter Author Name">
-                        </div>
+        // Close modal when clicking outside the iframe
+        window.addEventListener("click", function (event) {
+            let modal = document.getElementById("posterModal");
+            if (event.target === modal) {
+                modal.style.display = "none";
+                document.getElementById("posterFrame").src = "";
+            }
+        });
+    });
+</script>
 
-                        <!-- DATE FILTER -->
-                        <div class="filter-section">
-                            <label>Date</label>
-                            <input type="checkbox"> Oldest <br>
-                            <input type="checkbox"> Most Recent <br>
-                            <input type="date">
-                        </div>
-
-                        <!-- CATEGORY FILTER -->
-                        <div class="filter-section">
-                            <label>Category</label>
-                            <input type="text" placeholder="Enter Category">
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- PLACEHOLDER FOR JOURNAL LISTING -->
-        <div class="journal-listing">
-            <a href="journal1.html" class="journal-item">
-                <div class="journal-image">
-                    <img src="journal1.jpg" alt="Cover image for Journal 1">
-                </div>
-                <div class="journal-description">
-                    <h3>Title of Journal 1</h3>
-                    <p class="journal-summary">
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. In tincidunt sollicitudin augue, at fermentum odio vehicula a.
-                        Curabitur pharetra sit amet felis et tincidunt.
-                    </p>
-                    <div class="journal-details">
-                        <p><strong>Author:</strong> John Doe</p>
-                        <p><strong>Contact:</strong> johndoe@example.com</p>
-                        <p><strong>Published:</strong> March 2025</p>
-                    </div>
-                </div>
-            </a>
-
-            <a href="journal2.html" class="journal-item">
-                <div class="journal-image">
-                    <img src="journal2.jpg" alt="Cover image for Journal 2">
-                </div>
-                <div class="journal-description">
-                    <h3>Title of Journal 2</h3>
-                    <p class="journal-summary">
-                        Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam.
-                    </p>
-                    <div class="journal-details">
-                        <p><strong>Author:</strong> Jane Smith</p>
-                        <p><strong>Contact:</strong> janesmith@example.com</p>
-                        <p><strong>Published:</strong> February 2025</p>
-                    </div>
-                </div>
-            </a>
-            
-            <a href="journal3.html" class="journal-item">
-                <div class="journal-image">
-                    <img src="journal3.jpg" alt="Cover image for Journal 3">
-                </div>
-                <div class="journal-description">
-                    <h3>Title of Journal 3</h3>
-                    <p class="journal-summary">
-                        Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam.
-                    </p>
-                    <div class="journal-details">
-                        <p><strong>Author:</strong> Jane Doe</p>
-                        <p><strong>Contact:</strong> janedoe@example.com</p>
-                        <p><strong>Published:</strong> March 2025</p>
-                    </div>
-                </div>
-            </a>
-
-            <!-- Add more journal items here with links -->
-        </div>
-
-        {% endblock content %}
-    
 </body>
 </html>
+{% endblock content %}
