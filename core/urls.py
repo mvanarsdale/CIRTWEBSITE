@@ -43,7 +43,7 @@ urlpatterns = [
     # for editor portal view 
     path('editPort/', views.editPort, name='editPort'),
     # Route to allow editors to mark a journal as 'editor_reached' (updates Paper status)
-    path('mark_editor_reached/<int:paper_id>/', views.mark_editor_reached, name='mark_editor_reached'),
+    #path('mark_editor_reached/<int:paper_id>/', views.mark_editor_reached, name='mark_editor_reached'),
     # for reviewer portal view 
     path('reviewPort/', views.reviewPort, name='reviewPort'),
     # for author portal view 
