@@ -29,6 +29,7 @@ from core.models import Editor, Reviewer, Author #CustomUser
 from django.http import FileResponse, Http404
 
 """Imports from core app models""" 
+from core.forms import PaperForm
 from core.models import Editor, Reviewer, Author, CustomUser
 from .models import Paper, Poster
 
@@ -59,27 +60,28 @@ def posters(request):
 
     posters = Poster.objects.all()
 
-    # First, apply filtering
+    # Apply filtering
     if query and filter_by:
         if filter_by == 'author':
-            posters = posters.filter(author__username__icontains=query)
+            posters = posters.filter(author__icontains=query)  # Changed here
         elif filter_by == 'title':
             posters = posters.filter(title__icontains=query)
         elif filter_by == 'submitted_date':
             posters = posters.filter(submitted_date__icontains=query)
 
-    # Now apply sorting
+    # Apply sorting
     if sort_by:
         if sort_by == 'author_asc':
-            posters = posters.order_by('author__username')  # A → Z
+            posters = posters.order_by('author')  # Changed here
         elif sort_by == 'author_desc':
-            posters = posters.order_by('-author__username')  # Z → A
+            posters = posters.order_by('-author')
         elif sort_by == 'newest':
-            posters = posters.order_by('-submitted_date')  # Newest first
+            posters = posters.order_by('-submitted_date')
         elif sort_by == 'oldest':
-            posters = posters.order_by('submitted_date')  # Oldest first
+            posters = posters.order_by('submitted_date')
 
     return render(request, 'core/posters.html', {'posters': posters})
+
 
 # for the homepage
 def contact(request):
@@ -314,3 +316,22 @@ def serve_poster_pdf(request, poster_id):
         return FileResponse(poster.pdf.open('rb'), content_type='application/pdf')
     except Poster.DoesNotExist:
         raise Http404("Poster not found")
+    
+
+def submit_journal(request):
+    if request.method == 'POST':
+        title = request.POST.get('title')
+        pdf = request.FILES.get('pdf')
+        editor_comments = request.POST.get('editor_comments')
+        reviewer_comments = request.POST.get('reviewer_comments')
+
+        Paper.objects.create(
+            title=title,
+            pdf=pdf,
+            author=request.user,
+            editor_comments=editor_comments,
+            reviewer_comments=reviewer_comments
+        )
+
+        return redirect('JournalProc')  # or wherever you wanna go ✨
+    return render(request, 'core/journal_submission.html')
