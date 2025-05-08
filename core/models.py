@@ -154,6 +154,11 @@ class Paper(models.Model):
         unique=True, 
     )
 
+    # inside your Paper model
+    editor_comments = models.TextField(blank=True, null=True)
+    reviewer_comments = models.TextField(blank=True, null=True)
+
+    
     """Four step journal publication process """
     STATUS_CHOICES = [
         # work in progress 
